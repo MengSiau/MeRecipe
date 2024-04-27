@@ -9,11 +9,11 @@ import Foundation
 
 class Recipe {
     var name: String?
-    var difficulty: Int?
+    var difficulty: String?
 //    var time: Int?
 //    var ingredients: [String] = []
     
-    init(name: String?, difficulty: Int?) {
+    init(name: String?, difficulty: String?) {
         self.name = name
         self.difficulty = difficulty
     }

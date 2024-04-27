@@ -11,8 +11,16 @@ class ViewRecipeDetailViewController: UIViewController {
 
     @IBOutlet weak var recipeDifficultyField: UILabel!
     @IBOutlet weak var recipeNameField: UILabel!
+    
+    var recipeName: String = ""
+    var recipeDifficulty: String = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        recipeNameField.text = recipeName
+        recipeDifficultyField.text = recipeDifficulty
 
         // Do any additional setup after loading the view.
     }

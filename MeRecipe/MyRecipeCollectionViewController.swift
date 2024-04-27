@@ -26,7 +26,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     func addRecipe(_ newRecipe: Recipe) -> Bool {
         listOfRecipe.append(newRecipe)
         print("added")
-//        reloadData()
+        collectionView.reloadData();
         return true
         
     
@@ -68,9 +68,9 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     }
 
     func generateTestRecipe() {
-        listOfRecipe.append(Recipe(name: "test1", difficulty: 1))
-        listOfRecipe.append(Recipe(name: "test2", difficulty: 2))
-        listOfRecipe.append(Recipe(name: "test3", difficulty: 3))
+        listOfRecipe.append(Recipe(name: "test1", difficulty: "1"))
+        listOfRecipe.append(Recipe(name: "test2", difficulty: "2"))
+        listOfRecipe.append(Recipe(name: "test3", difficulty: "3"))
     }
 
     // MARK: UICollectionViewDataSource
@@ -157,6 +157,25 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         if segue.identifier == "createRecipeSegue" {
             let destination = segue.destination as! CreateRecipeViewController
             destination.recipeDelegate = self
+        } else if segue.identifier == "recipeDetailSegue" {
+            if let selectedIndexPaths = collectionView.indexPathsForSelectedItems, let indexPath = selectedIndexPaths.first {
+                let destination = segue.destination as! ViewRecipeDetailViewController
+                let selectedRecipe = listOfRecipe[indexPath.row]
+                print(indexPath.row)
+                
+                guard let recipeName = selectedRecipe.name else {
+                    print("unwrap error for name")
+                    return
+                }
+                
+                guard let recipeDifficulty = selectedRecipe.difficulty else {
+                    print("unwrap error for difficulty")
+                    return
+                }
+                
+                destination.recipeName = recipeName
+                destination.recipeDifficulty = recipeDifficulty
+            }
         }
     }
 }
