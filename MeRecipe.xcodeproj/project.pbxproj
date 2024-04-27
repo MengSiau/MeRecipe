@@ -19,6 +19,8 @@
 		2AD878B22BD8C2F60055DC01 /* CreateRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B12BD8C2F60055DC01 /* CreateRecipeViewController.swift */; };
 		2AD878B42BD8D70A0055DC01 /* AddRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */; };
 		2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */; };
+		2AF481622BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF481612BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift */; };
+		2AF481642BDD3B4B00BEE85B /* UIViewController+displayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		2AD878B12BD8C2F60055DC01 /* CreateRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeViewController.swift; sourceTree = "<group>"; };
 		2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeDelegate.swift; sourceTree = "<group>"; };
 		2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRecipeDetailViewController.swift; sourceTree = "<group>"; };
+		2AF481612BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeV2ViewController.swift; sourceTree = "<group>"; };
+		2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+displayMessage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +83,10 @@
 				2A48C54C2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
 				2AD878B12BD8C2F60055DC01 /* CreateRecipeViewController.swift */,
+				2AF481612BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift */,
 				2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */,
 				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
+				2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */,
 			);
 			path = MeRecipe;
 			sourceTree = "<group>";
@@ -158,6 +164,8 @@
 			files = (
 				2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */,
 				2A48C5392BD77DDD006EFA94 /* ViewController.swift in Sources */,
+				2AF481642BDD3B4B00BEE85B /* UIViewController+displayMessage.swift in Sources */,
+				2AF481622BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift in Sources */,
 				2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */,
 				2A48C54D2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift in Sources */,
 				2A48C5492BD782EA006EFA94 /* MyRecipeCollectionViewController.swift in Sources */,

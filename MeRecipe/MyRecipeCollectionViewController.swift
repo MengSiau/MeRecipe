@@ -68,9 +68,9 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     }
 
     func generateTestRecipe() {
-        listOfRecipe.append(Recipe(name: "test1", difficulty: "1"))
-        listOfRecipe.append(Recipe(name: "test2", difficulty: "2"))
-        listOfRecipe.append(Recipe(name: "test3", difficulty: "3"))
+        listOfRecipe.append(Recipe(name: "test1", difficulty: "1", ingredients: "ingredient1"))
+        listOfRecipe.append(Recipe(name: "test2", difficulty: "2", ingredients: "ingredient2"))
+        listOfRecipe.append(Recipe(name: "test3", difficulty: "3", ingredients: "ingredient3"))
     }
 
     // MARK: UICollectionViewDataSource
@@ -153,9 +153,10 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
 //            
 //        }
 //    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createRecipeSegue" {
-            let destination = segue.destination as! CreateRecipeViewController
+            let destination = segue.destination as! CreateRecipeV2ViewController
             destination.recipeDelegate = self
         } else if segue.identifier == "recipeDetailSegue" {
             if let selectedIndexPaths = collectionView.indexPathsForSelectedItems, let indexPath = selectedIndexPaths.first {
