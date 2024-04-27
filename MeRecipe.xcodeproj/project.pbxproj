@@ -16,6 +16,9 @@
 		2A48C5492BD782EA006EFA94 /* MyRecipeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C5482BD782EA006EFA94 /* MyRecipeCollectionViewController.swift */; };
 		2A48C54B2BD7842B006EFA94 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C54A2BD7842B006EFA94 /* Recipe.swift */; };
 		2A48C54D2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C54C2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift */; };
+		2AD878B22BD8C2F60055DC01 /* CreateRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B12BD8C2F60055DC01 /* CreateRecipeViewController.swift */; };
+		2AD878B42BD8D70A0055DC01 /* AddRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */; };
+		2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		2A48C5482BD782EA006EFA94 /* MyRecipeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeCollectionViewController.swift; sourceTree = "<group>"; };
 		2A48C54A2BD7842B006EFA94 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		2A48C54C2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		2AD878B12BD8C2F60055DC01 /* CreateRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeViewController.swift; sourceTree = "<group>"; };
+		2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeDelegate.swift; sourceTree = "<group>"; };
+		2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRecipeDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,9 @@
 				2A48C5482BD782EA006EFA94 /* MyRecipeCollectionViewController.swift */,
 				2A48C54C2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
+				2AD878B12BD8C2F60055DC01 /* CreateRecipeViewController.swift */,
+				2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */,
+				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
 			);
 			path = MeRecipe;
 			sourceTree = "<group>";
@@ -147,11 +156,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */,
 				2A48C5392BD77DDD006EFA94 /* ViewController.swift in Sources */,
 				2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */,
 				2A48C54D2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift in Sources */,
 				2A48C5492BD782EA006EFA94 /* MyRecipeCollectionViewController.swift in Sources */,
 				2A48C5372BD77DDD006EFA94 /* SceneDelegate.swift in Sources */,
+				2AD878B22BD8C2F60055DC01 /* CreateRecipeViewController.swift in Sources */,
+				2AD878B42BD8D70A0055DC01 /* AddRecipeDelegate.swift in Sources */,
 				2A48C54B2BD7842B006EFA94 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

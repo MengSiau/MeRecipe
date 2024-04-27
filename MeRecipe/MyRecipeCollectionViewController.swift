@@ -8,11 +8,13 @@
 import UIKit
 
 
-class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
+class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, AddRecipeDelegate {
     
     let CELL_IMAGE = "imageCell"
     var imageList = [UIImage]()
     var imagePathList = [String]()
+    var listOfRecipe = [Recipe]()
+    weak var recipeDelegate: AddRecipeDelegate?
     
     
     let bottomToolbar: UIToolbar = {
@@ -20,6 +22,15 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         return toolbar
     }()
+    
+    func addRecipe(_ newRecipe: Recipe) -> Bool {
+        listOfRecipe.append(newRecipe)
+        print("added")
+//        reloadData()
+        return true
+        
+    
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +41,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         collectionView.backgroundColor = .systemBackground
         collectionView.setCollectionViewLayout(generateLayout(), animated: false)
 
+        // TEST
+        generateTestRecipe()
         
         // SEARCH BAR //
         let searchController = UISearchController(searchResultsController: nil)
@@ -54,32 +67,31 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
        
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    func generateTestRecipe() {
+        listOfRecipe.append(Recipe(name: "test1", difficulty: 1))
+        listOfRecipe.append(Recipe(name: "test2", difficulty: 2))
+        listOfRecipe.append(Recipe(name: "test3", difficulty: 3))
     }
-    */
 
     // MARK: UICollectionViewDataSource
 
     // Set to 20
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
     
-    // set to 12
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 4
+        return listOfRecipe.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
+        let currentRecipe = listOfRecipe[indexPath.row]
+        
+        cell.recipeName.text = currentRecipe.name
         
         cell.backgroundColor = .secondarySystemFill
         cell.imageView.backgroundColor = .blue
@@ -112,12 +124,11 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     }
     */
 
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
+    
+//    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+    
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
@@ -133,5 +144,19 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     
     }
     */
-
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "createRecipeSegue" {
+//            if let cell = sender as? UICollectionViewCell, let indexPath = self.collectionView(UICollectionView, cellForItemAt: IndexPath) {
+//                let destination = segue.destination as! ViewRecipeDetailViewController
+//            }
+//            
+//        }
+//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "createRecipeSegue" {
+            let destination = segue.destination as! CreateRecipeViewController
+            destination.recipeDelegate = self
+        }
+    }
 }
