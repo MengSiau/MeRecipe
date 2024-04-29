@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateRecipeV2ViewController: UIViewController {
+class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
     
     weak var recipeDelegate: AddRecipeDelegate?
     
@@ -20,12 +20,20 @@ class CreateRecipeV2ViewController: UIViewController {
     @IBOutlet weak var recipeCookingTimeField: UITextField!
     @IBOutlet weak var recipeDifficultyField: UITextField!
     
-    
     @IBOutlet weak var ingredientsView: UIView!
     @IBOutlet weak var ingredientTextField: UITextView!
     
-
-
+    @IBOutlet weak var directionView: UIView!
+    @IBOutlet weak var directionTextField: UITextView!
+    
+    @IBOutlet weak var nutrientView: UIView!
+    @IBOutlet weak var recipeNameAPI: UITextField!
+    @IBOutlet weak var proteinTextField: UITextField!
+    @IBOutlet weak var carbohydrateTextField: UITextField!
+    @IBOutlet weak var fatTextField: UITextField!
+    @IBOutlet weak var caloriesTextField: UITextField!
+    
+    
     // Save button
     @IBAction func saveBtn(_ sender: Any) {
         guard let name = recipeNameField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text else {
@@ -52,7 +60,15 @@ class CreateRecipeV2ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        // Do any additional setup after loading the view.
+        
+        recipeDifficultyField.keyboardType = .numberPad
+        recipeDifficultyField.delegate = self
+    }
+    
+    // Conform to protocol. Called for the textfield's delegate when user tap return.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     func setupUI() {
@@ -63,9 +79,23 @@ class CreateRecipeV2ViewController: UIViewController {
         if segmentController.selectedSegmentIndex == 0 {
             overviewView.isHidden = false
             ingredientsView.isHidden = true
+            directionView.isHidden = true
+            nutrientView.isHidden = true
         } else if segmentController.selectedSegmentIndex == 1 {
             overviewView.isHidden = true
             ingredientsView.isHidden = false
+            directionView.isHidden = true
+            nutrientView.isHidden = true
+        } else if segmentController.selectedSegmentIndex == 2 {
+            overviewView.isHidden = true
+            ingredientsView.isHidden = true
+            directionView.isHidden = false
+            nutrientView.isHidden = true
+        } else if segmentController.selectedSegmentIndex == 3 {
+            overviewView.isHidden = true
+            ingredientsView.isHidden = true
+            directionView.isHidden = true
+            nutrientView.isHidden = false
         }
     }
     
