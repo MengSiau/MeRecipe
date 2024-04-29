@@ -10,6 +10,7 @@ import UIKit
 class ViewRecipeDetailViewController: UIViewController {
 
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var recipeDifficultyField: UILabel!
     @IBOutlet weak var recipeNameField: UILabel!
     
@@ -22,7 +23,7 @@ class ViewRecipeDetailViewController: UIViewController {
         
         recipeNameField.text = recipeName
         recipeDifficultyField.text = recipeDifficulty
-
+        recipeImage.backgroundColor = UIColor.red
         // Do any additional setup after loading the view.
     }
     
