@@ -9,6 +9,7 @@ import UIKit
 
 class ViewRecipeDetailViewController: UIViewController {
 
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var recipeDifficultyField: UILabel!
     @IBOutlet weak var recipeNameField: UILabel!
     
