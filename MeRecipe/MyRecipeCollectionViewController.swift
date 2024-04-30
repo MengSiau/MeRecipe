@@ -28,7 +28,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         print("added")
         collectionView.reloadData();
         return true
-        
     
     }
     

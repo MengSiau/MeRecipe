@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
+class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var recipeDelegate: AddRecipeDelegate?
     
@@ -19,6 +19,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var recipePrepTimeField: UITextField!
     @IBOutlet weak var recipeCookingTimeField: UITextField!
     @IBOutlet weak var recipeDifficultyField: UITextField!
+    @IBOutlet weak var recipePreviewImage: UIImageView!
     
     @IBOutlet weak var ingredientsView: UIView!
     @IBOutlet weak var ingredientTextField: UITextView!
@@ -33,6 +34,21 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var fatTextField: UITextField!
     @IBOutlet weak var caloriesTextField: UITextField!
     
+    @IBAction func selectPreviewImageBtn(_ sender: Any) {
+        let controller = UIImagePickerController()
+        
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            controller.sourceType = .camera
+//        } else {
+//            controller.sourceType = .photoLibrary
+//        }
+        controller.sourceType = .photoLibrary
+        controller.allowsEditing = false
+        controller.delegate = self
+        self.present(controller ,animated: true, completion: nil)
+        
+        
+    }
     
     // Save button
     @IBAction func saveBtn(_ sender: Any) {
@@ -101,8 +117,19 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-
+    // UIImagePickerControllerDelegate -> This func is called when user has selected a photo
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+            recipePreviewImage.image = pickedImage
+        }
+        // Once image selected, dismiss ... Maybe here we need to store it elsewhere.
+        dismiss(animated: true, completion: nil)
+    }
     
+    // UIImagePickerControllerDelegate -> This func is called when the image picker has been cancelled.
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation

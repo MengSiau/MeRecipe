@@ -409,15 +409,29 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwQ-1b-v1M">
+                                        <rect key="frame" x="8" y="312" width="377" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Select Image For Recipe"/>
+                                        <connections>
+                                            <action selector="selectPreviewImageBtn:" destination="xkk-z1-Jzn" eventType="touchUpInside" id="KjQ-OX-T62"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QVR-Ym-ag3">
+                                        <rect key="frame" x="8" y="355" width="377" height="222"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBrownColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="mMD-uT-ggn" secondAttribute="trailing" constant="8" id="2ws-e6-2NX"/>
+                                    <constraint firstItem="QVR-Ym-ag3" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="4sB-cQ-6D6"/>
                                     <constraint firstAttribute="trailing" secondItem="Wfu-mO-ufS" secondAttribute="trailing" constant="8" id="5GE-XS-IhZ"/>
                                     <constraint firstItem="qVz-HX-cxY" firstAttribute="top" secondItem="Nys-b3-JO1" secondAttribute="bottom" constant="8" symbolic="YES" id="6Bt-Nx-lMX"/>
+                                    <constraint firstItem="dwQ-1b-v1M" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="7d8-Yt-AJF"/>
                                     <constraint firstItem="U5w-xc-zy3" firstAttribute="top" secondItem="qVz-HX-cxY" secondAttribute="bottom" constant="8" symbolic="YES" id="9Qm-sj-0NV"/>
                                     <constraint firstAttribute="trailing" secondItem="U5w-xc-zy3" secondAttribute="trailing" constant="8" id="CHS-X3-1HV"/>
                                     <constraint firstItem="mMD-uT-ggn" firstAttribute="top" secondItem="yJ5-Px-piB" secondAttribute="top" constant="33" id="Dg6-HO-YAu"/>
+                                    <constraint firstItem="dwQ-1b-v1M" firstAttribute="top" secondItem="U5w-xc-zy3" secondAttribute="bottom" constant="49" id="Dsx-a2-9LU"/>
                                     <constraint firstItem="mMD-uT-ggn" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="Khh-Ci-uS5"/>
                                     <constraint firstItem="Nys-b3-JO1" firstAttribute="top" secondItem="Wfu-mO-ufS" secondAttribute="bottom" constant="36" id="LKz-I6-gT9"/>
                                     <constraint firstItem="U5w-xc-zy3" firstAttribute="top" secondItem="qVz-HX-cxY" secondAttribute="bottom" constant="8" symbolic="YES" id="LX8-vY-ZEp"/>
@@ -426,14 +440,19 @@
                                     <constraint firstItem="Wfu-mO-ufS" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="S50-5S-dih"/>
                                     <constraint firstItem="Nys-b3-JO1" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="Uvh-Rj-Rv7"/>
                                     <constraint firstItem="Nys-b3-JO1" firstAttribute="top" secondItem="Wfu-mO-ufS" secondAttribute="bottom" constant="36" id="VtL-Fl-dJ5"/>
+                                    <constraint firstItem="QVR-Ym-ag3" firstAttribute="top" secondItem="dwQ-1b-v1M" secondAttribute="bottom" constant="8" symbolic="YES" id="Yto-BG-qiT"/>
                                     <constraint firstItem="U5w-xc-zy3" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="aBB-RH-Oi6"/>
+                                    <constraint firstItem="QVR-Ym-ag3" firstAttribute="top" secondItem="dwQ-1b-v1M" secondAttribute="bottom" constant="8" symbolic="YES" id="bAF-nh-kDz"/>
                                     <constraint firstAttribute="trailing" secondItem="Nys-b3-JO1" secondAttribute="trailing" constant="8" id="beB-ec-IF0"/>
                                     <constraint firstItem="Wfu-mO-ufS" firstAttribute="top" secondItem="mMD-uT-ggn" secondAttribute="bottom" constant="8" symbolic="YES" id="bnW-k9-IgO"/>
                                     <constraint firstAttribute="trailing" secondItem="Nys-b3-JO1" secondAttribute="trailing" constant="8" id="cee-VA-fgY"/>
                                     <constraint firstItem="qVz-HX-cxY" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="cgZ-9h-IM2"/>
+                                    <constraint firstAttribute="trailing" secondItem="QVR-Ym-ag3" secondAttribute="trailing" constant="8" id="cty-jR-VCg"/>
                                     <constraint firstAttribute="trailing" secondItem="qVz-HX-cxY" secondAttribute="trailing" constant="8" id="dvf-U2-aTh"/>
                                     <constraint firstItem="Nys-b3-JO1" firstAttribute="leading" secondItem="yJ5-Px-piB" secondAttribute="leading" constant="8" id="oRw-1q-HNl"/>
                                     <constraint firstItem="qVz-HX-cxY" firstAttribute="top" secondItem="Nys-b3-JO1" secondAttribute="bottom" constant="8" symbolic="YES" id="ryR-en-Jd6"/>
+                                    <constraint firstAttribute="trailing" secondItem="dwQ-1b-v1M" secondAttribute="trailing" constant="8" id="tHu-MG-oYR"/>
+                                    <constraint firstAttribute="bottom" secondItem="QVR-Ym-ag3" secondAttribute="bottom" constant="49" id="tog-BL-fyP"/>
                                     <constraint firstItem="Wfu-mO-ufS" firstAttribute="top" secondItem="mMD-uT-ggn" secondAttribute="bottom" constant="8" symbolic="YES" id="uFe-Cy-eMF"/>
                                 </constraints>
                             </view>
@@ -487,6 +506,7 @@
                         <outlet property="recipeNameAPI" destination="eDD-om-rGk" id="SZd-3e-mWU"/>
                         <outlet property="recipeNameField" destination="mMD-uT-ggn" id="hE1-Qe-ILM"/>
                         <outlet property="recipePrepTimeField" destination="Nys-b3-JO1" id="15I-lU-s6U"/>
+                        <outlet property="recipePreviewImage" destination="QVR-Ym-ag3" id="rjK-sU-Wmh"/>
                         <outlet property="segmentController" destination="ydg-xI-D6j" id="8mX-Ms-ocr"/>
                     </connections>
                 </viewController>
