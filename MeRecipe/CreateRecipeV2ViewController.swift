@@ -36,7 +36,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
     
     // Save button
     @IBAction func saveBtn(_ sender: Any) {
-        guard let name = recipeNameField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text else {
+        guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text else {
             print("Issues in unwraping fields")
             return
         }
@@ -51,7 +51,8 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Add
-        let newRecipe = Recipe(name: name, difficulty: difficulty, ingredients: ingredients )
+        // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
+        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, ingredients: ingredients )
         let _ = recipeDelegate?.addRecipe(newRecipe)
         
         navigationController?.popViewController(animated: true)
@@ -75,6 +76,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate {
         segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
+    // SegmentedView controls the 4 Views
     @objc func segmentedControlValueChanged() {
         if segmentController.selectedSegmentIndex == 0 {
             overviewView.isHidden = false

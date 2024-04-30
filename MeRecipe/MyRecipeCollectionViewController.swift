@@ -66,11 +66,9 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         bottomToolbar.items = [addButton]
        
     }
-
+    // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
     func generateTestRecipe() {
-        listOfRecipe.append(Recipe(name: "test1", difficulty: "1", ingredients: "ingredient1"))
-        listOfRecipe.append(Recipe(name: "test2", difficulty: "2", ingredients: "ingredient2"))
-        listOfRecipe.append(Recipe(name: "test3", difficulty: "3", ingredients: "ingredient3"))
+        listOfRecipe.append(Recipe(name: "Apple Pie",  description: "sweet apple pie!", prepTime: "20", cookTime: "40", difficulty: "3", ingredients: "30g Apple, 40g Sugar, 500mL milk"))
     }
 
     // MARK: UICollectionViewDataSource
@@ -168,13 +166,24 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
                     print("unwrap error for name")
                     return
                 }
-                
+                guard let recipeDescription = selectedRecipe.description else {
+                    return
+                }
+                guard let recipePrepTime = selectedRecipe.prepTime else {
+                    return
+                }
+                guard let recipeCookTime = selectedRecipe.cookTime else {
+                    return
+                }
                 guard let recipeDifficulty = selectedRecipe.difficulty else {
                     print("unwrap error for difficulty")
                     return
                 }
                 
                 destination.recipeName = recipeName
+                destination.recipeDescription = recipeDescription
+                destination.recipePrepTime = recipePrepTime
+                destination.recipeCookTime = recipeCookTime
                 destination.recipeDifficulty = recipeDifficulty
             }
         }

@@ -11,7 +11,7 @@ class Recipe {
     var name: String?
     var description: String? 
     var prepTime: String?
-    var cookTIme: String?
+    var cookTime: String?
     var difficulty: String?
     
     var ingredients: String? // [String] = [], perhaps string manipulation, but store string for now.
@@ -23,9 +23,13 @@ class Recipe {
     var calories: String?
 
     
-    init(name: String?, difficulty: String?, ingredients: String?) {
+    init(name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?) {
         self.name = name
+        self.description = description
+        self.prepTime = prepTime
+        self.cookTime = cookTime
         self.difficulty = difficulty
+        
         self.ingredients = ingredients
     }
 }

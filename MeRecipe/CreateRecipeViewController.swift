@@ -20,8 +20,9 @@ class CreateRecipeViewController: UIViewController {
             return
         }
         
-        let newRecipe = Recipe(name: recipeName, difficulty: recipeDifficulty, ingredients: "dd")
-        let _ = recipeDelegate?.addRecipe(newRecipe)
+        // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
+//        let newRecipe = Recipe(name: recipeName, difficulty: recipeDifficulty, ingredients: "dd")
+//        let _ = recipeDelegate?.addRecipe(newRecipe)
         
         navigationController?.popViewController(animated: true)
     }
