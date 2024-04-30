@@ -27,6 +27,8 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     @IBOutlet weak var directionView: UIView!
     @IBOutlet weak var directionTextField: UITextView!
     
+    let REQUEST_STRING = "https://api.api-ninjas.com/v1/nutrition?query="
+    let API_KEY = "gXhfhW09+sIxVJ9P7D6LqQ==jDg5rHdQVtq3F3Dj"
     @IBOutlet weak var nutrientView: UIView!
     @IBOutlet weak var recipeNameAPI: UITextField!
     @IBOutlet weak var proteinTextField: UITextField!
@@ -36,7 +38,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     
     @IBAction func selectPreviewImageBtn(_ sender: Any) {
         let controller = UIImagePickerController()
-        
 //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
 //            controller.sourceType = .camera
 //        } else {
@@ -45,10 +46,40 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         controller.sourceType = .photoLibrary
         controller.allowsEditing = false
         controller.delegate = self
-        self.present(controller ,animated: true, completion: nil)
+        self.present(controller , animated: true, completion: nil)
+    }
+    
+    @IBAction func generateNutrientsAPI(_ sender: Any) {
+        print("API btn pressed")
+        guard let query = recipeNameAPI.text else {
+            print("No recipe name specified") // TODO: make pop up later
+            return
+        }
         
+        Task {
+            print("requestFunc called")
+            await requestNutrients(query)
+        }
+
+    }
+    
+    func requestNutrients(_ recipeName: String) async {
+        guard let url = URL(string: REQUEST_STRING+recipeName) else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key")
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
+        }
+        task.resume()
         
     }
+    
+    
     
     // Save button
     @IBAction func saveBtn(_ sender: Any) {
