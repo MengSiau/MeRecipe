@@ -35,20 +35,42 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     @IBOutlet weak var carbohydrateTextField: UITextField!
     @IBOutlet weak var fatTextField: UITextField!
     @IBOutlet weak var caloriesTextField: UITextField!
+    var proteinVal: String? = ""
     
     @IBAction func selectPreviewImageBtn(_ sender: Any) {
         let controller = UIImagePickerController()
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            controller.sourceType = .camera
-//        } else {
-//            controller.sourceType = .photoLibrary
-//        }
-        controller.sourceType = .photoLibrary
         controller.allowsEditing = false
         controller.delegate = self
-        self.present(controller , animated: true, completion: nil)
+        
+        let actionSheet = UIAlertController(title: nil, message: "Select Option:", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { action in
+            controller.sourceType = .camera
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let libraryAction = UIAlertAction(title: "Photo Library", style: .default) { action in
+            controller.sourceType = .photoLibrary
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let albumAction = UIAlertAction(title: "Photo Album", style: .default) { action in
+            controller.sourceType = .savedPhotosAlbum
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                actionSheet.addAction(cameraAction)
+        }
+        
+        actionSheet.addAction(libraryAction)
+        actionSheet.addAction(albumAction)
+        actionSheet.addAction(cancelAction)
+        self.present(actionSheet , animated: true, completion: nil)
     }
     
+    // Btn for auto-generating nutrients via API + Called the API request func
     @IBAction func generateNutrientsAPI(_ sender: Any) {
         print("API btn pressed")
         guard let query = recipeNameAPI.text else {
@@ -63,6 +85,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
 
     }
     
+    // Creates a API Request + Assigns TextFields with the retrieved values
     func requestNutrients(_ recipeName: String) async {
         guard let url = URL(string: REQUEST_STRING+recipeName) else {
             print("Invalid URL")
@@ -71,15 +94,37 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         
         var request = URLRequest(url: url)
         request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key")
+        
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard let data = data else { return }
-            print(String(data: data, encoding: .utf8)!)
+            
+            if let jsonArray = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                if let firstItem = jsonArray.first {
+                    
+                    if let protein = firstItem["protein_g"] as? Double, let carbs = firstItem["carbohydrates_total_g"] as? Double, let fats = firstItem["fat_total_g"] as? Double, let calories = firstItem["calories"] as? Double {
+                        
+                        DispatchQueue.main.async {
+                            self.proteinTextField.text = "\(protein) g"
+                            self.carbohydrateTextField.text = "\(carbs) g"
+                            self.fatTextField.text = "\(fats) g"
+                            self.caloriesTextField.text = "\(calories)"
+                        }
+                        
+                    } else {
+                        print("Error: Cannot unwrap values")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.displayMessage(title: "Recipe not found", message: "Please try use another keyword for your recipe")
+                        print("Cannot get JSON: Likely due to unknown recipe name.")
+                    }
+                    
+                }
+            }
         }
         task.resume()
-        
     }
-    
-    
+
     
     // Save button
     @IBAction func saveBtn(_ sender: Any) {
@@ -97,8 +142,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
         
-        // Add
-        // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
         let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, ingredients: ingredients )
         let _ = recipeDelegate?.addRecipe(newRecipe)
         
