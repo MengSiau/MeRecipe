@@ -126,7 +126,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     }
 
     
-    // Save button
+    // Save button (ADDS THE RECIPE)
     @IBAction func saveBtn(_ sender: Any) {
         guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text else {
             print("Issues in unwraping fields")
@@ -142,7 +142,14 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
         
-        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, ingredients: ingredients )
+        // Handling image
+        guard let image = recipePreviewImage.image else {
+            print("cannot unwrap the image")
+            return
+        }
+        
+        
+        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty,image: image, ingredients: ingredients )
         let _ = recipeDelegate?.addRecipe(newRecipe)
         
         navigationController?.popViewController(animated: true)

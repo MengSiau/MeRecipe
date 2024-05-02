@@ -67,7 +67,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     }
     // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
     func generateTestRecipe() {
-        listOfRecipe.append(Recipe(name: "Apple Pie",  description: "sweet apple pie!", prepTime: "20", cookTime: "40", difficulty: "3", ingredients: "30g Apple, 40g Sugar, 500mL milk"))
+//        listOfRecipe.append(Recipe(name: "Apple Pie",  description: "sweet apple pie!", prepTime: "20", cookTime: "40", difficulty: "3", ingredients: "30g Apple, 40g Sugar, 500mL milk"))
     }
 
     // MARK: UICollectionViewDataSource
@@ -84,14 +84,16 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         return listOfRecipe.count
     }
 
+    // Responsible for the creation/customization of the CollectionViewCell
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
         let currentRecipe = listOfRecipe[indexPath.row]
         
         cell.recipeName.text = currentRecipe.name
+        cell.imageView.image = currentRecipe.image
         
         cell.backgroundColor = .secondarySystemFill
-        cell.imageView.backgroundColor = .blue
+        
     
         return cell
     }
