@@ -10,6 +10,7 @@ import UIKit
 class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var recipeDelegate: AddRecipeDelegate?
+    weak var databaseController: DatabaseProtocol?
     
     @IBOutlet weak var segmentController: UISegmentedControl!
     
@@ -142,15 +143,16 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
         
-        // Handling image
-        guard let image = recipePreviewImage.image else {
-            print("cannot unwrap the image")
-            return
-        }
+//        // Handling image
+//        guard let image = recipePreviewImage.image else {
+//            print("cannot unwrap the image")
+//            return
+//        }
         
-        
-        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, image: image, ingredients: ingredients )
-        let _ = recipeDelegate?.addRecipe(newRecipe)
+//        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, image: image, ingredients: ingredients )
+//        let _ = recipeDelegate?.addRecipe(newRecipe)
+        print("add recipe btn pressed")
+        let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, ingredients: ingredients)
         
         navigationController?.popViewController(animated: true)
     }
@@ -158,6 +160,9 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
         
         recipeDifficultyField.keyboardType = .numberPad
         recipeDifficultyField.delegate = self

@@ -90,7 +90,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         let currentRecipe = listOfRecipe[indexPath.row]
         
         cell.recipeName.text = currentRecipe.name
-        cell.imageView.image = currentRecipe.image
+//        cell.imageView.image = currentRecipe.image
         
         cell.backgroundColor = .secondarySystemFill
         
@@ -167,7 +167,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
                     print("unwrap error for name")
                     return
                 }
-                guard let recipeDescription = selectedRecipe.description else {
+                guard let recipeDescription = selectedRecipe.desc else {
                     return
                 }
                 guard let recipePrepTime = selectedRecipe.prepTime else {
