@@ -104,9 +104,9 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
                     if let protein = firstItem["protein_g"] as? Double, let carbs = firstItem["carbohydrates_total_g"] as? Double, let fats = firstItem["fat_total_g"] as? Double, let calories = firstItem["calories"] as? Double {
                         
                         DispatchQueue.main.async {
-                            self.proteinTextField.text = "\(protein) g"
-                            self.carbohydrateTextField.text = "\(carbs) g"
-                            self.fatTextField.text = "\(fats) g"
+                            self.proteinTextField.text = "\(protein)"
+                            self.carbohydrateTextField.text = "\(carbs)"
+                            self.fatTextField.text = "\(fats)"
                             self.caloriesTextField.text = "\(calories)"
                         }
                         
@@ -149,7 +149,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         }
         
         
-        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty,image: image, ingredients: ingredients )
+        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, image: image, ingredients: ingredients )
         let _ = recipeDelegate?.addRecipe(newRecipe)
         
         navigationController?.popViewController(animated: true)
