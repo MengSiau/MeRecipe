@@ -92,6 +92,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             print("Failed to serialize Reicpe")
         }
         
+        
         // IMAGE //
         let timestamp = UInt(Date().timeIntervalSince1970)
         let filename = "\(timestamp).jpg"
@@ -99,13 +100,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
-        
         let uploadTask = imageRef.putData(imageData, metadata: metadata)
         
-        // Load
+        guard let recipeID = recipe.id else {
+            print("cannot unwrap recipe id")
+            return
+        }
+        
         uploadTask.observe(.success) {
         snapshot in
-            self.recipeRef?.document("\(timestamp)").setData(["url" : "\(imageRef)"])
+            self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
         }
         uploadTask.observe(.failure) {
         snapshot in
