@@ -8,12 +8,14 @@
 import UIKit
 
 
-class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, AddRecipeDelegate {
+class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
+    var listenerType = ListenerType.recipe
+    weak var databaseController: DatabaseProtocol?
     
     let CELL_IMAGE = "imageCell"
     var imageList = [UIImage]()
     var imagePathList = [String]()
-    var listOfRecipe = [Recipe]()
+    var listOfRecipe: [Recipe] = []
     weak var recipeDelegate: AddRecipeDelegate?
     
     
@@ -39,6 +41,10 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         
         collectionView.backgroundColor = .systemBackground
         collectionView.setCollectionViewLayout(generateLayout(), animated: false)
+        
+        // FIREBASE //
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
 
         // TEST
         generateTestRecipe()
@@ -68,6 +74,25 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
     func generateTestRecipe() {
 //        listOfRecipe.append(Recipe(name: "Apple Pie",  description: "sweet apple pie!", prepTime: "20", cookTime: "40", difficulty: "3", ingredients: "30g Apple, 40g Sugar, 500mL milk"))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        databaseController?.removeListener(listener: self)
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
+    
+    func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
+        print("onChange detected for recipe")
+        listOfRecipe = recipes
+        collectionView.reloadData();
+        print(recipes)
     }
 
     // MARK: UICollectionViewDataSource

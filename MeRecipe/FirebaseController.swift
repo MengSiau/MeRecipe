@@ -148,20 +148,20 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 return
             }
             self.parseRecipeSnapshot(snapshot: querySnapshot)
-            if self.recipeListRef == nil { self.setupRecipeListListener()} // If first time called, set up listener
+//            if self.recipeListRef == nil { self.setupRecipeListListener()} // If first time called, set up listener
         }
     }
     
-    func setupRecipeListListener() {
-        recipeListRef = database.collection("PLACEHOLDER") // may not use, use this name as a placeholder
-        recipeListRef?.whereField("name", isEqualTo: DEFAULT_RECIPELIST_NAME).addSnapshotListener { (querySnapshot, error) in // specify name
-            guard let querySnapshot = querySnapshot, let recipeListSnapshot = querySnapshot.documents.first else { // validate snapshot
-                print("Error fetching RecipeList: \(error!)")
-                return
-            }
-            self.parseRecipeListSnapshot(snapshot: recipeListSnapshot)
-        }
-    }
+//    func setupRecipeListListener() {
+//        recipeListRef = database.collection("PLACEHOLDER") // may not use, use this name as a placeholder
+//        recipeListRef?.whereField("name", isEqualTo: DEFAULT_RECIPELIST_NAME).addSnapshotListener { (querySnapshot, error) in // specify name
+//            guard let querySnapshot = querySnapshot, let recipeListSnapshot = querySnapshot.documents.first else { // validate snapshot
+//                print("Error fetching RecipeList: \(error!)")
+//                return
+//            }
+//            self.parseRecipeListSnapshot(snapshot: recipeListSnapshot)
+//        }
+//    }
     
     func parseRecipeSnapshot(snapshot: QuerySnapshot) {
         snapshot.documentChanges.forEach { (change) in // iterate thro each document change in snapshot
@@ -192,26 +192,25 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
-    func parseRecipeListSnapshot(snapshot: QueryDocumentSnapshot) {
-        
-        defaultRecipeList = RecipeList()
-        defaultRecipeList.name = snapshot.data()["name"] as? String
-        defaultRecipeList.id = snapshot.documentID
-        
-        // Try access the array of document references
-        if let recipeReference = snapshot.data()["recipes"] as? [DocumentReference] {
-            for reference in recipeReference { // Iterate through references, use it to get a hero, add hero to Team's array
-                if let recipe = getRecipeById(reference.documentID) {
-                    defaultRecipeList.recipes.append(recipe)
-                }
-            }
-        }
-        // Call Multicast delegate to invoke method to update all listeners
-        listeners.invoke { (listener) in
-            if listener.listenerType == ListenerType.recipeList || listener.listenerType == ListenerType.all {
-                listener.onRecipeListChange(change: .update, recipes: defaultRecipeList.recipes)
-            }
-        }
-        
-    }
+//    func parseRecipeListSnapshot(snapshot: QueryDocumentSnapshot) {
+//        
+//        defaultRecipeList = RecipeList()
+//        defaultRecipeList.name = snapshot.data()["name"] as? String
+//        defaultRecipeList.id = snapshot.documentID
+//        
+//        // Try access the array of document references
+//        if let recipeReference = snapshot.data()["recipes"] as? [DocumentReference] {
+//            for reference in recipeReference { // Iterate through references, use it to get a hero, add hero to Team's array
+//                if let recipe = getRecipeById(reference.documentID) {
+//                    defaultRecipeList.recipes.append(recipe)
+//                }
+//            }
+//        }
+//        // Call Multicast delegate to invoke method to update all listeners
+//        listeners.invoke { (listener) in
+//            if listener.listenerType == ListenerType.recipeList || listener.listenerType == ListenerType.all {
+//                listener.onRecipeListChange(change: .update, recipes: defaultRecipeList.recipes)
+//            }
+//        }
+//    }
 }
