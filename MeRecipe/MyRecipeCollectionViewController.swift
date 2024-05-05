@@ -89,10 +89,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
-        print("onChange detected for recipe")
         listOfRecipe = recipes
         collectionView.reloadData();
-        print(recipes)
     }
 
     // MARK: UICollectionViewDataSource

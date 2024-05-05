@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
+import FirebaseAuth
 import FirebaseFirestoreSwift
 
 class FirebaseController: NSObject, DatabaseProtocol {
@@ -23,12 +25,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var recipeListRef: CollectionReference?
     var currentUser: FirebaseAuth.User?
     
+
+    
     override init() {
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
         listOfRecipe = [Recipe]()
         defaultRecipeList = RecipeList()
+        
         super.init()
         
         Task {
@@ -61,7 +66,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.removeDelegate(listener)
     }
     
-    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?) -> Recipe {
+    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?) {
+        
+        var storageReference = Storage.storage().reference()
+        guard let imageData = imageData else {
+            print("Cannot unwrap image data")
+            return
+        }
         
         let recipe = Recipe()
         recipe.name = name
@@ -69,7 +80,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         recipe.prepTime = prepTime
         recipe.cookTime = cookTime
         recipe.difficulty = difficulty
-//        recipe.image = image
+        //recipe.image = image
         
         recipe.ingredients = ingredients
         
@@ -80,8 +91,29 @@ class FirebaseController: NSObject, DatabaseProtocol {
         } catch {
             print("Failed to serialize Reicpe")
         }
+        
+        // IMAGE //
+        let timestamp = UInt(Date().timeIntervalSince1970)
+        let filename = "\(timestamp).jpg"
+        let imageRef = storageReference.child("\(timestamp)")
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        let uploadTask = imageRef.putData(imageData, metadata: metadata)
+        
+        // Load
+        uploadTask.observe(.success) {
+        snapshot in
+            self.recipeRef?.document("\(timestamp)").setData(["url" : "\(imageRef)"])
+        }
+        uploadTask.observe(.failure) {
+        snapshot in
+            print("FAILLLLL UPLOAD IMAGE")
+        }
+        
         print("FirebaseCont addRecipe method called")
-        return recipe
+        return
     }
     
     func deleteRecipe(recipe: Recipe) {
@@ -213,4 +245,5 @@ class FirebaseController: NSObject, DatabaseProtocol {
 //            }
 //        }
 //    }
+    
 }

@@ -143,16 +143,20 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
         
-//        // Handling image
-//        guard let image = recipePreviewImage.image else {
-//            print("cannot unwrap the image")
-//            return
-//        }
+        // Handling image
+        guard let image = recipePreviewImage.image else {
+            print("cannot unwrap the image")
+            return
+        }
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            displayMessage(title: "Error", message: "Image data could not be compressed")
+            return
+        }
         
 //        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, image: image, ingredients: ingredients )
 //        let _ = recipeDelegate?.addRecipe(newRecipe)
         print("add recipe btn pressed")
-        let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, ingredients: ingredients)
+        let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients)
         
         navigationController?.popViewController(animated: true)
     }
