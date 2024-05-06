@@ -68,7 +68,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?) {
         
-        var storageReference = Storage.storage().reference()
+        let storageReference = Storage.storage().reference()
         guard let imageData = imageData else {
             print("Cannot unwrap image data")
             return
@@ -95,8 +95,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         // IMAGE //
         let timestamp = UInt(Date().timeIntervalSince1970)
-        let filename = "\(timestamp).jpg"
+//        let filename = "\(timestamp).jpg"
         let imageRef = storageReference.child("\(timestamp)")
+        
+        
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -107,12 +109,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
             return
         }
         
-        uploadTask.observe(.success) {
-        snapshot in
+        uploadTask.observe(.success) { snapshot in
             self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
+            print(imageRef)
         }
-        uploadTask.observe(.failure) {
-        snapshot in
+        uploadTask.observe(.failure) { snapshot in
             print("FAILLLLL UPLOAD IMAGE")
         }
         

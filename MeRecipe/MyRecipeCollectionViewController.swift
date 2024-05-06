@@ -6,11 +6,15 @@
 //
 
 import UIKit
-
+import Firebase
+import FirebaseStorage
 
 class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
+//    var storageReference = Storage.storage().reference()
+    var recipeRef: CollectionReference?
+    
     
     let CELL_IMAGE = "imageCell"
     var imageList = [UIImage]()
@@ -112,12 +116,32 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
         let currentRecipe = listOfRecipe[indexPath.row]
         
+        // Set the cell Name //
         cell.recipeName.text = currentRecipe.name
-//        cell.imageView.image = currentRecipe.image
         
+        
+        // Set the cell Image //
+        let storage = Storage.storage()
+        guard let url = currentRecipe.url else{
+            print("cannot unwrwap url")
+            return cell
+        }
+        let storageReference = storage.reference(forURL: url)
+        
+        storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
+            guard let imageData = data, error == nil else {
+                print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            if let image = UIImage(data: imageData) {
+                cell.imageView.image = image
+            } else {
+                print("cammot get the image")
+            }
+        }
         cell.backgroundColor = .secondarySystemFill
         
-    
         return cell
     }
     
