@@ -10,10 +10,12 @@ import Firebase
 import FirebaseStorage
 
 class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
+    
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
 //    var storageReference = Storage.storage().reference()
     var recipeRef: CollectionReference?
+    let storage = Storage.storage()
     
     
     let CELL_IMAGE = "imageCell"
@@ -83,6 +85,10 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        
+        for recipe in listOfRecipe {
+            
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -119,28 +125,40 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         // Set the cell Name //
         cell.recipeName.text = currentRecipe.name
         
-        
         // Set the cell Image //
-        let storage = Storage.storage()
+        cell.imageView.image = UIImage(named: "placeholder")
         guard let url = currentRecipe.url else{
             print("cannot unwrwap url")
             return cell
         }
-        let storageReference = storage.reference(forURL: url)
         
-        storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
+        
+        let storageReference = storage.reference(forURL: url)
+        let cellIndex = indexPath.row // Capture the current index path
+            
+        let downloadTask = storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
             guard let imageData = data, error == nil else {
                 print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
             
-            if let image = UIImage(data: imageData) {
-                cell.imageView.image = image
+            // Check if the cell is still showing the same recipe
+            if let image = UIImage(data: imageData), indexPath.row == cellIndex {
+                DispatchQueue.main.async {
+                    print("updating image view")
+                    cell.imageView.image = image
+                }
             } else {
-                print("cammot get the image")
+                print("Cell has been reused, skipping image update")
             }
         }
+        
+        cell.onReuse = {
+            downloadTask.cancel()
+        }
+        
         cell.backgroundColor = .secondarySystemFill
+        
         
         return cell
     }
@@ -237,3 +255,39 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         }
     }
 }
+
+//override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
+//    let currentRecipe = listOfRecipe[indexPath.row]
+//    
+//    // Set the cell Name //
+//    cell.recipeName.text = currentRecipe.name
+//    
+//    // Set the cell Image //
+////        let storage = Storage.storage()
+//    guard let url = currentRecipe.url else{
+//        print("cannot unwrwap url")
+//        return cell
+//    }
+//    
+//    
+//    let storageReference = storage.reference(forURL: url)
+//    storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
+//        guard let imageData = data, error == nil else {
+//            print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
+//            return
+//        }
+//        
+//        if let image = UIImage(data: imageData) {
+//            print("updating image view")
+//            cell.imageView.image = image
+//        } else {
+//            print("cammot get the image")
+//        }
+//    }
+//    
+//    cell.backgroundColor = .secondarySystemFill
+//    
+//    
+//    return cell
+//}

@@ -95,10 +95,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         // IMAGE //
         let timestamp = UInt(Date().timeIntervalSince1970)
-//        let filename = "\(timestamp).jpg"
+        let filename = "\(timestamp).jpg"
         let imageRef = storageReference.child("\(timestamp)")
-        
-        
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -109,6 +107,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             return
         }
         
+        // Attempt to save image URL in firebase // 
         uploadTask.observe(.success) { snapshot in
             self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
             print(imageRef)
@@ -117,8 +116,26 @@ class FirebaseController: NSObject, DatabaseProtocol {
             print("FAILLLLL UPLOAD IMAGE")
         }
         
+        // Save image locally //
+        
+        saveImageData(filename: filename, imageData: imageData)
+
+ 
+        
         print("FirebaseCont addRecipe method called")
         return
+    }
+    
+    func saveImageData(filename: String, imageData: Data) {
+        print("\(filename) saved locally")
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        let fileURL = documentsDirectory.appendingPathComponent(filename)
+        do {
+            try imageData.write(to: fileURL)
+        } catch {
+            print("Error writing file: \(error.localizedDescription)")
+        }
     }
     
     func deleteRecipe(recipe: Recipe) {
