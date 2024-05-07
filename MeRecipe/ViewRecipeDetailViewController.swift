@@ -16,30 +16,42 @@ class ViewRecipeDetailViewController: UIViewController {
     @IBOutlet weak var recipeDescriptionFIeld: UILabel!
     @IBOutlet weak var recipeDifficultyAndTime: UILabel!
     
-    var recipeName: String = ""
-    var recipeDescription: String = ""
-    var recipePrepTime: String = ""
-    var recipeCookTime: String = ""
-    var recipeDifficulty: String = ""
+    var name: String = ""
+    var desc: String = ""
+    var prepTime: String = ""
+    var cookTime: String = ""
+    var difficulty: String = ""
+    var imageToLoad: UIImage?
+    
+    var ingredients: String = ""
+    var directions: String = ""
+    
+    var protein: String = ""
+    var carbohydrates: String = ""
+    var fats: String = ""
+    var calories: String = ""
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Load the Image
+        recipeImage.image = imageToLoad
 
         // Processing Values
-        guard let prepTime = Int(recipePrepTime), let cookTime = Int(recipeCookTime) else {
+        guard let prepTime = Int(prepTime), let cookTime = Int(cookTime) else {
             print("issue unwrapping time")
             return
         }
         let totalTime = prepTime + cookTime
-        let difficultyAndTime = "Difficulty: [" + recipeDifficulty + "/5] Time: " + String(totalTime) + " minutes"
+        let difficultyAndTime = "Difficulty: [" + difficulty + "/5] Time: " + String(totalTime) + " minutes"
         
-        // Setting Texts values
-        recipeNameField.text = recipeName
-        recipeDescriptionFIeld.text = recipeDescription
+        // Setting Texts values //
+        recipeNameField.text = name
+        recipeDescriptionFIeld.text = desc
         recipeDifficultyAndTime.text = difficultyAndTime
         
-        recipeImage.backgroundColor = UIColor.red
+        
         
     }
     

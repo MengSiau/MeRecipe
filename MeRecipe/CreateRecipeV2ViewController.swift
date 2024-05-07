@@ -38,6 +38,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     @IBOutlet weak var caloriesTextField: UITextField!
     var proteinVal: String? = ""
     
+    // Allows users to choose different methods for uploading images //
     @IBAction func selectPreviewImageBtn(_ sender: Any) {
         let controller = UIImagePickerController()
         controller.allowsEditing = false
@@ -71,7 +72,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         self.present(actionSheet , animated: true, completion: nil)
     }
     
-    // Btn for auto-generating nutrients via API + Called the API request func
+    // Btn for auto-generating nutrients via API + Called the API request func //
     @IBAction func generateNutrientsAPI(_ sender: Any) {
         print("API btn pressed")
         guard let query = recipeNameAPI.text else {
@@ -86,7 +87,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
 
     }
     
-    // Creates a API Request + Assigns TextFields with the retrieved values
+    // Creates a API Request + Assigns TextFields with the retrieved values //
     func requestNutrients(_ recipeName: String) async {
         guard let url = URL(string: REQUEST_STRING+recipeName) else {
             print("Invalid URL")
@@ -127,13 +128,13 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     }
 
     
-    // Save button (ADDS THE RECIPE)
+    // Save button (ADDS THE RECIPE) //
     @IBAction func saveBtn(_ sender: Any) {
-        guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text else {
+        guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text, let directions = directionTextField.text, let protein = proteinTextField.text, let carbohydrate = carbohydrateTextField.text, let fats = fatTextField.text, let calories = caloriesTextField.text else {
             print("Issues in unwraping fields")
             return
         }
-        
+    
         // Field checking
         if name.isEmpty {
             var errorMsg = "Please ensure all fields are filled:\n"
@@ -144,10 +145,12 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         }
         
         // Handling image
+        // TODO: NEED TO MAKE IT OPTIONAL TO ADD AN IMAGE LATER (perhaps use nil)
         guard let image = recipePreviewImage.image else {
             print("cannot unwrap the image")
             return
         }
+        
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             displayMessage(title: "Error", message: "Image data could not be compressed")
             return
@@ -156,7 +159,8 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
 //        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, image: image, ingredients: ingredients )
 //        let _ = recipeDelegate?.addRecipe(newRecipe)
         print("add recipe btn pressed")
-        let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients)
+        //, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?
+        let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
         
         navigationController?.popViewController(animated: true)
     }
@@ -182,7 +186,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
-    // SegmentedView controls the 4 Views
+    // SegmentedView controls the 4 Views //
     @objc func segmentedControlValueChanged() {
         if segmentController.selectedSegmentIndex == 0 {
             overviewView.isHidden = false

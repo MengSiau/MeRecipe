@@ -118,7 +118,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         return listOfRecipe.count
     }
 
-    
+    // Function for getting Recipe Image that may have been stored locally //
     func loadImageFromLocal(filename: String) -> UIImage? {
         // Get the document directory path
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -146,14 +146,14 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         // Set the cell Name //
         cell.recipeName.text = currentRecipe.name
         
-        // Set the cell Image //
+        // Get recipe image URL //
         cell.imageView.image = UIImage(named: "placeholder")
         guard let url = currentRecipe.url else{
             print("cannot unwrwap url")
             return cell
         }
         
-        
+        // Get Recipe's image file name and attempt to load it locally from files //
         guard let filename = currentRecipe.imageFileName else {
             print("cannot unwrap image file name")
             return cell
@@ -163,6 +163,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
             return cell
         }
         
+        // If image not locally stored, attempt to retrieve image from cloud //
         let storageReference = storage.reference(forURL: url)
         let cellIndex = indexPath.row // Capture the current index path
             
@@ -174,9 +175,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
             
             // Make sure that reused cells do not show images that are still previously being loaded in
             if let image = UIImage(data: imageData), indexPath.row == cellIndex {
-                
-
-                
                 DispatchQueue.main.async {
                     print("updating image view")
                     cell.imageView.image = image
@@ -248,6 +246,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
 //        }
 //    }
     
+    // Prepares the Recipe values for the ViewReciipeDetail page //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createRecipeSegue" {
             let destination = segue.destination as! CreateRecipeV2ViewController
@@ -256,7 +255,11 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
             if let selectedIndexPaths = collectionView.indexPathsForSelectedItems, let indexPath = selectedIndexPaths.first {
                 let destination = segue.destination as! ViewRecipeDetailViewController
                 let selectedRecipe = listOfRecipe[indexPath.row]
-                print(indexPath.row)
+                
+                guard let recipeImageFileName = selectedRecipe.imageFileName else {
+                    return
+                }
+                let recipeImage = loadImageFromLocal(filename: recipeImageFileName)
                 
                 guard let recipeName = selectedRecipe.name else {
                     print("unwrap error for name")
@@ -275,12 +278,30 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
                     print("unwrap error for difficulty")
                     return
                 }
+                guard let recipeIngredients = selectedRecipe.ingredients else {
+                    return
+                }
+                guard let recipeDirections = selectedRecipe.directions else {
+                    return
+                }
+                guard let recipeProtein = selectedRecipe.protein, let recipeCarbohydrate = selectedRecipe.carbohydrate, let recipeFats = selectedRecipe.fats, let recipeCalories = selectedRecipe.calories else {
+                    return
+                }
                 
-                destination.recipeName = recipeName
-                destination.recipeDescription = recipeDescription
-                destination.recipePrepTime = recipePrepTime
-                destination.recipeCookTime = recipeCookTime
-                destination.recipeDifficulty = recipeDifficulty
+                destination.name = recipeName
+                destination.desc = recipeDescription
+                destination.prepTime = recipePrepTime
+                destination.cookTime = recipeCookTime
+                destination.difficulty = recipeDifficulty
+                destination.imageToLoad = recipeImage
+                
+                destination.ingredients = recipeIngredients
+                destination.directions = recipeDirections
+                
+                destination.protein = recipeProtein
+                destination.carbohydrates = recipeCarbohydrate
+                destination.fats = recipeFats
+                destination.calories = recipeCalories
             }
         }
     }

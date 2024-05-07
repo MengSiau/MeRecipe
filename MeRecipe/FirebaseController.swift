@@ -66,24 +66,32 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.removeDelegate(listener)
     }
     
-    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?) {
+    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
         
+        // Attempet to unwrap image data //
         let storageReference = Storage.storage().reference()
         guard let imageData = imageData else {
             print("Cannot unwrap image data")
             return
         }
         
+        // Create a Recipe object //
         let recipe = Recipe()
         recipe.name = name
         recipe.desc = desc
         recipe.prepTime = prepTime
         recipe.cookTime = cookTime
         recipe.difficulty = difficulty
-        //recipe.image = image
         
         recipe.ingredients = ingredients
+        recipe.directions = directions
         
+        recipe.protein = protein
+        recipe.carbohydrate = carbohydrate
+        recipe.fats = fats
+        recipe.calories = calories
+        
+        // Store newly created Recipe on firebase //
         do {
             if let recipeRef = try recipeRef?.addDocument(from: recipe) {
                 recipe.id = recipeRef.documentID // returns id if added successfully -> use this id to update/delete
@@ -92,8 +100,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             print("Failed to serialize Reicpe")
         }
         
-        
-        // IMAGE //
+        // Storing of Recipe Image //
         let timestamp = UInt(Date().timeIntervalSince1970)
         let filename = "\(timestamp).jpg"
         let imageRef = storageReference.child("\(timestamp)")
@@ -118,15 +125,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         
         // Save image locally //
-        
         saveImageData(filename: filename, imageData: imageData)
-
- 
         
         print("FirebaseCont addRecipe method called")
         return
     }
     
+    // Function used in addRecipe() to locally store image data as a file //
     func saveImageData(filename: String, imageData: Data) {
         print("\(filename) saved locally")
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

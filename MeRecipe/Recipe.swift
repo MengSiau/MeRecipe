@@ -13,13 +13,13 @@ class Recipe: NSObject, Codable {
     @DocumentID var id: String?
     
     var name: String?
-    var desc: String? // description var alr taken?
+    var desc: String?
     var prepTime: String?
     var cookTime: String?
     var difficulty: String?
-    var image: Data? // prev was just UIImage
-    var url: String?
-    var imageFileName: String?
+    var image: Data?
+    var url: String? // Accessed by addRecipe()
+    var imageFileName: String? // Accessed by addRecipe()
     
     var ingredients: String? // [String] = [], perhaps string manipulation, but store string for now.
     var directions: String?

@@ -32,7 +32,7 @@ protocol DatabaseProtocol: AnyObject {
     func removeListener(listener: DatabaseListener)
     
     // init(name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, image: UIImage?, ingredients: String?)
-    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?)
+    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?)
     func deleteRecipe(recipe: Recipe)
     
     var defaultRecipeList: RecipeList {get}
@@ -41,3 +41,5 @@ protocol DatabaseProtocol: AnyObject {
     func addRecipeToRecipeList(recipe: Recipe, recipeList: RecipeList) -> Bool
     func removeRecipeFromRecipeList(recipe: Recipe, recipeList: RecipeList)
 }
+
+
