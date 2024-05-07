@@ -16,6 +16,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
 //    var storageReference = Storage.storage().reference()
     var recipeRef: CollectionReference?
     let storage = Storage.storage()
+    let cache = NSCache<NSString, UIImage>()
     
     
     let CELL_IMAGE = "imageCell"
@@ -117,10 +118,30 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         return listOfRecipe.count
     }
 
+    
+    func loadImageFromLocal(filename: String) -> UIImage? {
+        // Get the document directory path
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        
+        // Create a file URL for the image
+        let fileURL = documentsDirectory.appendingPathComponent(filename)
+        
+        // Load image from file URL
+        do {
+            let imageData = try Data(contentsOf: fileURL)
+            return UIImage(data: imageData)
+        } catch {
+            print("Error loading image from local storage: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     // Responsible for the creation/customization of the CollectionViewCell
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
         let currentRecipe = listOfRecipe[indexPath.row]
+        cell.backgroundColor = .secondarySystemFill
         
         // Set the cell Name //
         cell.recipeName.text = currentRecipe.name
@@ -133,6 +154,15 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         }
         
         
+        guard let filename = currentRecipe.imageFileName else {
+            print("cannot unwrap image file name")
+            return cell
+        }
+        if let localImage = loadImageFromLocal(filename: filename) {
+            cell.imageView.image = localImage
+            return cell
+        }
+        
         let storageReference = storage.reference(forURL: url)
         let cellIndex = indexPath.row // Capture the current index path
             
@@ -142,8 +172,11 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
                 return
             }
             
-            // Check if the cell is still showing the same recipe
+            // Make sure that reused cells do not show images that are still previously being loaded in
             if let image = UIImage(data: imageData), indexPath.row == cellIndex {
+                
+
+                
                 DispatchQueue.main.async {
                     print("updating image view")
                     cell.imageView.image = image
@@ -156,9 +189,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         cell.onReuse = {
             downloadTask.cancel()
         }
-        
-        cell.backgroundColor = .secondarySystemFill
-        
         
         return cell
     }
@@ -288,6 +318,59 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
 //    
 //    cell.backgroundColor = .secondarySystemFill
 //    
+//    
+//    return cell
+//}
+
+//// Uses Caching
+//override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
+//    let currentRecipe = listOfRecipe[indexPath.row]
+//    
+//    // Set the cell Name //
+//    cell.recipeName.text = currentRecipe.name
+//    
+//    // Set the cell Image //
+//    cell.imageView.image = UIImage(named: "placeholder")
+//    guard let url = currentRecipe.url else{
+//        print("cannot unwrwap url")
+//        return cell
+//    }
+//    
+//    if let cachedImage = cache.object(forKey: url as NSString) {
+//        cell.imageView.image = cachedImage
+//        print("found in cache")
+//        return cell
+//    }
+//    
+//    let storageReference = storage.reference(forURL: url)
+//    let cellIndex = indexPath.row // Capture the current index path
+//        
+//    let downloadTask = storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
+//        guard let imageData = data, error == nil else {
+//            print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
+//            return
+//        }
+//        
+//        // Make sure that reused cells do not show images that are still previously being loaded in
+//        if let image = UIImage(data: imageData), indexPath.row == cellIndex {
+//            
+//            self.cache.setObject(image, forKey: url as NSString)
+//            
+//            DispatchQueue.main.async {
+//                print("updating image view")
+//                cell.imageView.image = image
+//            }
+//        } else {
+//            print("Cell has been reused, skipping image update")
+//        }
+//    }
+//    
+//    cell.onReuse = {
+//        downloadTask.cancel()
+//    }
+//    
+//    cell.backgroundColor = .secondarySystemFill
 //    
 //    return cell
 //}

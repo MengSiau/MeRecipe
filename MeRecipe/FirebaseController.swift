@@ -110,6 +110,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         // Attempt to save image URL in firebase // 
         uploadTask.observe(.success) { snapshot in
             self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
+            self.recipeRef?.document(recipeID).updateData(["imageFileName" : "\(filename)"])
             print(imageRef)
         }
         uploadTask.observe(.failure) { snapshot in
@@ -182,7 +183,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
-    // MARK: - Firebase Controller Specific m=Methods
+    // MARK: - Firebase Controller Specific methods
     
     func getRecipeById(_ id: String) -> Recipe? {
         for recipe in listOfRecipe {

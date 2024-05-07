@@ -19,6 +19,7 @@ class Recipe: NSObject, Codable {
     var difficulty: String?
     var image: Data? // prev was just UIImage
     var url: String?
+    var imageFileName: String?
     
     var ingredients: String? // [String] = [], perhaps string manipulation, but store string for now.
     var directions: String?
