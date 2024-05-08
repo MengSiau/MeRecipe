@@ -16,6 +16,11 @@ class ViewRecipeDetailViewController: UIViewController {
     @IBOutlet weak var recipeDescriptionFIeld: UILabel!
     @IBOutlet weak var recipeDifficultyAndTime: UILabel!
     
+    @IBOutlet weak var recipeIngredientsField: UILabel!
+    @IBOutlet weak var recipeIngredientStackView: UIStackView!
+    
+    
+    
     var name: String = ""
     var desc: String = ""
     var prepTime: String = ""
@@ -35,23 +40,35 @@ class ViewRecipeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the Image
+        // Load the Image //
         recipeImage.image = imageToLoad
 
-        // Processing Values
+        // Processing Values for time and difficulty //
         guard let prepTime = Int(prepTime), let cookTime = Int(cookTime) else {
             print("issue unwrapping time")
             return
         }
         let totalTime = prepTime + cookTime
-        let difficultyAndTime = "Difficulty: [" + difficulty + "/5] Time: " + String(totalTime) + " minutes"
+        let difficultyAndTime = "⭐️ Difficulty: [" + difficulty + "/5] | ⏰ Time: " + String(totalTime) + " minutes"
+        
+        // Processing ingredients //
+        let listIngredients = ingredients.components(separatedBy: "\n")
+        recipeIngredientStackView.spacing = 8
+        for ingredient in listIngredients {
+            let label = UILabel()
+            label.text = ingredient
+            recipeIngredientStackView.addArrangedSubview(label)
+            
+        }
         
         // Setting Texts values //
         recipeNameField.text = name
         recipeDescriptionFIeld.text = desc
         recipeDifficultyAndTime.text = difficultyAndTime
         
-        
+    
+        print(ingredients)
+        print(listIngredients)
         
     }
     

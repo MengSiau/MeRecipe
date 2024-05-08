@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
     weak var recipeDelegate: AddRecipeDelegate?
     weak var databaseController: DatabaseProtocol?
@@ -24,6 +24,7 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     
     @IBOutlet weak var ingredientsView: UIView!
     @IBOutlet weak var ingredientTextField: UITextView!
+    
     
     @IBOutlet weak var directionView: UIView!
     @IBOutlet weak var directionTextField: UITextView!
@@ -169,11 +170,28 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         super.viewDidLoad()
         setupUI()
         
+        // Set up firebase //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        recipeDifficultyField.keyboardType = .numberPad
+        // UITextView delegate for placeholder text //
+        ingredientTextField.text = "List ingredients here"
+        ingredientTextField.textColor = UIColor.lightGray
+        ingredientTextField.returnKeyType = .done
+        ingredientTextField.delegate = self
+        
+        // Keyboard settings //
         recipeDifficultyField.delegate = self
+        recipeDifficultyField.keyboardType = .numberPad
+        
+    }
+    
+    // TextView Delegate: changes from placeholder text to user typed text //
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if ingredientTextField.text == "List ingredients here" {
+            ingredientTextField.text = ""
+            ingredientTextField.textColor = UIColor.black
+        }
     }
     
     // Conform to protocol. Called for the textfield's delegate when user tap return.

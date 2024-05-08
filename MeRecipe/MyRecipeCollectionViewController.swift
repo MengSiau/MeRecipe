@@ -87,9 +87,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
         
-        for recipe in listOfRecipe {
-            
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
