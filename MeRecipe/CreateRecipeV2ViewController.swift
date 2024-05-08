@@ -184,7 +184,46 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         recipeDifficultyField.delegate = self
         recipeDifficultyField.keyboardType = .numberPad
         
+        ingredientToolBar()
+        
     }
+    
+    func ingredientToolBar() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let oneQuarterButton = UIBarButtonItem(title: "1/4", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let oneThirdButton = UIBarButtonItem(title: "1/3", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let oneHalfButton = UIBarButtonItem(title: "1/2", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let twoThirdButton = UIBarButtonItem(title: "2/3", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let threeQuarterButton = UIBarButtonItem(title: "3/4", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let tspButton = UIBarButtonItem(title: "tsp", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let cupButton = UIBarButtonItem(title: "cup", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let mlButton = UIBarButtonItem(title: "ml", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        let gramsButton = UIBarButtonItem(title: "grams", style: .plain, target: self, action: #selector(measurementButtonTapped))
+        
+        toolbar.items = [oneQuarterButton, oneThirdButton, oneHalfButton, twoThirdButton, threeQuarterButton, tspButton, mlButton, gramsButton]
+        
+        ingredientTextField.inputAccessoryView = toolbar
+    }
+    
+
+    @objc func doneButtonTapped() {
+        ingredientTextField.resignFirstResponder()
+    }
+    @objc func measurementButtonTapped(sender: UIBarButtonItem) {
+        if let text = ingredientTextField.text {
+            ingredientTextField.text = text + sender.title!
+        } else {
+            ingredientTextField.text = sender.title
+        }
+    }
+//    @objc func measurementButtonTapped(sender: UIBarButtonItem) {
+//        ingredientTextField.text = sender.title
+//    }
     
     // TextView Delegate: changes from placeholder text to user typed text //
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -194,12 +233,18 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         }
     }
     
-    // Conform to protocol. Called for the textfield's delegate when user tap return.
+    // UITextView delegate: Called for the textfield's delegate when user tap return. //
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    // UITextView delegate: Dismisses the keyboard //
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    // Set up the segmented controller //
     func setupUI() {
         segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
