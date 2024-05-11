@@ -16,9 +16,8 @@ class ViewRecipeDetailViewController: UIViewController {
     @IBOutlet weak var recipeDescriptionFIeld: UILabel!
     @IBOutlet weak var recipeDifficultyAndTime: UILabel!
     
-    @IBOutlet weak var recipeIngredientsField: UILabel!
     @IBOutlet weak var recipeIngredientStackView: UIStackView!
-    
+    @IBOutlet weak var recipeDirectionStackView: UIStackView!
     
     
     var name: String = ""
@@ -51,14 +50,22 @@ class ViewRecipeDetailViewController: UIViewController {
         let totalTime = prepTime + cookTime
         let difficultyAndTime = "⭐️ Difficulty: [" + difficulty + "/5] | ⏰ Time: " + String(totalTime) + " minutes"
         
-        // Processing ingredients //
+        // Processing ingredients stackview //
         let listIngredients = ingredients.components(separatedBy: "\n")
         recipeIngredientStackView.spacing = 8
         for ingredient in listIngredients {
             let label = UILabel()
             label.text = ingredient
             recipeIngredientStackView.addArrangedSubview(label)
-            
+        }
+        
+        // Processing direction stackview //
+        let listDirections = directions.components(separatedBy: "\n")
+        recipeDirectionStackView.spacing = 8
+        for direction in listDirections {
+            let label = UILabel()
+            label.text = direction
+            recipeDirectionStackView.addArrangedSubview(label)
         }
         
         // Setting Texts values //
@@ -66,7 +73,7 @@ class ViewRecipeDetailViewController: UIViewController {
         recipeDescriptionFIeld.text = desc
         recipeDifficultyAndTime.text = difficultyAndTime
         
-    
+
         print(ingredients)
         print(listIngredients)
         

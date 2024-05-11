@@ -182,6 +182,15 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="B24-67-UdG">
                                                 <rect key="frame" x="8" y="411" width="377" height="200"/>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mgd-y8-euA">
+                                                <rect key="frame" x="8" y="669" width="377" height="174"/>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Directions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYq-Ml-nBf">
+                                                <rect key="frame" x="8" y="640" width="78" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="systemIndigoColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="8d5-2P-y4v" firstAttribute="top" secondItem="F3V-dJ-Cai" secondAttribute="bottom" constant="5" id="5As-HF-9bZ"/>
@@ -190,9 +199,13 @@
                                             <constraint firstItem="B24-67-UdG" firstAttribute="top" secondItem="MJ8-6b-5u5" secondAttribute="bottom" constant="8" symbolic="YES" id="Dar-sV-AUo"/>
                                             <constraint firstAttribute="trailing" secondItem="8d5-2P-y4v" secondAttribute="trailing" constant="8" id="FnF-pZ-YFK"/>
                                             <constraint firstAttribute="trailing" secondItem="MJ8-6b-5u5" secondAttribute="trailing" constant="299" id="Gid-P5-28V"/>
+                                            <constraint firstItem="gYq-Ml-nBf" firstAttribute="top" secondItem="B24-67-UdG" secondAttribute="bottom" constant="29" id="H5Q-kG-llw"/>
                                             <constraint firstAttribute="trailing" secondItem="QaS-ZD-LE9" secondAttribute="trailing" constant="241" id="IRd-gm-qNR"/>
+                                            <constraint firstItem="mgd-y8-euA" firstAttribute="top" secondItem="gYq-Ml-nBf" secondAttribute="bottom" constant="8" symbolic="YES" id="Iqy-Bf-tMf"/>
                                             <constraint firstAttribute="height" constant="1200" id="MXN-M4-kPe"/>
+                                            <constraint firstItem="mgd-y8-euA" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="O0w-sW-BkU"/>
                                             <constraint firstItem="QaS-ZD-LE9" firstAttribute="top" secondItem="8d5-2P-y4v" secondAttribute="bottom" constant="20" id="SmU-n8-zzj"/>
+                                            <constraint firstAttribute="trailing" secondItem="gYq-Ml-nBf" secondAttribute="trailing" constant="307" id="VQ4-sr-j7g"/>
                                             <constraint firstItem="t10-kO-k4Z" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" id="WLD-cW-MSr"/>
                                             <constraint firstAttribute="trailing" secondItem="F3V-dJ-Cai" secondAttribute="trailing" constant="284" id="WcU-eF-URI"/>
                                             <constraint firstItem="B24-67-UdG" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="YcB-xI-nhQ"/>
@@ -203,8 +216,10 @@
                                             <constraint firstAttribute="trailing" secondItem="t10-kO-k4Z" secondAttribute="trailing" id="cRc-op-Kby"/>
                                             <constraint firstItem="MJ8-6b-5u5" firstAttribute="top" secondItem="m6r-vO-rvz" secondAttribute="bottom" constant="43.670000000000002" id="cXd-Nw-fAr"/>
                                             <constraint firstItem="8d5-2P-y4v" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="ctN-hC-QJ2"/>
+                                            <constraint firstAttribute="trailing" secondItem="mgd-y8-euA" secondAttribute="trailing" constant="8" id="kuS-UI-vaD"/>
                                             <constraint firstItem="F3V-dJ-Cai" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="len-kG-uoJ"/>
                                             <constraint firstItem="t10-kO-k4Z" firstAttribute="top" secondItem="ffh-D6-UDz" secondAttribute="top" id="qTb-qs-COY"/>
+                                            <constraint firstItem="gYq-Ml-nBf" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="xXd-sb-2Zp"/>
                                             <constraint firstAttribute="trailing" secondItem="m6r-vO-rvz" secondAttribute="trailing" constant="8" id="xmD-60-HAF"/>
                                         </constraints>
                                     </view>
@@ -233,6 +248,7 @@
                         <outlet property="contentView" destination="ffh-D6-UDz" id="n97-im-W5k"/>
                         <outlet property="recipeDescriptionFIeld" destination="m6r-vO-rvz" id="9Ym-hN-UXS"/>
                         <outlet property="recipeDifficultyAndTime" destination="8d5-2P-y4v" id="5ps-4d-0Vc"/>
+                        <outlet property="recipeDirectionStackView" destination="mgd-y8-euA" id="h2N-rP-FlG"/>
                         <outlet property="recipeImage" destination="t10-kO-k4Z" id="T6R-bD-U83"/>
                         <outlet property="recipeIngredientStackView" destination="B24-67-UdG" id="I7Z-VC-zaG"/>
                         <outlet property="recipeNameField" destination="F3V-dJ-Cai" id="BcP-A2-HOp"/>

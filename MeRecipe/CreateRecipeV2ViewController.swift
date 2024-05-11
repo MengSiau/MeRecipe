@@ -184,10 +184,12 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         recipeDifficultyField.delegate = self
         recipeDifficultyField.keyboardType = .numberPad
         
+        // Sets of the toolbar above the ingredient textView keyboard //
         ingredientToolBar()
         
     }
     
+    // Adds bar btns above keyboard for ingredient textView //
     func ingredientToolBar() {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -210,10 +212,11 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         ingredientTextField.inputAccessoryView = toolbar
     }
     
-
+    
     @objc func doneButtonTapped() {
         ingredientTextField.resignFirstResponder()
     }
+    // Adds the bar button text ontop of what the user has typed //
     @objc func measurementButtonTapped(sender: UIBarButtonItem) {
         if let text = ingredientTextField.text {
             ingredientTextField.text = text + sender.title!
@@ -221,9 +224,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
             ingredientTextField.text = sender.title
         }
     }
-//    @objc func measurementButtonTapped(sender: UIBarButtonItem) {
-//        ingredientTextField.text = sender.title
-//    }
     
     // TextView Delegate: changes from placeholder text to user typed text //
     func textViewDidBeginEditing(_ textView: UITextView) {

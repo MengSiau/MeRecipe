@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A14994F2BE3D8A2005114DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2A14994E2BE3D8A2005114DE /* GoogleService-Info.plist */; };
+		2A297B002BEF8C9C0009E014 /* PieChartUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */; };
 		2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C5342BD77DDD006EFA94 /* AppDelegate.swift */; };
 		2A48C5372BD77DDD006EFA94 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C5362BD77DDD006EFA94 /* SceneDelegate.swift */; };
 		2A48C5392BD77DDD006EFA94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C5382BD77DDD006EFA94 /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		2A14994E2BE3D8A2005114DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartUIView.swift; sourceTree = "<group>"; };
 		2A48C5312BD77DDD006EFA94 /* MeRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A48C5342BD77DDD006EFA94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A48C5362BD77DDD006EFA94 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,10 +107,11 @@
 				2AF481612BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift */,
 				2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */,
 				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
-				2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
 				2A7DACFD2BE6085E00886398 /* RecipeList.swift */,
 				2A7DACFF2BE6092100886398 /* FirebaseController.swift */,
+				2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */,
+				2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */,
 			);
 			path = MeRecipe;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				2AF481622BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift in Sources */,
 				2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */,
 				2A48C54D2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift in Sources */,
+				2A297B002BEF8C9C0009E014 /* PieChartUIView.swift in Sources */,
 				2A48C5492BD782EA006EFA94 /* MyRecipeCollectionViewController.swift in Sources */,
 				2A48C5372BD77DDD006EFA94 /* SceneDelegate.swift in Sources */,
 				2AD878B22BD8C2F60055DC01 /* CreateRecipeViewController.swift in Sources */,
