@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ViewRecipeDetailViewController: UIViewController {
 
@@ -18,7 +19,7 @@ class ViewRecipeDetailViewController: UIViewController {
     
     @IBOutlet weak var recipeIngredientStackView: UIStackView!
     @IBOutlet weak var recipeDirectionStackView: UIStackView!
-    
+    @IBOutlet weak var viewForChart: UIView!
     
     var name: String = ""
     var desc: String = ""
@@ -38,6 +39,11 @@ class ViewRecipeDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(protein, carbohydrates, fats)
+        if let nigga = Float(protein) {
+            print(Int(round(nigga)))
+        }
         
         // Load the Image //
         recipeImage.image = imageToLoad
@@ -73,10 +79,56 @@ class ViewRecipeDetailViewController: UIViewController {
         recipeDescriptionFIeld.text = desc
         recipeDifficultyAndTime.text = difficultyAndTime
         
-
         print(ingredients)
         print(listIngredients)
         
+        // Cast string that are floats to int //
+        guard let proteinFloat = Float(protein), let carbohydrateFloat = Float(carbohydrates), let fatsFloat = Float(fats) else {
+            print("Cannot unwrap nutrition values")
+            return
+        }
+        let proteinInt = Int(round(proteinFloat))
+        let carbohydrateInt = Int(round(carbohydrateFloat))
+        let fatsInt = Int(round(fatsFloat))
+        
+        let controller = UIHostingController(rootView: PieChartUIView())
+        guard let chartView = controller.view else {
+            print("blah")
+            return
+        }
+        
+        // Add values to the PieChartUIView //
+        controller.rootView.chartData.append(NutritionDataStructure(name: "Protein", value: proteinInt))
+        controller.rootView.chartData.append(NutritionDataStructure(name: "Carbo", value: carbohydrateInt))
+        controller.rootView.chartData.append(NutritionDataStructure(name: "Fats", value: fatsInt))
+        
+        // Assign UIView the PieChartUIView
+        viewForChart.addSubview(chartView)
+        chartView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            chartView.centerXAnchor.constraint(equalTo: viewForChart.centerXAnchor),
+            chartView.centerYAnchor.constraint(equalTo: viewForChart.centerYAnchor),
+            chartView.widthAnchor.constraint(equalTo: viewForChart.widthAnchor),
+            chartView.heightAnchor.constraint(equalTo: viewForChart.heightAnchor)
+        ])
+        
+//        NSLayoutConstraint.activate([
+//            chartView.leadingAnchor.constraint(equalTo: viewForChart.leadingAnchor),
+//            chartView.trailingAnchor.constraint(equalTo: viewForChart.trailingAnchor),
+//            chartView.topAnchor.constraint(equalTo: viewForChart.topAnchor),
+//            chartView.bottomAnchor.constraint(equalTo: viewForChart.bottomAnchor)
+//        ])
+//        
+//        view.addSubview(chartView)
+//        addChild(controller)
+//        
+//        chartView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
+//            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12.0),
+//            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12.0),
+//            chartView.widthAnchor.constraint(equalTo: chartView.heightAnchor)
+//        ])
     }
     
 

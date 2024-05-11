@@ -9,37 +9,37 @@ import SwiftUI
 import Charts
 
 struct PieChartUIView: View {
+    
+    var chartData: [NutritionDataStructure] = []
 
     var body: some View {
-        NavigationStack {
-            VStack {
-                Chart {
-                    ForEach(TestData.data) { stream in
-                        SectorMark(angle: .value("stream", stream.value),
-                                   innerRadius: .ratio(0.618),
-                                   angularInset: 2)
-                            .foregroundStyle(by: .value("name", stream.name))
-                            .cornerRadius(12)
-                    }
+        VStack {
+            Chart {
+                ForEach(chartData) { stream in
+                    SectorMark(angle: .value("stream", stream.value),
+                               innerRadius: .ratio(0.618),
+                               angularInset: 2)
+                        .foregroundStyle(by: .value("name", stream.name))
+                        .cornerRadius(12)
                 }
             }
-            .padding()
-            .navigationTitle("title")
+            .chartLegend()
+            .frame(width: 225, height: 225)
         }
     }
 }
 
-struct data: Identifiable {
+struct NutritionDataStructure: Identifiable {
     let id = UUID()
     let name: String
     let value: Int
 }
 
 struct TestData {
-    static var data: [data] = [
-        .init(name: "test1", value: 10),
-        .init(name: "test2", value: 15),
-        .init(name: "test3", value: 20),
+    static var data: [NutritionDataStructure] = [
+        .init(name: "Protein", value: 10),
+        .init(name: "Carbohydrates", value: 15),
+        .init(name: "Fats", value: 20),
     ]
 }
 
