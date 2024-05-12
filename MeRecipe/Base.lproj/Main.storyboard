@@ -191,42 +191,39 @@
                                                 <color key="textColor" systemColor="systemIndigoColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QAc-JC-PNC">
-                                                <rect key="frame" x="84" y="917" width="225" height="225"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhS-rQ-QNl">
-                                                <rect key="frame" x="175" y="1309.6666666666667" width="42" height="20.333333333333258"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Nutrition" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRg-vp-3Ga">
                                                 <rect key="frame" x="8" y="869" width="301" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemIndigoColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lyG-P9-XIF">
+                                                <rect key="frame" x="8" y="898" width="372" height="135"/>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QAc-JC-PNC">
+                                                <rect key="frame" x="82" y="1041" width="225" height="225"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="8d5-2P-y4v" firstAttribute="top" secondItem="F3V-dJ-Cai" secondAttribute="bottom" constant="5" id="5As-HF-9bZ"/>
                                             <constraint firstItem="F3V-dJ-Cai" firstAttribute="top" secondItem="t10-kO-k4Z" secondAttribute="bottom" constant="8" symbolic="YES" id="5CX-ie-P5Y"/>
-                                            <constraint firstItem="QAc-JC-PNC" firstAttribute="top" secondItem="fRg-vp-3Ga" secondAttribute="bottom" constant="27" id="6N6-OJ-CHv"/>
-                                            <constraint firstAttribute="trailing" secondItem="QAc-JC-PNC" secondAttribute="trailing" constant="84" id="8Ir-eX-eWs"/>
-                                            <constraint firstItem="QAc-JC-PNC" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="84" id="Bng-0g-9Bj"/>
                                             <constraint firstItem="m6r-vO-rvz" firstAttribute="top" secondItem="QaS-ZD-LE9" secondAttribute="bottom" constant="7" id="Czd-E0-elJ"/>
                                             <constraint firstItem="B24-67-UdG" firstAttribute="top" secondItem="MJ8-6b-5u5" secondAttribute="bottom" constant="8" symbolic="YES" id="Dar-sV-AUo"/>
+                                            <constraint firstItem="lyG-P9-XIF" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="FfL-E0-unA"/>
+                                            <constraint firstItem="QAc-JC-PNC" firstAttribute="top" secondItem="lyG-P9-XIF" secondAttribute="bottom" constant="8" symbolic="YES" id="Fig-Er-hqN"/>
                                             <constraint firstAttribute="trailing" secondItem="8d5-2P-y4v" secondAttribute="trailing" constant="8" id="FnF-pZ-YFK"/>
                                             <constraint firstAttribute="trailing" secondItem="MJ8-6b-5u5" secondAttribute="trailing" constant="299" id="Gid-P5-28V"/>
                                             <constraint firstItem="gYq-Ml-nBf" firstAttribute="top" secondItem="B24-67-UdG" secondAttribute="bottom" constant="29" id="H5Q-kG-llw"/>
+                                            <constraint firstItem="lyG-P9-XIF" firstAttribute="top" secondItem="fRg-vp-3Ga" secondAttribute="bottom" constant="8" symbolic="YES" id="HsT-ez-oLu"/>
                                             <constraint firstAttribute="trailing" secondItem="fRg-vp-3Ga" secondAttribute="trailing" constant="84" id="IDO-d4-1vt"/>
                                             <constraint firstAttribute="trailing" secondItem="QaS-ZD-LE9" secondAttribute="trailing" constant="241" id="IRd-gm-qNR"/>
                                             <constraint firstItem="mgd-y8-euA" firstAttribute="top" secondItem="gYq-Ml-nBf" secondAttribute="bottom" constant="8" symbolic="YES" id="Iqy-Bf-tMf"/>
                                             <constraint firstAttribute="height" constant="1500" id="MXN-M4-kPe"/>
                                             <constraint firstItem="mgd-y8-euA" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="O0w-sW-BkU"/>
+                                            <constraint firstItem="QAc-JC-PNC" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="82" id="QOe-yf-209"/>
                                             <constraint firstItem="QaS-ZD-LE9" firstAttribute="top" secondItem="8d5-2P-y4v" secondAttribute="bottom" constant="20" id="SmU-n8-zzj"/>
                                             <constraint firstAttribute="trailing" secondItem="gYq-Ml-nBf" secondAttribute="trailing" constant="307" id="VQ4-sr-j7g"/>
-                                            <constraint firstAttribute="bottom" secondItem="fhS-rQ-QNl" secondAttribute="bottom" constant="170" id="VyH-Dg-OEx"/>
                                             <constraint firstItem="t10-kO-k4Z" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" id="WLD-cW-MSr"/>
                                             <constraint firstAttribute="trailing" secondItem="F3V-dJ-Cai" secondAttribute="trailing" constant="284" id="WcU-eF-URI"/>
                                             <constraint firstItem="B24-67-UdG" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="YcB-xI-nhQ"/>
@@ -241,7 +238,9 @@
                                             <constraint firstItem="8d5-2P-y4v" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="ctN-hC-QJ2"/>
                                             <constraint firstAttribute="trailing" secondItem="mgd-y8-euA" secondAttribute="trailing" constant="8" id="kuS-UI-vaD"/>
                                             <constraint firstItem="F3V-dJ-Cai" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="len-kG-uoJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="lyG-P9-XIF" secondAttribute="trailing" constant="13" id="prk-sb-WAM"/>
                                             <constraint firstItem="t10-kO-k4Z" firstAttribute="top" secondItem="ffh-D6-UDz" secondAttribute="top" id="qTb-qs-COY"/>
+                                            <constraint firstAttribute="trailing" secondItem="QAc-JC-PNC" secondAttribute="trailing" constant="86" id="vGi-l5-kMZ"/>
                                             <constraint firstItem="gYq-Ml-nBf" firstAttribute="leading" secondItem="ffh-D6-UDz" secondAttribute="leading" constant="8" id="xXd-sb-2Zp"/>
                                             <constraint firstAttribute="trailing" secondItem="m6r-vO-rvz" secondAttribute="trailing" constant="8" id="xmD-60-HAF"/>
                                         </constraints>
@@ -275,6 +274,7 @@
                         <outlet property="recipeImage" destination="t10-kO-k4Z" id="T6R-bD-U83"/>
                         <outlet property="recipeIngredientStackView" destination="B24-67-UdG" id="I7Z-VC-zaG"/>
                         <outlet property="recipeNameField" destination="F3V-dJ-Cai" id="BcP-A2-HOp"/>
+                        <outlet property="recipeNutritionStack" destination="lyG-P9-XIF" id="TVz-kh-x8w"/>
                         <outlet property="viewForChart" destination="QAc-JC-PNC" id="69d-E4-auR"/>
                     </connections>
                 </viewController>

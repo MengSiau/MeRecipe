@@ -19,6 +19,8 @@ class ViewRecipeDetailViewController: UIViewController {
     
     @IBOutlet weak var recipeIngredientStackView: UIStackView!
     @IBOutlet weak var recipeDirectionStackView: UIStackView!
+    @IBOutlet weak var recipeNutritionStack: UIStackView!
+    
     @IBOutlet weak var viewForChart: UIView!
     
     var name: String = ""
@@ -56,7 +58,12 @@ class ViewRecipeDetailViewController: UIViewController {
         let totalTime = prepTime + cookTime
         let difficultyAndTime = "⭐️ Difficulty: [" + difficulty + "/5] | ⏰ Time: " + String(totalTime) + " minutes"
         
-        // Processing ingredients stackview //
+        // Setting Texts values //
+        recipeNameField.text = name
+        recipeDescriptionFIeld.text = desc
+        recipeDifficultyAndTime.text = difficultyAndTime
+        
+        // Processing ingredients for stackview //
         let listIngredients = ingredients.components(separatedBy: "\n")
         recipeIngredientStackView.spacing = 8
         for ingredient in listIngredients {
@@ -65,7 +72,7 @@ class ViewRecipeDetailViewController: UIViewController {
             recipeIngredientStackView.addArrangedSubview(label)
         }
         
-        // Processing direction stackview //
+        // Processing direction for stackview //
         let listDirections = directions.components(separatedBy: "\n")
         recipeDirectionStackView.spacing = 8
         for direction in listDirections {
@@ -74,10 +81,46 @@ class ViewRecipeDetailViewController: UIViewController {
             recipeDirectionStackView.addArrangedSubview(label)
         }
         
-        // Setting Texts values //
-        recipeNameField.text = name
-        recipeDescriptionFIeld.text = desc
-        recipeDifficultyAndTime.text = difficultyAndTime
+        // Processing nutrition for stackview //
+        let proteinLabel = UILabel()
+        var proteinText = "Protein: \(protein) g"
+        if protein == "" {
+            proteinText = String(proteinText.dropLast(1))
+        }
+        let attributedString1 = NSMutableAttributedString(string: proteinText)
+        attributedString1.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 8))
+        proteinLabel.attributedText = attributedString1
+        
+        let carbohydrateLabel = UILabel()
+        var carbohydrateText = "Carbohydrate: \(carbohydrates) g"
+        if carbohydrates == "" {
+            carbohydrateText = String(carbohydrateText.dropLast(1))
+        }
+        let attributedString2 = NSMutableAttributedString(string: carbohydrateText)
+        attributedString2.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 13))
+        carbohydrateLabel.attributedText = attributedString2
+        
+        let fatsLabel = UILabel()
+        var fatsText = "Fats: \(fats) g"
+        if fats == "" {
+            fatsText = String(fatsText.dropLast(1))
+        }
+        let attributedString3 = NSMutableAttributedString(string: fatsText)
+        attributedString3.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 5))
+        fatsLabel.attributedText = attributedString3
+        
+        let caloriesLabel = UILabel()
+        let caloriesText = "Calories: \(calories)"
+        let attributedString4 = NSMutableAttributedString(string: caloriesText)
+        attributedString4.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 9))
+        caloriesLabel.attributedText = attributedString4
+        
+        recipeNutritionStack.spacing = 8
+        recipeNutritionStack.addArrangedSubview(proteinLabel)
+        recipeNutritionStack.addArrangedSubview(carbohydrateLabel)
+        recipeNutritionStack.addArrangedSubview(fatsLabel)
+        recipeNutritionStack.addArrangedSubview(caloriesLabel)
+        
         
         print(ingredients)
         print(listIngredients)
@@ -102,7 +145,7 @@ class ViewRecipeDetailViewController: UIViewController {
         controller.rootView.chartData.append(NutritionDataStructure(name: "Carbo", value: carbohydrateInt))
         controller.rootView.chartData.append(NutritionDataStructure(name: "Fats", value: fatsInt))
         
-        // Assign UIView the PieChartUIView
+        // Assign UIView the PieChartUIView //
         viewForChart.addSubview(chartView)
         chartView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -112,23 +155,7 @@ class ViewRecipeDetailViewController: UIViewController {
             chartView.heightAnchor.constraint(equalTo: viewForChart.heightAnchor)
         ])
         
-//        NSLayoutConstraint.activate([
-//            chartView.leadingAnchor.constraint(equalTo: viewForChart.leadingAnchor),
-//            chartView.trailingAnchor.constraint(equalTo: viewForChart.trailingAnchor),
-//            chartView.topAnchor.constraint(equalTo: viewForChart.topAnchor),
-//            chartView.bottomAnchor.constraint(equalTo: viewForChart.bottomAnchor)
-//        ])
-//        
-//        view.addSubview(chartView)
-//        addChild(controller)
-//        
-//        chartView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            chartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
-//            chartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12.0),
-//            chartView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12.0),
-//            chartView.widthAnchor.constraint(equalTo: chartView.heightAnchor)
-//        ])
+
     }
     
 
