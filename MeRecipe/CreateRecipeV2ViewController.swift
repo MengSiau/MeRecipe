@@ -180,6 +180,11 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         ingredientTextField.returnKeyType = .done
         ingredientTextField.delegate = self
         
+        directionTextField.text = "List directions here"
+        directionTextField.textColor = UIColor.lightGray
+        directionTextField.returnKeyType = .done
+        directionTextField.delegate = self
+        
         // Keyboard settings //
         recipeDifficultyField.delegate = self
         recipeDifficultyField.keyboardType = .numberPad
@@ -230,6 +235,11 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         if ingredientTextField.text == "List ingredients here" {
             ingredientTextField.text = ""
             ingredientTextField.textColor = UIColor.black
+        }
+        
+        if directionTextField.text == "List directions here" {
+            directionTextField.text = ""
+            directionTextField.textColor = UIColor.black
         }
     }
     

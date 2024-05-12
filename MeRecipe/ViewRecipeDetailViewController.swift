@@ -42,11 +42,6 @@ class ViewRecipeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(protein, carbohydrates, fats)
-        if let nigga = Float(protein) {
-            print(Int(round(nigga)))
-        }
-        
         // Load the Image //
         recipeImage.image = imageToLoad
 
@@ -154,7 +149,6 @@ class ViewRecipeDetailViewController: UIViewController {
             chartView.widthAnchor.constraint(equalTo: viewForChart.widthAnchor),
             chartView.heightAnchor.constraint(equalTo: viewForChart.heightAnchor)
         ])
-        
 
     }
     
