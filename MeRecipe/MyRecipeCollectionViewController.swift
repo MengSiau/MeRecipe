@@ -9,8 +9,8 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
-    
+class MyRecipeCollectionViewController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
+        
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
 //    var storageReference = Storage.storage().reference()
@@ -23,6 +23,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     var imageList = [UIImage]()
     var imagePathList = [String]()
     var listOfRecipe: [Recipe] = []
+    var filteredListOfRecipe: [Recipe] = []
     weak var recipeDelegate: AddRecipeDelegate?
     
     
@@ -57,14 +58,25 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         generateTestRecipe()
         
         // SEARCH BAR //
+//        let searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchBar.delegate = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search"
+//        searchController.searchBar.showsCancelButton = false
+//        navigationItem.searchController = searchController
+//        // Ensure the search bar is always visible.
+//        navigationItem.hidesSearchBarWhenScrolling = false
+        
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        searchController.searchBar.showsCancelButton = false
+        searchController.searchBar.placeholder = "Search All Recipes"
         navigationItem.searchController = searchController
-        // Ensure the search bar is always visible.
-        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        
+        filteredListOfRecipe = listOfRecipe
+        
+        
         
         // TOOL BAR //
         view.addSubview(bottomToolbar)
@@ -78,6 +90,24 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
         bottomToolbar.items = [addButton]
        
     }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text?.lowercased() else {
+            return
+        }
+        
+        if searchText.count > 0 {
+            filteredListOfRecipe = listOfRecipe.filter({ (recipe: Recipe) -> Bool in
+                return (recipe.name?.lowercased().contains(searchText) ?? false)
+            })
+        } else {
+            filteredListOfRecipe = listOfRecipe
+        }
+//        print(filteredListOfRecipe)
+        collectionView.reloadData()
+    }
+    
+    
     // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
     func generateTestRecipe() {
 //        listOfRecipe.append(Recipe(name: "Apple Pie",  description: "sweet apple pie!", prepTime: "20", cookTime: "40", difficulty: "3", ingredients: "30g Apple, 40g Sugar, 500mL milk"))
@@ -98,7 +128,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
         listOfRecipe = recipes
-        collectionView.reloadData();
+        updateSearchResults(for: navigationItem.searchController!)
+//        collectionView.reloadData();
     }
 
     // MARK: UICollectionViewDataSource
@@ -112,7 +143,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return listOfRecipe.count
+        return filteredListOfRecipe.count
     }
 
     // Function for getting Recipe Image that may have been stored locally //
@@ -137,7 +168,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchBarD
     // Responsible for the creation/customization of the CollectionViewCell
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
-        let currentRecipe = listOfRecipe[indexPath.row]
+        
+        let currentRecipe = filteredListOfRecipe[indexPath.row]
         cell.backgroundColor = .secondarySystemFill
         
         // Set the cell Name //

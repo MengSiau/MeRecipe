@@ -121,7 +121,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
                         self.displayMessage(title: "Recipe not found", message: "Please try use another keyword for your recipe")
                         print("Cannot get JSON: Likely due to unknown recipe name.")
                     }
-                    
                 }
             }
         }
