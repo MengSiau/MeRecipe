@@ -290,6 +290,10 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
                 }
                 let recipeImage = loadImageFromLocal(filename: recipeImageFileName)
                 
+                guard let recipeId = selectedRecipe.id else {
+                    print("")
+                    return
+                }
                 guard let recipeName = selectedRecipe.name else {
                     print("unwrap error for name")
                     return
@@ -316,6 +320,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
                 guard let recipeProtein = selectedRecipe.protein, let recipeCarbohydrate = selectedRecipe.carbohydrate, let recipeFats = selectedRecipe.fats, let recipeCalories = selectedRecipe.calories else {
                     return
                 }
+                destination.recipeId = recipeId
+                destination.recipe = selectedRecipe
                 
                 destination.name = recipeName
                 destination.desc = recipeDescription

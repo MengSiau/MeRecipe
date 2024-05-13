@@ -150,6 +150,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+//    func deleteRecipeById(recipeId: String) {
+//        recipeRef?.document(recipeId).delete()
+//    }
+    
     func addRecipeList(recipeListName: String) -> RecipeList {
         let recipeList = RecipeList()
         recipeList.name = recipeListName

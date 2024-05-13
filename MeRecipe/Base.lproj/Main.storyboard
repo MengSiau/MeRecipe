@@ -127,7 +127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SAA-Db-YAJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3996" y="-951"/>
+            <point key="canvasLocation" x="1250" y="-1223"/>
         </scene>
         <!--View Recipe Detail View Controller-->
         <scene sceneID="BTy-90-Zk4">
@@ -264,7 +264,20 @@
                             <constraint firstAttribute="bottom" secondItem="Hl5-6n-hEf" secondAttribute="bottom" id="eFe-kh-BoN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fMS-4S-gY7"/>
+                    <navigationItem key="navigationItem" id="fMS-4S-gY7">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="trash" id="GrG-gJ-Snu">
+                                <connections>
+                                    <action selector="deleteRecipeBtn:" destination="jFE-Bq-S8r" id="a40-2h-99Q"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="edit" id="GVs-NV-syL">
+                                <connections>
+                                    <action selector="editRecipeBtn:" destination="jFE-Bq-S8r" id="UBM-w8-dDk"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <size key="freeformSize" width="393" height="1500"/>
                     <connections>
                         <outlet property="contentView" destination="ffh-D6-UDz" id="n97-im-W5k"/>

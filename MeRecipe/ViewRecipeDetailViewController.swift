@@ -9,6 +9,8 @@ import UIKit
 import SwiftUI
 
 class ViewRecipeDetailViewController: UIViewController {
+    
+    weak var databaseController: DatabaseProtocol?
 
     @IBOutlet weak var contentView: UIView!
     
@@ -22,6 +24,9 @@ class ViewRecipeDetailViewController: UIViewController {
     @IBOutlet weak var recipeNutritionStack: UIStackView!
     
     @IBOutlet weak var viewForChart: UIView!
+    
+    var recipeId: String = ""
+    var recipe: Recipe?
     
     var name: String = ""
     var desc: String = ""
@@ -38,9 +43,38 @@ class ViewRecipeDetailViewController: UIViewController {
     var fats: String = ""
     var calories: String = ""
     
+    @IBAction func deleteRecipeBtn(_ sender: Any) {
+        guard let recipeToDelete = recipe else {
+            print("Unable to delete recipe")
+            return
+        }
+        
+        let alertController = UIAlertController(title: "Warning", message: "Are you sure you want to delete recipe?", preferredStyle: .alert)
+        let leaveAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            self.databaseController?.deleteRecipe(recipe: recipeToDelete)
+            self.navigationController?.popViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            return
+        }
+        
+        alertController.addAction(leaveAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+
+    
+    @IBAction func editRecipeBtn(_ sender: Any) {
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // FIREBASE //
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
         
         // Load the Image //
         recipeImage.image = imageToLoad

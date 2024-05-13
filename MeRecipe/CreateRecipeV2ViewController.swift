@@ -198,8 +198,8 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         let oneQuarterButton = UIBarButtonItem(title: "1/4", style: .plain, target: self, action: #selector(measurementButtonTapped))
         let oneThirdButton = UIBarButtonItem(title: "1/3", style: .plain, target: self, action: #selector(measurementButtonTapped))
@@ -207,7 +207,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         let twoThirdButton = UIBarButtonItem(title: "2/3", style: .plain, target: self, action: #selector(measurementButtonTapped))
         let threeQuarterButton = UIBarButtonItem(title: "3/4", style: .plain, target: self, action: #selector(measurementButtonTapped))
         let tspButton = UIBarButtonItem(title: "tsp", style: .plain, target: self, action: #selector(measurementButtonTapped))
-        let cupButton = UIBarButtonItem(title: "cup", style: .plain, target: self, action: #selector(measurementButtonTapped))
         let mlButton = UIBarButtonItem(title: "ml", style: .plain, target: self, action: #selector(measurementButtonTapped))
         let gramsButton = UIBarButtonItem(title: "grams", style: .plain, target: self, action: #selector(measurementButtonTapped))
         
