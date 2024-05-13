@@ -73,9 +73,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         searchController.searchBar.placeholder = "Search All Recipes"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
         filteredListOfRecipe = listOfRecipe
-        
         
         
         // TOOL BAR //
@@ -86,9 +84,32 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
             bottomToolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             bottomToolbar.heightAnchor.constraint(equalToConstant: 44)
         ])
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-        bottomToolbar.items = [addButton]
-       
+//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+//        bottomToolbar.items = [addButton]
+        
+        let homeButton = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        let cartButton = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(cartButtonTapped))
+        let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        bottomToolbar.items = [homeButton, flexibleSpace, addButton, flexibleSpace, cartButton, flexibleSpace, settingsButton]
+      
+    }
+    
+    @objc func homeButtonTapped() {
+        // Handle home button tap
+    }
+
+    @objc func addButtonTapped() {
+        // Handle add button tap
+    }
+
+    @objc func cartButtonTapped() {
+        // Handle cart button tap
+    }
+
+    @objc func settingsButtonTapped() {
+        // Handle settings button tap
     }
     
     func updateSearchResults(for searchController: UISearchController) {

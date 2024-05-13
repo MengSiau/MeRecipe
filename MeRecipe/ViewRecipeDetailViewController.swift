@@ -222,6 +222,8 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     }
     
     // TODO: This loads via firebase. But popping back means vertical stack duplicates. ViewWillAppear -> Call a self made function that resets the viewstacks
+    // This uses the recipe grabbed from firebase via id. This unwraps + sets local vars for recipe attributes.
+    
 //    func magic(selectedRecipe: Recipe) {
 //        
 //        guard let recipeImageFileName = selectedRecipe.imageFileName else {
