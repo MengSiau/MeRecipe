@@ -11,6 +11,23 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     
     weak var recipeDelegate: AddRecipeDelegate?
     weak var databaseController: DatabaseProtocol?
+    var mode: String?
+    var recipeToReplace: Recipe?
+    
+    var name: String = ""
+    var desc: String = ""
+    var prepTime: String = ""
+    var cookTime: String = ""
+    var difficulty: String = ""
+    var imageToLoad: UIImage?
+    
+    var ingredients: String = ""
+    var directions: String = ""
+    
+    var protein: String = ""
+    var carbohydrates: String = ""
+    var fats: String = ""
+    var calories: String = ""
     
     @IBOutlet weak var segmentController: UISegmentedControl!
     
@@ -25,7 +42,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     @IBOutlet weak var ingredientsView: UIView!
     @IBOutlet weak var ingredientTextField: UITextView!
     
-    
     @IBOutlet weak var directionView: UIView!
     @IBOutlet weak var directionTextField: UITextView!
     
@@ -37,7 +53,6 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
     @IBOutlet weak var carbohydrateTextField: UITextField!
     @IBOutlet weak var fatTextField: UITextField!
     @IBOutlet weak var caloriesTextField: UITextField!
-    var proteinVal: String? = ""
     
     // Allows users to choose different methods for uploading images //
     @IBAction func selectPreviewImageBtn(_ sender: Any) {
@@ -156,13 +171,18 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
             return
         }
         
-//        let newRecipe = Recipe(name: name, description: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, image: image, ingredients: ingredients )
-//        let _ = recipeDelegate?.addRecipe(newRecipe)
-        print("add recipe btn pressed")
-        //, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?
-        let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
-        
-        navigationController?.popViewController(animated: true)
+        if mode == "create" {
+            let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
+            navigationController?.popViewController(animated: true)
+        } else if mode == "edit" {
+            let _ = databaseController?.editRecipe(recipeToEdit: recipeToReplace, name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
+            navigationController?.popViewController(animated: true)
+            print("edit mode called")
+        } else {
+            print("Invalid mode")
+            return
+        }
+
     }
     
     override func viewDidLoad() {
@@ -190,6 +210,23 @@ class CreateRecipeV2ViewController: UIViewController, UITextFieldDelegate, UIIma
         
         // Sets of the toolbar above the ingredient textView keyboard //
         ingredientToolBar()
+        
+        if mode == "edit" {
+            recipeNameField.text = name
+            recipeDescriptionField.text = desc
+            recipePrepTimeField.text = prepTime
+            recipeCookingTimeField.text = cookTime
+            recipeDifficultyField.text = difficulty
+            recipePreviewImage.image = imageToLoad
+            
+            ingredientTextField.text = ingredients
+            directionTextField.text = directions
+            
+            proteinTextField.text = protein
+            carbohydrateTextField.text = carbohydrates
+            fatTextField.text = fats
+            caloriesTextField.text = calories
+        }
         
     }
     

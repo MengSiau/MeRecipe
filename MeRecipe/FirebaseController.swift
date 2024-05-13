@@ -66,6 +66,72 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.removeDelegate(listener)
     }
     
+    func editRecipe(recipeToEdit: Recipe?, name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
+        
+        guard let recipeToEdit = recipeToEdit, let recipeToEditId = recipeToEdit.id else {
+            print("Unable to unwrap recipeToEdit")
+            return
+        }
+        
+        let storageReference = Storage.storage().reference()
+        guard let imageData = imageData else {
+            print("Cannot unwrap image data")
+            return
+        }
+        
+        recipeToEdit.name = name
+        recipeToEdit.desc = desc
+        recipeToEdit.prepTime = prepTime
+        recipeToEdit.cookTime = cookTime
+        recipeToEdit.difficulty = difficulty
+        
+        recipeToEdit.ingredients = ingredients
+        recipeToEdit.directions = directions
+        
+        recipeToEdit.protein = protein
+        recipeToEdit.carbohydrate = carbohydrate
+        recipeToEdit.fats = fats
+        recipeToEdit.calories = calories
+        
+        // Store updated Recipe on firebase //
+        do {
+            try recipeRef?.document(recipeToEditId).setData(from: recipeToEdit)
+            print("recipe setData called")
+        } catch {
+            print("Failed to update Recipe")
+            return
+        }
+        
+        // Storing of Recipe Image //
+        let timestamp = UInt(Date().timeIntervalSince1970)
+        let filename = "\(timestamp).jpg"
+        let imageRef = storageReference.child("\(timestamp)")
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        let uploadTask = imageRef.putData(imageData, metadata: metadata)
+        
+        guard let recipeToEditID = recipeToEdit.id else {
+            print("cannot unwrap recipe id")
+            return
+        }
+        
+        // Attempt to save image URL in firebase //
+        uploadTask.observe(.success) { snapshot in
+            self.recipeRef?.document(recipeToEditID).updateData(["url" : "\(imageRef)"])
+            self.recipeRef?.document(recipeToEditID).updateData(["imageFileName" : "\(filename)"])
+            print(imageRef)
+        }
+        uploadTask.observe(.failure) { snapshot in
+            print("FAIL UPLOAD IMAGE")
+        }
+        
+        // Save image locally //
+        saveImageData(filename: filename, imageData: imageData)
+        
+        
+    }
+    
     func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
         
         // Attempet to unwrap image data //

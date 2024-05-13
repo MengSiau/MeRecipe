@@ -75,60 +75,6 @@
             </objects>
             <point key="canvasLocation" x="3118.320610687023" y="-598.59154929577471"/>
         </scene>
-        <!--Create Recipe-->
-        <scene sceneID="G4P-V0-tLm">
-            <objects>
-                <viewController id="6Ew-Jb-UvG" customClass="CreateRecipeViewController" customModule="MeRecipe" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tdF-iM-axX">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Recipe Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mwc-QK-6sQ">
-                                <rect key="frame" x="27" y="115" width="294" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Difficulty" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h7a-W9-IKu">
-                                <rect key="frame" x="27" y="178" width="294" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xk-zx-85C">
-                                <rect key="frame" x="27" y="284" width="294" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
-                                <connections>
-                                    <action selector="createRecipeBtn:" destination="6Ew-Jb-UvG" eventType="touchUpInside" id="DWr-PQ-TJ0"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Qli-sX-rAz"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Qli-sX-rAz" firstAttribute="trailing" secondItem="Mwc-QK-6sQ" secondAttribute="trailing" constant="72" id="AZw-w3-izx"/>
-                            <constraint firstItem="h7a-W9-IKu" firstAttribute="top" secondItem="Mwc-QK-6sQ" secondAttribute="bottom" constant="29" id="NcY-BC-kKs"/>
-                            <constraint firstItem="Mwc-QK-6sQ" firstAttribute="top" secondItem="Qli-sX-rAz" secondAttribute="top" constant="12" id="Ztw-rn-slK"/>
-                            <constraint firstItem="Qli-sX-rAz" firstAttribute="trailing" secondItem="6Xk-zx-85C" secondAttribute="trailing" constant="72" id="dcO-IM-fvv"/>
-                            <constraint firstItem="6Xk-zx-85C" firstAttribute="top" secondItem="h7a-W9-IKu" secondAttribute="bottom" constant="72" id="fA6-Jb-m6R"/>
-                            <constraint firstItem="Qli-sX-rAz" firstAttribute="bottom" secondItem="6Xk-zx-85C" secondAttribute="bottom" constant="499" id="fSl-k1-mnw"/>
-                            <constraint firstItem="Qli-sX-rAz" firstAttribute="trailing" secondItem="h7a-W9-IKu" secondAttribute="trailing" constant="72" id="g9G-Qn-dgT"/>
-                            <constraint firstItem="h7a-W9-IKu" firstAttribute="top" secondItem="Mwc-QK-6sQ" secondAttribute="bottom" constant="29" id="jNP-ny-GeC"/>
-                            <constraint firstItem="6Xk-zx-85C" firstAttribute="leading" secondItem="Qli-sX-rAz" secondAttribute="leading" constant="27" id="muG-Jf-8be"/>
-                            <constraint firstItem="h7a-W9-IKu" firstAttribute="leading" secondItem="Qli-sX-rAz" secondAttribute="leading" constant="27" id="rBI-pI-hKi"/>
-                            <constraint firstItem="Mwc-QK-6sQ" firstAttribute="leading" secondItem="Qli-sX-rAz" secondAttribute="leading" constant="27" id="ufO-sY-VFH"/>
-                            <constraint firstItem="6Xk-zx-85C" firstAttribute="top" secondItem="h7a-W9-IKu" secondAttribute="bottom" constant="72" id="zi9-ag-hby"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Create Recipe" id="ywA-XT-6xa"/>
-                    <connections>
-                        <outlet property="recipeDifficultyField" destination="h7a-W9-IKu" id="Gcr-cV-IIW"/>
-                        <outlet property="recipeNameField" destination="Mwc-QK-6sQ" id="aJO-qP-VZY"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SAA-Db-YAJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1250" y="-1223"/>
-        </scene>
         <!--View Recipe Detail View Controller-->
         <scene sceneID="BTy-90-Zk4">
             <objects>
@@ -274,6 +220,7 @@
                             <barButtonItem systemItem="edit" id="GVs-NV-syL">
                                 <connections>
                                     <action selector="editRecipeBtn:" destination="jFE-Bq-S8r" id="UBM-w8-dDk"/>
+                                    <segue destination="xkk-z1-Jzn" kind="show" identifier="editRecipeSegue" id="Tpy-L9-PyT"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -600,7 +547,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Td2-CK-EeO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4849.6183206106871" y="-599.29577464788736"/>
+            <point key="canvasLocation" x="4518" y="-599"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mFb-3Y-vAm">
@@ -621,6 +568,9 @@
             <point key="canvasLocation" x="2191.6030534351144" y="-598.59154929577471"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Tpy-L9-PyT"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

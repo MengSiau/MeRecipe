@@ -16,7 +16,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
 //    var storageReference = Storage.storage().reference()
     var recipeRef: CollectionReference?
     let storage = Storage.storage()
-    let cache = NSCache<NSString, UIImage>()
+//    let cache = NSCache<NSString, UIImage>()
     
     
     let CELL_IMAGE = "imageCell"
@@ -279,7 +279,10 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createRecipeSegue" {
             let destination = segue.destination as! CreateRecipeV2ViewController
-            destination.recipeDelegate = self
+            destination.recipeDelegate = self // TODO: NEED THIS HERE?
+            destination.mode = "create"
+            
+            
         } else if segue.identifier == "recipeDetailSegue" {
             if let selectedIndexPaths = collectionView.indexPathsForSelectedItems, let indexPath = selectedIndexPaths.first {
                 let destination = segue.destination as! ViewRecipeDetailViewController
