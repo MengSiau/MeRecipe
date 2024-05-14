@@ -123,12 +123,17 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
-    // Responsible for moving ingredients to buy, to the checked section below //
+    // Responsible for moving ingredients back and forth from ToBuy and Checked sections //
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == SECTION_TOBUY {
             let selectedIngredient = toBuyList[indexPath.row]
             boughtList.append(selectedIngredient)
             toBuyList.remove(at: indexPath.row)
+            tableView.reloadData()
+        } else if indexPath.section == SECTION_BOUGHT {
+            let selectedIngredient = boughtList[indexPath.row]
+            toBuyList.append(selectedIngredient)
+            boughtList.remove(at: indexPath.row)
             tableView.reloadData()
         }
     }
@@ -141,17 +146,17 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-                    case SECTION_TOBUY:
-                        return "Ingredients To Buy:"
-                    case SECTION_BOUGHT:
-                        return "Checked: "
-                    case SECTION_INFO:
-                        return "Status"
-                    default:
-                        return nil
-                }
-            }
+    switch section {
+            case SECTION_TOBUY:
+                return "Ingredients To Buy:"
+            case SECTION_BOUGHT:
+                return "Checked: "
+            case SECTION_INFO:
+                return "Status"
+            default:
+                return nil
+        }
+    }
     
 
     /*
