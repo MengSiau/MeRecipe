@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ShoppingListTableViewController: UITableViewController, DatabaseListener {
+class ShoppingListTableViewController: UITableViewController, DatabaseListener, UISearchBarDelegate {
     
     var listenerType = ListenerType.ingredient
     weak var databaseController: DatabaseProtocol?
@@ -25,10 +25,9 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     
     @IBAction func addIngredientBtn(_ sender: Any) {
         print("btn pressed")
-        let _ = databaseController?.addIngredient(name: "chow")
+        databaseController?.addIngredient(name: "chow")
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +37,26 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         
         navigationItem.title = "Shoppling List"
         
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Add Ingredient Name Here"
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        if let searchedText = searchBar.text {
+            databaseController?.addIngredient(name: searchedText)
+            searchBar.text = ""
+        }
+        searchBar.resignFirstResponder()
+    }
+    
+
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     
