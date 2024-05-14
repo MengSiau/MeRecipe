@@ -37,6 +37,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         
         navigationItem.title = "Shoppling List"
         
+        // Search Bar to add Ingredients manually //
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -44,19 +45,16 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
     }
     
+    // Adds the ingredient from the search bar //
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         if let searchedText = searchBar.text {
             databaseController?.addIngredient(name: searchedText)
             searchBar.text = ""
         }
         searchBar.resignFirstResponder()
     }
-    
-
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     
@@ -80,7 +78,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         databaseController?.removeListener(listener: self)
     }
     
-    // Removed checked Ingredients from Firebaes //
+    // Removes checked Ingredients from Firebaes //
     func removeCheckedIngredients() {
         for checkedIngredient in boughtList {
             databaseController?.deleteIngredient(ingredient: checkedIngredient)
@@ -105,11 +103,10 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
                 return 0
         }
     }
-
     
+    // Handles the ToBuy, Checked and Info Sections in TableView //
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_TOBUY {
-            // Configure and return a hero cell
             let toBuyCell = tableView.dequeueReusableCell(withIdentifier: CELL_TOBUY, for: indexPath) as! ToBuyTableViewCell
             let toBuyIngredient = toBuyList[indexPath.row]
             toBuyCell.ingredientText.text = toBuyIngredient.name
@@ -117,15 +114,14 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
             return toBuyCell
         }
         else if indexPath.section == SECTION_BOUGHT{
-            // Configure and return an info cell instead
             let boughtCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOUGHT, for: indexPath) as! BoughtTableViewCell
-            
             let boughtIngredient = boughtList[indexPath.row]
             boughtCell.ingredientText.text = boughtIngredient.name
             
             // Grey text and strikeout text //
             boughtCell.textLabel?.textColor = .gray
             boughtCell.textLabel?.attributedText = NSAttributedString(string: boughtIngredient.name ?? "Cannot Display Ingredient", attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+            
             return boughtCell
         } else {
             let infoCell = tableView.dequeueReusableCell(withIdentifier: CELL_INFO, for: indexPath)
@@ -134,9 +130,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
             let boughtCount = boughtList.count
             let totalCount = toBuyCount + boughtCount
             
-            
             infoCell.textLabel?.text = "Ingredients Bought: [\(boughtCount) / \(totalCount)]"
-            
             return infoCell
         }
     }
@@ -155,7 +149,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
             tableView.reloadData()
         }
     }
-    
 
     
     // Override to support conditional editing of the table view.
@@ -216,15 +209,4 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
 
 }
 
-//// Responsible for moving the Ingredients to the checked off list //
-//override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    if indexPath.section == SECTION_TOBUY {
-//        // Move the selected ingredient to the bought list
-//        let ingredient = toBuyList.remove(at: indexPath.row)
-//        boughtList.append(ingredient)
-//        
-//        // Update the table view by moving the checked off Ingredient //
-//        tableView.moveRow(at: indexPath, to: IndexPath(row: boughtList.count - 1, section: SECTION_BOUGHT))
-//
-//    }
-//}
+

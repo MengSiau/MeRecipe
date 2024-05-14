@@ -422,9 +422,10 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editRecipeSegue" {
             let destination = segue.destination as! CreateRecipeV2ViewController
-            destination.mode = "edit"
             
-            print("test " + name)
+            destination.mode = "edit"
+            destination.navigationItem.title = "Editing \(name)"
+            
             destination.recipeToReplace = recipe
             destination.name = name
             
