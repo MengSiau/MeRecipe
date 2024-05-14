@@ -14,22 +14,20 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_TOBUY = 0
     let SECTION_BOUGHT = 1
+    let SECTION_INFO = 2
     
     let CELL_TOBUY = "toBuyCell"
     let CELL_BOUGHT = "boughtCell"
+    let CELL_INFO = "infoCell"
     
     var toBuyList: [Ingredient] = []
     var boughtList: [Ingredient] = []
-    
-    
-
     
     @IBAction func addIngredientBtn(_ sender: Any) {
         print("btn pressed")
         let _ = databaseController?.addIngredient(name: "chow")
     }
     
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +59,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         
         // Removes checked Ingredients //
         removeCheckedIngredients()
-        
         databaseController?.removeListener(listener: self)
     }
     
@@ -75,7 +72,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,6 +81,8 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
                 return toBuyList.count
             case SECTION_BOUGHT:
                 return boughtList.count
+            case SECTION_INFO:
+                return 1
             default:
                 return 0
         }
@@ -94,13 +93,12 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         if indexPath.section == SECTION_TOBUY {
             // Configure and return a hero cell
             let toBuyCell = tableView.dequeueReusableCell(withIdentifier: CELL_TOBUY, for: indexPath) as! ToBuyTableViewCell
-            
             let toBuyIngredient = toBuyList[indexPath.row]
             toBuyCell.ingredientText.text = toBuyIngredient.name
             
             return toBuyCell
         }
-        else {
+        else if indexPath.section == SECTION_BOUGHT{
             // Configure and return an info cell instead
             let boughtCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOUGHT, for: indexPath) as! BoughtTableViewCell
             
@@ -110,12 +108,22 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             // Grey text and strikeout text //
             boughtCell.textLabel?.textColor = .gray
             boughtCell.textLabel?.attributedText = NSAttributedString(string: boughtIngredient.name ?? "Cannot Display Ingredient", attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
-            
             return boughtCell
-
+        } else {
+            let infoCell = tableView.dequeueReusableCell(withIdentifier: CELL_INFO, for: indexPath)
+            
+            let toBuyCount = toBuyList.count
+            let boughtCount = boughtList.count
+            let totalCount = toBuyCount + boughtCount
+            
+            
+            infoCell.textLabel?.text = "Ingredients Bought: [\(boughtCount) / \(totalCount)]"
+            infoCell.textLabel?.textColor = .gray
+            return infoCell
         }
     }
     
+    // Responsible for moving ingredients to buy, to the checked section below //
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == SECTION_TOBUY {
             let selectedIngredient = toBuyList[indexPath.row]
@@ -133,14 +141,18 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == SECTION_TOBUY {
-            return "Ingredients To Buy:"
-        }
-        if section == SECTION_BOUGHT {
-            return "Checked: "
-        }
-        return nil
-    }
+        switch section {
+                    case SECTION_TOBUY:
+                        return "Ingredients To Buy:"
+                    case SECTION_BOUGHT:
+                        return "Checked: "
+                    case SECTION_INFO:
+                        return "Status"
+                    default:
+                        return nil
+                }
+            }
+    
 
     /*
     // Override to support editing the table view.
