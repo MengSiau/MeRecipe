@@ -38,6 +38,8 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
+        navigationItem.title = "Shoppling List"
+        
     }
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
@@ -67,27 +69,76 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        switch section {
+            case SECTION_TOBUY:
+                return toBuyList.count
+            case SECTION_BOUGHT:
+                return boughtList.count
+            default:
+                return 0
+        }
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        if indexPath.section == SECTION_TOBUY {
+            // Configure and return a hero cell
+            let toBuyCell = tableView.dequeueReusableCell(withIdentifier: CELL_TOBUY, for: indexPath) as! ToBuyTableViewCell
+            
+//            var content = toBuyCell.defaultContentConfiguration()
+//            let toBuyIngredient = toBuyList[indexPath.row]
+//            content.text = toBuyIngredient.name
+//            toBuyCell.contentConfiguration = content
+            let toBuyIngredient = toBuyList[indexPath.row]
+            toBuyCell.ingredientText.text = toBuyIngredient.name
+            
+            return toBuyCell
+        }
+        else {
+            // Configure and return an info cell instead
+            let boughtCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOUGHT, for: indexPath) as! BoughtTableViewCell
+                    
+//            var content = boughtCell.defaultContentConfiguration()
+//            let boughtIngredient = boughtList[indexPath.row]
+//            content.text = boughtIngredient.name
+//            boughtCell.contentConfiguration = content
+            
+            let boughtIngredient = boughtList[indexPath.row]
+            boughtCell.ingredientText.text = boughtIngredient.name
+            
+            boughtCell.textLabel?.textColor = .gray
+            boughtCell.textLabel?.attributedText = NSAttributedString(string: boughtIngredient.name ?? "y", attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+            
+            return boughtCell
 
-        // Configure the cell...
-
-        return cell
+        }
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == SECTION_TOBUY {
+            let selectedIngredient = toBuyList[indexPath.row]
+            boughtList.append(selectedIngredient)
+            toBuyList.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+    }
+    
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == SECTION_TOBUY {
+            return "Ingredients To Buy:"
+        }
+        if section == SECTION_BOUGHT {
+            return "Checked: "
+        }
+        return nil
+    }
 
     /*
     // Override to support editing the table view.
@@ -127,3 +178,16 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     */
 
 }
+
+//// Responsible for moving the Ingredients to the checked off list //
+//override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//    if indexPath.section == SECTION_TOBUY {
+//        // Move the selected ingredient to the bought list
+//        let ingredient = toBuyList.remove(at: indexPath.row)
+//        boughtList.append(ingredient)
+//        
+//        // Update the table view by moving the checked off Ingredient //
+//        tableView.moveRow(at: indexPath, to: IndexPath(row: boughtList.count - 1, section: SECTION_BOUGHT))
+//
+//    }
+//}
