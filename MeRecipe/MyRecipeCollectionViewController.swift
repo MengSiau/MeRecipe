@@ -10,6 +10,10 @@ import Firebase
 import FirebaseStorage
 
 class MyRecipeCollectionViewController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {
+        
+    }
+    
         
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
@@ -97,7 +101,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     }
     
     @objc func homeButtonTapped() {
-        // Handle home button tap
+        
     }
 
     @objc func addButtonTapped() {
@@ -105,7 +109,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     }
 
     @objc func cartButtonTapped() {
-        // Handle cart button tap
+        performSegue(withIdentifier: "shoppingListSegue", sender: self)
     }
 
     @objc func settingsButtonTapped() {

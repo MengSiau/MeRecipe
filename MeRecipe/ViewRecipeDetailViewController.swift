@@ -9,6 +9,11 @@ import UIKit
 import SwiftUI
 
 class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
+    
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {
+        
+    }
+    
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
     var listOfRecipe: [Recipe] = []

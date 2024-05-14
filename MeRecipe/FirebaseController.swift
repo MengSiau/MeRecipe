@@ -18,12 +18,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var listOfRecipe: [Recipe]
     var defaultRecipeList: RecipeList
     
+    var listOfIngredient: [Ingredient]
+    
     // References to Firebase and its collections
     var authController: Auth
     var database: Firestore
     var recipeRef: CollectionReference?
     var recipeListRef: CollectionReference?
     var currentUser: FirebaseAuth.User?
+    
+    var ingredientRef: CollectionReference? // For now
     
 
     
@@ -33,6 +37,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
         database = Firestore.firestore()
         listOfRecipe = [Recipe]()
         defaultRecipeList = RecipeList()
+        
+        listOfIngredient = [Ingredient]()
         
         super.init()
         
@@ -45,6 +51,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
             }
             self.setupRecipeListener()
+            self.setupIngredientListener()
         }
     }
     
@@ -59,6 +66,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         if listener.listenerType == .recipeList || listener.listenerType == .all {
             listener.onRecipeListChange(change: .update, recipes: defaultRecipeList.recipes)
+        }
+        
+        if listener.listenerType == .ingredient || listener.listenerType == .all {
+            listener.onAllIngredientChange(change: .update, ingredients: listOfIngredient)
         }
     }
     
@@ -128,8 +139,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         // Save image locally //
         saveImageData(filename: filename, imageData: imageData)
-        
-        
     }
     
     func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
@@ -216,9 +225,27 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
-//    func deleteRecipeById(recipeId: String) {
-//        recipeRef?.document(recipeId).delete()
-//    }
+    // FOR INGREDIENTS //
+    
+    func addIngredient(name: String?) {
+        let ingredient = Ingredient()
+        ingredient.name = name
+        
+        // Store newly created Recipe on firebase //
+        do {
+            if let ingredientRef = try ingredientRef?.addDocument(from: ingredient) {
+                ingredient.id = ingredientRef.documentID // returns id if added successfully -> use this id to update/delete
+            }
+        } catch {
+            print("Failed to serialize Reicpe")
+        }
+    }
+    
+    func deleteIngredient(ingredient: Ingredient) {
+        if let ingredientID = ingredient.id {
+            ingredientRef?.document(ingredientID).delete()
+        }
+    }
     
     func addRecipeList(recipeListName: String) -> RecipeList {
         let recipeList = RecipeList()
@@ -282,6 +309,20 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    func setupIngredientListener() {
+        ingredientRef = database.collection("IngredientList")
+        
+        // Closure executes whenever change occur in RecipeList collection
+        ingredientRef?.addSnapshotListener() { (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot else {
+                print("Failed to fetch documents with error: \(String(describing: error))")
+                return
+            }
+            self.parseIngredientSnapshot(snapshot: querySnapshot)
+//            if self.recipeListRef == nil { self.setupRecipeListListener()} // If first time called, set up listener
+        }
+    }
+    
 //    func setupRecipeListListener() {
 //        recipeListRef = database.collection("PLACEHOLDER") // may not use, use this name as a placeholder
 //        recipeListRef?.whereField("name", isEqualTo: DEFAULT_RECIPELIST_NAME).addSnapshotListener { (querySnapshot, error) in // specify name
@@ -320,6 +361,36 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 listener.onAllRecipeChange(change: .update, recipes: listOfRecipe)
             }
         }
+    }
+    
+    func parseIngredientSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { (change) in // iterate thro each document change in snapshot
+            var ingredient: Ingredient
+            // Try decode document data as Recipe object so we can do logic stuff to it
+            do {
+                ingredient = try change.document.data(as: Ingredient.self)
+            } catch {
+                fatalError("Unable to decode ingredient: \(error.localizedDescription)")
+            }
+            
+            // Respond to the types of changes made to recipe accordingly
+            if change.type == .added {
+                listOfIngredient.insert(ingredient, at: Int(change.newIndex)) // The local array in this file
+            } else if change.type == .modified {
+                listOfIngredient.remove(at: Int(change.oldIndex))
+                listOfIngredient.insert(ingredient, at: Int(change.newIndex))
+            } else if change.type == .removed {
+                listOfIngredient.remove(at: Int(change.oldIndex))
+            }
+        }
+        
+        // Call the multicast delegate to call the onAllHeroChange on all listeners
+        listeners.invoke { (listener) in
+            if listener.listenerType == ListenerType.ingredient || listener.listenerType == ListenerType.all {
+                listener.onAllIngredientChange(change: .update, ingredients: listOfIngredient)
+            }
+        }
+        
     }
     
 //    func parseRecipeListSnapshot(snapshot: QueryDocumentSnapshot) {

@@ -16,6 +16,7 @@ enum DatabaseChange{
 enum ListenerType {
     case recipe
     case recipeList
+    case ingredient // For now
     case all
 }
 
@@ -23,6 +24,7 @@ protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe])
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe])
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) // For now
 }
 
 protocol DatabaseProtocol: AnyObject {
@@ -35,6 +37,9 @@ protocol DatabaseProtocol: AnyObject {
     func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?)
     func editRecipe(recipeToEdit: Recipe?, name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?)
     func deleteRecipe(recipe: Recipe)
+    
+    func addIngredient(name: String?)
+    func deleteIngredient(ingredient: Ingredient)
     
     var defaultRecipeList: RecipeList {get}
     func addRecipeList(recipeListName: String) -> RecipeList
