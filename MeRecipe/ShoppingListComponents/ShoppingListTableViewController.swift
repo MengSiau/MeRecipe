@@ -118,7 +118,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             
             
             infoCell.textLabel?.text = "Ingredients Bought: [\(boughtCount) / \(totalCount)]"
-            infoCell.textLabel?.textColor = .gray
+            
             return infoCell
         }
     }

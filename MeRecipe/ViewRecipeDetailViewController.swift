@@ -18,6 +18,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     weak var databaseController: DatabaseProtocol?
     var listOfRecipe: [Recipe] = []
     var selectedRecipe: Recipe?
+    var listOfIngredients: [String] = []
 
 
     @IBOutlet weak var contentView: UIView!
@@ -51,6 +52,16 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     var fats: String = ""
     var calories: String = ""
     
+    @IBAction func addIngredientToShopplingListBtn(_ sender: Any) {
+        for ingredient in listOfIngredients {
+            databaseController?.addIngredient(name: ingredient)
+        }
+        print("add ingre btn pressed")
+        let alert = UIAlertController(title: "Ingredients added", message: "Incredients have been successfully added to the shopping list", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func deleteRecipeBtn(_ sender: Any) {
         guard let recipeToDelete = recipe else {
             print("Unable to delete recipe")
@@ -72,9 +83,8 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     }
     
 
-    
-    @IBAction func editRecipeBtn(_ sender: Any) {
-    }
+    // Handled below in ... IDK
+    @IBAction func editRecipeBtn(_ sender: Any) {}
     
     
     override func viewDidLoad() {
@@ -83,9 +93,6 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         // FIREBASE //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
-        
-        
-        
         
 //        // Test //
 //        if let selectedRecipe = selectedRecipe?.name {
@@ -119,6 +126,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
             label.text = ingredient
             recipeIngredientStackView.addArrangedSubview(label)
         }
+        listOfIngredients = listIngredients
         
         // Processing direction for stackview //
         let listDirections = directions.components(separatedBy: "\n")
