@@ -58,13 +58,23 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        // Removes checked Ingredients //
+        removeCheckedIngredients()
+        
         databaseController?.removeListener(listener: self)
+    }
+    
+    // Removed checked Ingredients from Firebaes //
+    func removeCheckedIngredients() {
+        for checkedIngredient in boughtList {
+            databaseController?.deleteIngredient(ingredient: checkedIngredient)
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-     
         return 3
     }
 
@@ -85,10 +95,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             // Configure and return a hero cell
             let toBuyCell = tableView.dequeueReusableCell(withIdentifier: CELL_TOBUY, for: indexPath) as! ToBuyTableViewCell
             
-//            var content = toBuyCell.defaultContentConfiguration()
-//            let toBuyIngredient = toBuyList[indexPath.row]
-//            content.text = toBuyIngredient.name
-//            toBuyCell.contentConfiguration = content
             let toBuyIngredient = toBuyList[indexPath.row]
             toBuyCell.ingredientText.text = toBuyIngredient.name
             
@@ -97,17 +103,13 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         else {
             // Configure and return an info cell instead
             let boughtCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOUGHT, for: indexPath) as! BoughtTableViewCell
-                    
-//            var content = boughtCell.defaultContentConfiguration()
-//            let boughtIngredient = boughtList[indexPath.row]
-//            content.text = boughtIngredient.name
-//            boughtCell.contentConfiguration = content
             
             let boughtIngredient = boughtList[indexPath.row]
             boughtCell.ingredientText.text = boughtIngredient.name
             
+            // Grey text and strikeout text //
             boughtCell.textLabel?.textColor = .gray
-            boughtCell.textLabel?.attributedText = NSAttributedString(string: boughtIngredient.name ?? "y", attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+            boughtCell.textLabel?.attributedText = NSAttributedString(string: boughtIngredient.name ?? "Cannot Display Ingredient", attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
             
             return boughtCell
 
