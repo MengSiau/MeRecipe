@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Meal Schedule-->
+        <!--Daily Meal Schedule-->
         <scene sceneID="5ZW-PD-Fan">
             <objects>
                 <tableViewController id="YI7-Y8-JxW" customClass="MealSchedulerTableViewController" customModule="MeRecipe" customModuleProvider="target" sceneMemberID="viewController">
@@ -26,29 +26,40 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7D-MP-cWW">
-                                            <rect key="frame" x="129" y="11" width="42" height="21"/>
+                                            <rect key="frame" x="129" y="11" width="244" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dC-fE-YjP">
-                                            <rect key="frame" x="129" y="40" width="42" height="21"/>
+                                            <rect key="frame" x="129" y="40" width="244" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eP6-N4-gqH">
+                                            <rect key="frame" x="20" y="11" width="101" height="67"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="eP6-N4-gqH" secondAttribute="height" multiplier="16:9" id="I1k-IF-20I"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="f7D-MP-cWW" firstAttribute="leading" secondItem="C1Q-V8-2Zg" secondAttribute="leadingMargin" constant="109" id="66J-iF-iIx"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="8dC-fE-YjP" secondAttribute="bottom" constant="18" id="7ue-NO-AL2"/>
-                                        <constraint firstItem="8dC-fE-YjP" firstAttribute="leading" secondItem="C1Q-V8-2Zg" secondAttribute="leadingMargin" constant="109" id="UY3-AW-6yA"/>
-                                        <constraint firstItem="8dC-fE-YjP" firstAttribute="top" secondItem="f7D-MP-cWW" secondAttribute="bottom" constant="8" symbolic="YES" id="VBK-rz-sVQ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="8dC-fE-YjP" secondAttribute="trailing" constant="202" id="VCY-LY-XGU"/>
-                                        <constraint firstItem="f7D-MP-cWW" firstAttribute="top" secondItem="C1Q-V8-2Zg" secondAttribute="topMargin" id="fol-eL-TUD"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="f7D-MP-cWW" secondAttribute="trailing" constant="202" id="wPG-Sg-RQU"/>
+                                        <constraint firstItem="eP6-N4-gqH" firstAttribute="leading" secondItem="C1Q-V8-2Zg" secondAttribute="leadingMargin" id="BQD-XK-iyb"/>
+                                        <constraint firstItem="f7D-MP-cWW" firstAttribute="trailing" secondItem="C1Q-V8-2Zg" secondAttribute="trailingMargin" id="Cq3-c7-kuy"/>
+                                        <constraint firstItem="8dC-fE-YjP" firstAttribute="trailing" secondItem="C1Q-V8-2Zg" secondAttribute="trailingMargin" id="TNP-cp-sgV"/>
+                                        <constraint firstItem="8dC-fE-YjP" firstAttribute="leading" secondItem="C1Q-V8-2Zg" secondAttribute="leadingMargin" constant="109" id="Tcm-p9-i3A"/>
+                                        <constraint firstItem="f7D-MP-cWW" firstAttribute="top" secondItem="C1Q-V8-2Zg" secondAttribute="topMargin" id="ZWW-tF-bYp"/>
+                                        <constraint firstItem="f7D-MP-cWW" firstAttribute="leading" secondItem="C1Q-V8-2Zg" secondAttribute="leadingMargin" constant="109" id="bYE-Vg-WiC"/>
+                                        <constraint firstItem="eP6-N4-gqH" firstAttribute="top" secondItem="C1Q-V8-2Zg" secondAttribute="topMargin" id="bkE-hX-b72"/>
+                                        <constraint firstItem="8dC-fE-YjP" firstAttribute="top" secondItem="f7D-MP-cWW" secondAttribute="bottom" constant="8" symbolic="YES" id="mIZ-AQ-5fG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="8dC-fE-YjP" secondAttribute="bottom" constant="18" id="uR3-Zj-sNU"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="eP6-N4-gqH" secondAttribute="bottom" constant="1" id="w3v-FY-4gY"/>
+                                        <constraint firstItem="f7D-MP-cWW" firstAttribute="leading" secondItem="eP6-N4-gqH" secondAttribute="trailing" constant="8" symbolic="YES" id="z90-YM-c4Z"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="mealImage" destination="eP6-N4-gqH" id="LB3-X4-EDK"/>
                                     <outlet property="mealNameText" destination="f7D-MP-cWW" id="3q0-z2-c3B"/>
                                     <outlet property="timeText" destination="8dC-fE-YjP" id="EQd-JI-PqA"/>
                                 </connections>
@@ -125,7 +136,7 @@
                             <outlet property="delegate" destination="YI7-Y8-JxW" id="wNJ-oU-Dzq"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Meal Schedule" id="L1X-xI-pAw">
+                    <navigationItem key="navigationItem" title="Daily Meal Schedule" id="L1X-xI-pAw">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="diq-60-72k">
                             <connections>
                                 <action selector="addMealBtn:" destination="YI7-Y8-JxW" id="7CP-h9-h9g"/>
@@ -860,7 +871,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IIU-gT-5fF"/>
+        <segue reference="Tpy-L9-PyT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

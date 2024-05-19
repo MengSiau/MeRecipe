@@ -7,9 +7,8 @@
 
 import UIKit
 
-class MealSchedulerTableViewController: UITableViewController {
-    
-//    var listenerType = ListenerType.ingredient
+class MealSchedulerTableViewController: UITableViewController, DatabaseListener {
+    var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
     
     let SECTION_BREAKFAST = 0
@@ -22,17 +21,16 @@ class MealSchedulerTableViewController: UITableViewController {
     
     // List of Recipe so that user can choose which one to add
     // breakfast, lunch, dinner. Add recipe means to tag recipe with tag. Loop through list of recipe to find the one with the tag.
-    var recipeList: [Recipe] = []
+    var listOfRecipe: [Recipe] = []
     var testList = ["test1", "test2", "test3"]
     
-    var breakfastList: [String] = []
-    var lunchList: [String] = []
-    var dinnerList: [String] = []
+    var breakfastList: [Recipe] = []
+    var lunchList: [Recipe] = []
+    var dinnerList: [Recipe] = []
     
     @IBAction func addMealBtn(_ sender: Any) {
         performSegue(withIdentifier: "addMealSegue", sender: self)
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +39,52 @@ class MealSchedulerTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
+        // Processing //
+//        sortRecipeByCategory()
         
+        print("printing breaklist from load", breakfastList)
+        
+    }
+    
+    func sortRecipeByCategory(listOfRecipe: [Recipe]) {
+        for recipe in listOfRecipe {
+            if recipe.category == "breakfast" {
+                breakfastList.append(recipe)
+            } else if recipe.category == "lunch" {
+                lunchList.append(recipe)
+            } else if recipe.category == "dinner" {
+                dinnerList.append(recipe)
+            }
+        }
+    }
+    
+    
+    func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
+    
+    func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
+        for newRecipe in recipes {
+            if !listOfRecipe.contains(newRecipe) {
+                listOfRecipe.append(newRecipe)
+            }
+        }
+        print("onchange recipelist", listOfRecipe)
+        sortRecipeByCategory(listOfRecipe: listOfRecipe)
+        print("onchange breakList", breakfastList)
+    }
+    
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        databaseController?.removeListener(listener: self)
+        
+
     }
 
     // MARK: - Table view data source
@@ -53,7 +96,7 @@ class MealSchedulerTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case SECTION_BREAKFAST:
-                return testList.count
+                return breakfastList.count
             case SECTION_LUNCH:
                 return testList.count
             case SECTION_DINNER:
@@ -80,9 +123,23 @@ class MealSchedulerTableViewController: UITableViewController {
         if indexPath.section == SECTION_BREAKFAST {
             let cell = tableView.dequeueReusableCell(withIdentifier: "breakfastCell", for: indexPath) as! BreakfastMealTableViewCell
             
-            let meal = testList[indexPath.row]
-            cell.mealNameText.text = meal
-            cell.timeText.text = "asdasdasdasd"
+            
+            
+            let selectedMeal = breakfastList[indexPath.row]
+            cell.mealNameText.text = selectedMeal.name
+            cell.timeText.text = selectedMeal.cookTime
+            
+            // Get Recipe's image file name and attempt to load it locally from files //
+            guard let filename = selectedMeal.imageFileName else {
+                print("cannot unwrap image file name")
+                return cell
+            }
+            if let localImage = loadImageFromLocal(filename: filename) {
+                cell.mealImage.image = localImage
+                return cell
+            }
+            
+            
             return cell
             
         } else if indexPath.section == SECTION_LUNCH {
@@ -101,6 +158,24 @@ class MealSchedulerTableViewController: UITableViewController {
         }
     }
     
+    func loadImageFromLocal(filename: String) -> UIImage? {
+        // Get the document directory path
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        
+        // Create a file URL for the image
+        let fileURL = documentsDirectory.appendingPathComponent(filename)
+        
+        // Load image from file URL
+        do {
+            let imageData = try Data(contentsOf: fileURL)
+            return UIImage(data: imageData)
+        } catch {
+            print("Error loading image from local storage: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     switch section {
             case SECTION_BREAKFAST:
@@ -114,25 +189,47 @@ class MealSchedulerTableViewController: UITableViewController {
         }
     }
 
-    /*
-    // Override to support conditional editing of the table view.
+    
+    //
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
-    /*
-    // Override to support editing the table view.
+    //
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            var recipeToRemove: Recipe?
+            
+            tableView.beginUpdates()
+            
+            switch indexPath.section {
+            case SECTION_BREAKFAST:
+                recipeToRemove = breakfastList[indexPath.row]
+                breakfastList.remove(at: indexPath.row)
+                
+            case SECTION_LUNCH:
+                recipeToRemove = lunchList[indexPath.row]
+                lunchList.remove(at: indexPath.row)
+                
+            case SECTION_DINNER:
+                recipeToRemove = dinnerList[indexPath.row]
+                dinnerList.remove(at: indexPath.row)
+                
+            default:
+                return
+            }
+            
+            if let recipeToRemove = recipeToRemove {
+                databaseController?.editRecipeCategory(recipeToEdit: recipeToRemove, category: "")
+            }
+            
+            print("Breakfast List Count After Removal: \(breakfastList.count)")
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            tableView.endUpdates()
+        }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.

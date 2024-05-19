@@ -38,13 +38,22 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell", for: indexPath)
         
+        let selectedRecipe = listOfRecipe[indexPath.row]
+        
         // Configure the cell
-        cell.textLabel?.text = "Row \(indexPath.row)"
+        cell.textLabel?.text = selectedRecipe.name
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedRecipe = listOfRecipe[indexPath.row]
+        databaseController?.editRecipeCategory(recipeToEdit: selectedRecipe, category: "breakfast")
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        navigationController?.popViewController(animated: false)
+        print("row clicked")
         
     }
     
@@ -52,6 +61,7 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
         listOfRecipe = recipes
+        print(listOfRecipe)
     }
     
     func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}

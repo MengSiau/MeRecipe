@@ -28,6 +28,8 @@ class Recipe: NSObject, Codable {
     var carbohydrate: String?
     var fats: String?
     var calories: String?
+    
+    var category: String?
 }
 
 enum CodingKeys: String, CodingKey {
@@ -45,6 +47,8 @@ enum CodingKeys: String, CodingKey {
     case carbohydrates
     case fats
     case calories
+    
+    case category
 }
 
 
