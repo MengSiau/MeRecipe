@@ -30,7 +30,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     var filteredListOfRecipe: [Recipe] = []
     weak var recipeDelegate: AddRecipeDelegate?
     
-    
     let bottomToolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.translatesAutoresizingMaskIntoConstraints = false
@@ -62,15 +61,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         generateTestRecipe()
         
         // SEARCH BAR //
-//        let searchController = UISearchController(searchResultsController: nil)
-//        searchController.searchBar.delegate = self
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "Search"
-//        searchController.searchBar.showsCancelButton = false
-//        navigationItem.searchController = searchController
-//        // Ensure the search bar is always visible.
-//        navigationItem.hidesSearchBarWhenScrolling = false
-        
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -79,42 +69,29 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         definesPresentationContext = true
         filteredListOfRecipe = listOfRecipe
         
+        navigationItem.hidesBackButton = true
         
         // TOOL BAR //
-        view.addSubview(bottomToolbar)
-        NSLayoutConstraint.activate([
-            bottomToolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bottomToolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomToolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            bottomToolbar.heightAnchor.constraint(equalToConstant: 44)
-        ])
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-//        bottomToolbar.items = [addButton]
-        
-        let homeButton = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        let cartButton = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(cartButtonTapped))
-        let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
+        let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
+        let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
+        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        bottomToolbar.items = [homeButton, flexibleSpace, addButton, flexibleSpace, cartButton, flexibleSpace, settingsButton]
-      
+        
+//        homeBtn.tintColor = UIColor.systemRed
+        
+        // Set the toolbar items
+        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
+        
+        // Ensure the toolbar is visible
+        self.navigationController?.isToolbarHidden = false
     }
     
-    @objc func homeButtonTapped() {
-        
-    }
-
-    @objc func addButtonTapped() {
-        // Handle add button tap
-    }
-
-    @objc func cartButtonTapped() {
-        performSegue(withIdentifier: "shoppingListSegue", sender: self)
-    }
-
-    @objc func settingsButtonTapped() {
-        // Handle settings button tap
-    }
+    // Action functions for bot nav bar //
+    @objc func homeButtonTapped() {}
+    @objc func shoppingListBtnTapped() {performSegue(withIdentifier: "shoppingListSegue", sender: self)}
+    @objc func mealScheduleBtnTapped() {}
+    @objc func settingsButtonTapped() {}
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased() else {

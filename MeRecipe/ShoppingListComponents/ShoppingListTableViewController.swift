@@ -23,6 +23,13 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     var toBuyList: [Ingredient] = []
     var boughtList: [Ingredient] = []
     
+    
+    let bottomToolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        return toolbar
+    }()
+    
     @IBAction func addIngredientBtn(_ sender: Any) {
         print("btn pressed")
         databaseController?.addIngredient(name: "chow")
@@ -45,7 +52,29 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        
+        // TOOLBAR //
+        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
+        let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
+        let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
+        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+//        homeBtn.tintColor = UIColor.systemRed
+        
+        // Set the toolbar items
+        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
+        
+        // Ensure the toolbar is visible
+        self.navigationController?.isToolbarHidden = false
     }
+    
+    @objc func homeButtonTapped() {performSegue(withIdentifier: "homeSegue", sender: self)}
+    @objc func shoppingListBtnTapped() {}
+    @objc func mealScheduleBtnTapped() {}
+    @objc func settingsButtonTapped() {}
+    
     
     // Adds the ingredient from the search bar //
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

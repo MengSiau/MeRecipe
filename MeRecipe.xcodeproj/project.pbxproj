@@ -115,7 +115,6 @@
 				2AF481612BDD2CA100BEE85B /* CreateRecipeV2ViewController.swift */,
 				2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */,
 				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
-				2A58447D2BF364AF00FA9BD3 /* BoughtTableViewCell.swift */,
 				2A58447C2BF3645300FA9BD3 /* ShoppingListComponents */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
 				2A7DACFD2BE6085E00886398 /* RecipeList.swift */,
@@ -130,6 +129,7 @@
 		2A58447C2BF3645300FA9BD3 /* ShoppingListComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2A58447D2BF364AF00FA9BD3 /* BoughtTableViewCell.swift */,
 				2AADB0B52BF32CEB00962CF6 /* ShoppingListTableViewController.swift */,
 				2AADB0BB2BF3574F00962CF6 /* ToBuyTableViewCell.swift */,
 			);
