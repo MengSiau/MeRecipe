@@ -66,11 +66,9 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         // Set the toolbar items
         self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
         
-        // Ensure the toolbar is visible
-//        self.navigationController?.isToolbarHidden = false
     }
     
-    @objc func homeButtonTapped() {performSegue(withIdentifier: "homeSegue", sender: self)}
+    @objc func homeButtonTapped() {navigationController?.popViewController(animated: true)}
     @objc func shoppingListBtnTapped() {}
     @objc func mealScheduleBtnTapped() {}
     @objc func settingsButtonTapped() {}
@@ -97,6 +95,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        
         self.navigationController?.isToolbarHidden = false
     }
     

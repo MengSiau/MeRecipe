@@ -90,7 +90,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     // Action functions for bot nav bar //
     @objc func homeButtonTapped() {}
     @objc func shoppingListBtnTapped() {performSegue(withIdentifier: "shoppingListSegue", sender: self)}
-    @objc func mealScheduleBtnTapped() {}
+    @objc func mealScheduleBtnTapped() {performSegue(withIdentifier: "mealSchedulerSegue", sender: self)}
     @objc func settingsButtonTapped() {}
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -118,13 +118,16 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
-        self.navigationController?.isToolbarHidden = false
         
+        // Disable bot nav bar: Some screens will not have the bot nav bar //
+        self.navigationController?.isToolbarHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
+        
+        // Enable bot nav bar //
         self.navigationController?.isToolbarHidden = true
     }
     

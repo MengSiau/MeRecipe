@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A10860E2BF9EA4900F8FAED /* MealSchedulerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A10860D2BF9EA4900F8FAED /* MealSchedulerTableViewController.swift */; };
+		2A1086132BF9F9DC00F8FAED /* BreakfastMealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1086122BF9F9DC00F8FAED /* BreakfastMealTableViewCell.swift */; };
+		2A1086152BF9F9F600F8FAED /* LunchMealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1086142BF9F9F600F8FAED /* LunchMealTableViewCell.swift */; };
+		2A1086192BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1086182BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift */; };
+		2A10861B2BFA059600F8FAED /* AddMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A10861A2BFA059600F8FAED /* AddMealViewController.swift */; };
 		2A14994F2BE3D8A2005114DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2A14994E2BE3D8A2005114DE /* GoogleService-Info.plist */; };
 		2A297B002BEF8C9C0009E014 /* PieChartUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */; };
 		2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48C5342BD77DDD006EFA94 /* AppDelegate.swift */; };
@@ -38,6 +43,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A10860D2BF9EA4900F8FAED /* MealSchedulerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealSchedulerTableViewController.swift; sourceTree = "<group>"; };
+		2A1086122BF9F9DC00F8FAED /* BreakfastMealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakfastMealTableViewCell.swift; sourceTree = "<group>"; };
+		2A1086142BF9F9F600F8FAED /* LunchMealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunchMealTableViewCell.swift; sourceTree = "<group>"; };
+		2A1086182BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinnerMealTableViewCell.swift; sourceTree = "<group>"; };
+		2A10861A2BFA059600F8FAED /* AddMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealViewController.swift; sourceTree = "<group>"; };
 		2A14994E2BE3D8A2005114DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartUIView.swift; sourceTree = "<group>"; };
 		2A48C5312BD77DDD006EFA94 /* MeRecipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeRecipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +91,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A10860F2BF9EA5A00F8FAED /* MealSchedulerComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2A10860D2BF9EA4900F8FAED /* MealSchedulerTableViewController.swift */,
+				2A1086122BF9F9DC00F8FAED /* BreakfastMealTableViewCell.swift */,
+				2A1086142BF9F9F600F8FAED /* LunchMealTableViewCell.swift */,
+				2A1086182BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift */,
+				2A10861A2BFA059600F8FAED /* AddMealViewController.swift */,
+			);
+			path = MealSchedulerComponents;
+			sourceTree = "<group>";
+		};
 		2A48C5282BD77DDD006EFA94 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +138,7 @@
 				2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */,
 				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
 				2A58447C2BF3645300FA9BD3 /* ShoppingListComponents */,
+				2A10860F2BF9EA5A00F8FAED /* MealSchedulerComponents */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
 				2A7DACFD2BE6085E00886398 /* RecipeList.swift */,
 				2AADB0B92BF32EF600962CF6 /* Ingredient.swift */,
@@ -227,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A7DAD002BE6092100886398 /* FirebaseController.swift in Sources */,
+				2A10860E2BF9EA4900F8FAED /* MealSchedulerTableViewController.swift in Sources */,
 				2A7DACFA2BE6020400886398 /* DatabaseProtocol.swift in Sources */,
 				2AADB0BA2BF32EF600962CF6 /* Ingredient.swift in Sources */,
 				2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */,
@@ -236,12 +260,16 @@
 				2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */,
 				2A48C54D2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift in Sources */,
 				2A297B002BEF8C9C0009E014 /* PieChartUIView.swift in Sources */,
+				2A1086152BF9F9F600F8FAED /* LunchMealTableViewCell.swift in Sources */,
 				2A48C5492BD782EA006EFA94 /* MyRecipeCollectionViewController.swift in Sources */,
 				2A48C5372BD77DDD006EFA94 /* SceneDelegate.swift in Sources */,
 				2A58447E2BF364AF00FA9BD3 /* BoughtTableViewCell.swift in Sources */,
 				2AD878B22BD8C2F60055DC01 /* CreateRecipeViewController.swift in Sources */,
 				2AADB0BC2BF3575000962CF6 /* ToBuyTableViewCell.swift in Sources */,
+				2A10861B2BFA059600F8FAED /* AddMealViewController.swift in Sources */,
 				2AD878B42BD8D70A0055DC01 /* AddRecipeDelegate.swift in Sources */,
+				2A1086192BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift in Sources */,
+				2A1086132BF9F9DC00F8FAED /* BreakfastMealTableViewCell.swift in Sources */,
 				2AADB0B62BF32CEB00962CF6 /* ShoppingListTableViewController.swift in Sources */,
 				2A48C54B2BD7842B006EFA94 /* Recipe.swift in Sources */,
 				2A7DACF82BE601EF00886398 /* MulticastDelegate.swift in Sources */,
