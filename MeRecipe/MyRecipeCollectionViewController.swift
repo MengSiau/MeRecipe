@@ -84,7 +84,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
         
         // Ensure the toolbar is visible
-        self.navigationController?.isToolbarHidden = false
+//        self.navigationController?.isToolbarHidden = false
     }
     
     // Action functions for bot nav bar //
@@ -118,12 +118,14 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        self.navigationController?.isToolbarHidden = false
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
+        self.navigationController?.isToolbarHidden = true
     }
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}

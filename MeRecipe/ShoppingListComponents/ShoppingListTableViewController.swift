@@ -67,7 +67,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
         
         // Ensure the toolbar is visible
-        self.navigationController?.isToolbarHidden = false
+//        self.navigationController?.isToolbarHidden = false
     }
     
     @objc func homeButtonTapped() {performSegue(withIdentifier: "homeSegue", sender: self)}
@@ -97,6 +97,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        self.navigationController?.isToolbarHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,6 +106,8 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         // Removes checked Ingredients //
         removeCheckedIngredients()
         databaseController?.removeListener(listener: self)
+        
+        self.navigationController?.isToolbarHidden = true
     }
     
     // Removes checked Ingredients from Firebaes //
