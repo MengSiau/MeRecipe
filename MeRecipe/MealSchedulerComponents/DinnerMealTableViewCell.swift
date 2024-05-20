@@ -9,8 +9,8 @@ import UIKit
 
 class DinnerMealTableViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var mealImage: UIImageView!
+
     
     @IBOutlet weak var mealNameText: UILabel!
     

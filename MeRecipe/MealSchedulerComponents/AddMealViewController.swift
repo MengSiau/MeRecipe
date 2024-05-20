@@ -16,10 +16,12 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tableView: UITableView!
     
     var listOfRecipe: [Recipe] = []
+    var categoryType: String = "breakfast"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupSegmentController()
         
         // FIREBASE //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -49,11 +51,11 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedRecipe = listOfRecipe[indexPath.row]
-        databaseController?.editRecipeCategory(recipeToEdit: selectedRecipe, category: "breakfast")
+        databaseController?.editRecipeCategory(recipeToEdit: selectedRecipe, category: categoryType)
         
         tableView.deselectRow(at: indexPath, animated: true)
         navigationController?.popViewController(animated: false)
-        print("row clicked")
+        print("ADDING RECIPE")
         
     }
     
@@ -74,6 +76,22 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
+    }
+    
+
+    func setupSegmentController() {
+        segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+    }
+    
+    // SegmentedView controls the 4 Views //
+    @objc func segmentedControlValueChanged() {
+        if segmentController.selectedSegmentIndex == 0 {
+            categoryType = "breakfast"
+        } else if segmentController.selectedSegmentIndex == 1 {
+            categoryType = "lunch"
+        } else if segmentController.selectedSegmentIndex == 2 {
+            categoryType = "dinner"
+        }
     }
     
 

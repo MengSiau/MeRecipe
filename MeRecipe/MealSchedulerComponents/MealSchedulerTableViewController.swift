@@ -48,11 +48,11 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     
     func sortRecipeByCategory(listOfRecipe: [Recipe]) {
         for recipe in listOfRecipe {
-            if recipe.category == "breakfast" {
+            if recipe.category == "breakfast" && !breakfastList.contains(where: { $0.name == recipe.name }){
                 breakfastList.append(recipe)
-            } else if recipe.category == "lunch" {
+            } else if recipe.category == "lunch" && !lunchList.contains(where: { $0.name == recipe.name }){
                 lunchList.append(recipe)
-            } else if recipe.category == "dinner" {
+            } else if recipe.category == "dinner" && !dinnerList.contains(where: { $0.name == recipe.name }){
                 dinnerList.append(recipe)
             }
         }
@@ -61,14 +61,11 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     
+    // TODO: ISSUE HERE IS THAT POPPING BACK CAUSES BREAKFAST LIST TO OVERPOPULATE
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
-        for newRecipe in recipes {
-            if !listOfRecipe.contains(newRecipe) {
-                listOfRecipe.append(newRecipe)
-            }
-        }
+        listOfRecipe = recipes
         print("onchange recipelist", listOfRecipe)
-        sortRecipeByCategory(listOfRecipe: listOfRecipe)
+        sortRecipeByCategory(listOfRecipe: listOfRecipe) 
         print("onchange breakList", breakfastList)
     }
     
@@ -77,6 +74,7 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        tableView.reloadData()
         
     }
     
@@ -98,23 +96,12 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
             case SECTION_BREAKFAST:
                 return breakfastList.count
             case SECTION_LUNCH:
-                return testList.count
+                return lunchList.count
             case SECTION_DINNER:
                 return dinnerList.count
             default:
                 return 0
         }
-        
-//        switch section {
-//            case SECTION_BREAKFAST:
-//                return breakfastList.count
-//            case SECTION_LUNCH:
-//                return lunchList.count
-//            case SECTION_DINNER:
-//                return dinnerList.count
-//            default:
-//                return 0
-//        }
     }
 
     
@@ -145,15 +132,38 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         } else if indexPath.section == SECTION_LUNCH {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_LUNCH, for: indexPath) as! LunchMealTableViewCell
             
-            let meal = testList[indexPath.row]
-            cell.mealNameText.text = meal
+            let selectedMeal = lunchList[indexPath.row]
+            cell.mealNameText.text = selectedMeal.name
+            cell.timeText.text = selectedMeal.cookTime
+            
+            // Get Recipe's image file name and attempt to load it locally from files //
+            guard let filename = selectedMeal.imageFileName else {
+                print("cannot unwrap image file name")
+                return cell
+            }
+            if let localImage = loadImageFromLocal(filename: filename) {
+                cell.mealImage.image = localImage
+                return cell
+            }
             return cell
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_DINNER, for: indexPath) as! DinnerMealTableViewCell
             
-            let meal = testList[indexPath.row]
-            cell.mealNameText.text = meal
+            let selectedMeal = dinnerList[indexPath.row]
+            cell.mealNameText.text = selectedMeal.name
+            cell.timeText.text = selectedMeal.cookTime
+            
+            // Get Recipe's image file name and attempt to load it locally from files //
+            guard let filename = selectedMeal.imageFileName else {
+                print("cannot unwrap image file name")
+                return cell
+            }
+            if let localImage = loadImageFromLocal(filename: filename) {
+                cell.mealImage.image = localImage
+                return cell
+            }
+            
             return cell
         }
     }
