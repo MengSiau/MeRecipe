@@ -30,6 +30,7 @@ class Recipe: NSObject, Codable {
     var calories: String?
     
     var category: String?
+    var notificationTime: String?
 }
 
 enum CodingKeys: String, CodingKey {
@@ -49,6 +50,7 @@ enum CodingKeys: String, CodingKey {
     case calories
     
     case category
+    case notificationTime
 }
 
 

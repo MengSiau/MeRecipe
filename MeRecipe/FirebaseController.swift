@@ -92,7 +92,23 @@ class FirebaseController: NSObject, DatabaseProtocol {
             print("Failed to update Recipe")
             return
         }
+    }
+    
+    func editRecipeNotificationTime(recipeToEdit: Recipe?, notificationTime: String?) {
+        guard let recipeToEdit = recipeToEdit, let recipeToEditId = recipeToEdit.id else {
+            print("Unable to unwrap recipeToEdit")
+            return
+        }
         
+        recipeToEdit.notificationTime = notificationTime
+        
+        do {
+            try recipeRef?.document(recipeToEditId).setData(from: recipeToEdit, merge: true)
+            print("recipe setData called")
+        } catch {
+            print("Failed to update Recipe")
+            return
+        }
     }
     
     func editRecipe(recipeToEdit: Recipe?, name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
@@ -185,6 +201,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         recipe.calories = calories
         
         recipe.category = ""
+        recipe.notificationTime = ""
         
         // Store newly created Recipe on firebase //
         do {

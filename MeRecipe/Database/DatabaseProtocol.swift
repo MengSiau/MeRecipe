@@ -38,6 +38,7 @@ protocol DatabaseProtocol: AnyObject {
     func editRecipe(recipeToEdit: Recipe?, name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?)
     func deleteRecipe(recipe: Recipe)
     func editRecipeCategory(recipeToEdit: Recipe?, category: String?)
+    func editRecipeNotificationTime(recipeToEdit: Recipe?, notificationTime: String?)
     
     func addIngredient(name: String?)
     func deleteIngredient(ingredient: Ingredient)

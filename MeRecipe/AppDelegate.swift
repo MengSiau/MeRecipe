@@ -7,16 +7,32 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var databaseController: DatabaseProtocol?
+    var notificationsEnabled = false
+    static let NOTIFICATION_IDENTIFIER = "edu.monash.MeRecipe"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
         databaseController = FirebaseController()
+        
+        Task {
+            let notificationCenter = UNUserNotificationCenter.current()
+            let notificationSettings = await notificationCenter.notificationSettings()
+            if notificationSettings.authorizationStatus == .notDetermined {
+                let granted = try await notificationCenter.requestAuthorization(options: [.alert])
+                self.notificationsEnabled = granted
+            }
+            else if notificationSettings.authorizationStatus == .authorized {
+                self.notificationsEnabled = true
+            }
+        }
+        UNUserNotificationCenter.current().delegate = self
+        
+        
         return true
     }
 
@@ -32,6 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    // MARK: UNUserNotificationCenterDelegate methods
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        return [.banner]
     }
 
 

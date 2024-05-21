@@ -31,6 +31,7 @@
 		2A7DAD022BE60C8B00886398 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2A7DAD012BE60C8B00886398 /* FirebaseAuth */; };
 		2A7DAD042BE60C8B00886398 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A7DAD032BE60C8B00886398 /* FirebaseFirestore */; };
 		2A7DAD062BE60C8B00886398 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2A7DAD052BE60C8B00886398 /* FirebaseFirestoreSwift */; };
+		2AA5CE8C2BFC6E7900BDDC46 /* PushNotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5CE8B2BFC6E7900BDDC46 /* PushNotificationSettingsViewController.swift */; };
 		2AADB0B62BF32CEB00962CF6 /* ShoppingListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADB0B52BF32CEB00962CF6 /* ShoppingListTableViewController.swift */; };
 		2AADB0BA2BF32EF600962CF6 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADB0B92BF32EF600962CF6 /* Ingredient.swift */; };
 		2AADB0BC2BF3575000962CF6 /* ToBuyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADB0BB2BF3574F00962CF6 /* ToBuyTableViewCell.swift */; };
@@ -66,6 +67,7 @@
 		2A7DACF92BE6020400886398 /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		2A7DACFD2BE6085E00886398 /* RecipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeList.swift; sourceTree = "<group>"; };
 		2A7DACFF2BE6092100886398 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		2AA5CE8B2BFC6E7900BDDC46 /* PushNotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSettingsViewController.swift; sourceTree = "<group>"; };
 		2AADB0B52BF32CEB00962CF6 /* ShoppingListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewController.swift; sourceTree = "<group>"; };
 		2AADB0B92BF32EF600962CF6 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		2AADB0BB2BF3574F00962CF6 /* ToBuyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToBuyTableViewCell.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				2A1086142BF9F9F600F8FAED /* LunchMealTableViewCell.swift */,
 				2A1086182BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift */,
 				2A10861A2BFA059600F8FAED /* AddMealViewController.swift */,
+				2AA5CE8B2BFC6E7900BDDC46 /* PushNotificationSettingsViewController.swift */,
 			);
 			path = MealSchedulerComponents;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				2A1086152BF9F9F600F8FAED /* LunchMealTableViewCell.swift in Sources */,
 				2A48C5492BD782EA006EFA94 /* MyRecipeCollectionViewController.swift in Sources */,
 				2A48C5372BD77DDD006EFA94 /* SceneDelegate.swift in Sources */,
+				2AA5CE8C2BFC6E7900BDDC46 /* PushNotificationSettingsViewController.swift in Sources */,
 				2A58447E2BF364AF00FA9BD3 /* BoughtTableViewCell.swift in Sources */,
 				2AD878B22BD8C2F60055DC01 /* CreateRecipeViewController.swift in Sources */,
 				2AADB0BC2BF3575000962CF6 /* ToBuyTableViewCell.swift in Sources */,

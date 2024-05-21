@@ -22,6 +22,7 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     // List of Recipe so that user can choose which one to add
     // breakfast, lunch, dinner. Add recipe means to tag recipe with tag. Loop through list of recipe to find the one with the tag.
     var listOfRecipe: [Recipe] = []
+    var selectedRecipeForNotification: Recipe?
     var testList = ["test1", "test2", "test3"]
     
     var breakfastList: [Recipe] = []
@@ -31,6 +32,7 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     @IBAction func addMealBtn(_ sender: Any) {
         performSegue(withIdentifier: "addMealSegue", sender: self)
     }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,11 +112,21 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         if indexPath.section == SECTION_BREAKFAST {
             let cell = tableView.dequeueReusableCell(withIdentifier: "breakfastCell", for: indexPath) as! BreakfastMealTableViewCell
             
-            
-            
             let selectedMeal = breakfastList[indexPath.row]
+            
+            // Set meal name + notification alarm time //
             cell.mealNameText.text = selectedMeal.name
-            cell.timeText.text = selectedMeal.cookTime
+            guard let notificationTime = selectedMeal.notificationTime else {
+                print("Unable to unwrap notification time")
+                return cell
+            }
+            
+            if notificationTime == "" {
+                cell.timeText.text = "⏰ Alarm: " + "N/A"
+            } else {
+                cell.timeText.text = "⏰ Alarm: " + notificationTime
+            }
+           
             
             // Get Recipe's image file name and attempt to load it locally from files //
             guard let filename = selectedMeal.imageFileName else {
@@ -125,16 +137,25 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
                 cell.mealImage.image = localImage
                 return cell
             }
-            
-            
             return cell
             
         } else if indexPath.section == SECTION_LUNCH {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_LUNCH, for: indexPath) as! LunchMealTableViewCell
             
             let selectedMeal = lunchList[indexPath.row]
+            
+            // Set meal name + notification alarm time //
             cell.mealNameText.text = selectedMeal.name
-            cell.timeText.text = selectedMeal.cookTime
+            guard let notificationTime = selectedMeal.notificationTime else {
+                print("Unable to unwrap notification time")
+                return cell
+            }
+            
+            if notificationTime == "" {
+                cell.timeText.text = "⏰ Alarm: " + "N/A"
+            } else {
+                cell.timeText.text = "⏰ Alarm: " + notificationTime
+            }
             
             // Get Recipe's image file name and attempt to load it locally from files //
             guard let filename = selectedMeal.imageFileName else {
@@ -151,8 +172,19 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_DINNER, for: indexPath) as! DinnerMealTableViewCell
             
             let selectedMeal = dinnerList[indexPath.row]
+            
+            // Set meal name + notification alarm time //
             cell.mealNameText.text = selectedMeal.name
-            cell.timeText.text = selectedMeal.cookTime
+            guard let notificationTime = selectedMeal.notificationTime else {
+                print("Unable to unwrap notification time")
+                return cell
+            }
+            
+            if notificationTime == "" {
+                cell.timeText.text = "⏰ Alarm: " + "N/A"
+            } else {
+                cell.timeText.text = "⏰ Alarm: " + notificationTime
+            }
             
             // Get Recipe's image file name and attempt to load it locally from files //
             guard let filename = selectedMeal.imageFileName else {
@@ -205,6 +237,18 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         return true
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == SECTION_BREAKFAST {
+            selectedRecipeForNotification = breakfastList[indexPath.row]
+            performSegue(withIdentifier: "notificationSegue", sender: self)
+        } else if indexPath.section == SECTION_LUNCH {
+            selectedRecipeForNotification = lunchList[indexPath.row]
+            performSegue(withIdentifier: "notificationSegue", sender: self)
+        } else if indexPath.section == SECTION_DINNER {
+            selectedRecipeForNotification = dinnerList[indexPath.row]
+            performSegue(withIdentifier: "notificationSegue", sender: self)
+        }
+    }
 
     //
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -256,14 +300,19 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "notificationSegue" {
+              if let destination = segue.destination as? PushNotificationSettingsViewController {
+                  destination.selectedRecipe = selectedRecipeForNotification
+              }
+          }
+      }
+    
     }
-    */
+    
 
-}
+
