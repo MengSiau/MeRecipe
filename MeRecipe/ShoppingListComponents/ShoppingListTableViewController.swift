@@ -24,11 +24,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     var boughtList: [Ingredient] = []
     
     
-    let bottomToolbar: UIToolbar = {
-        let toolbar = UIToolbar()
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        return toolbar
-    }()
+
     
     @IBAction func addIngredientBtn(_ sender: Any) {
         print("btn pressed")
@@ -61,8 +57,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-//        homeBtn.tintColor = UIColor.systemRed
-        
         // Set the toolbar items
         self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
         
@@ -71,7 +65,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     @objc func homeButtonTapped() {navigationController?.popViewController(animated: true)}
     @objc func shoppingListBtnTapped() {}
     @objc func mealScheduleBtnTapped() {}
-    @objc func settingsButtonTapped() {}
+    @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
     
     
     // Adds the ingredient from the search bar //

@@ -15,6 +15,12 @@ class SettingsTableViewController: UITableViewController, DatabaseListener {
     let SECTION_NIGHTMODE = 0
     let SECTION_DELETEDATA = 1
     let SECTION_ACKNOWLEDGEMENT = 2
+    
+    let bottomToolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        return toolbar
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +29,21 @@ class SettingsTableViewController: UITableViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        tableView.backgroundColor = UIColor.systemGroupedBackground
-
+//        tableView.backgroundColor = UIColor.systemGroupedBackground
+        
+        // TOOLBAR //
+        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
+        let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
+        let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
+        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
     }
+    
+    @objc func homeButtonTapped() {performSegue(withIdentifier: "homeSegue", sender: self)}
+    @objc func shoppingListBtnTapped() {}
+    @objc func mealScheduleBtnTapped() {}
+    @objc func settingsButtonTapped() {}
 
     // MARK: - Table view data source
 
@@ -90,10 +108,20 @@ class SettingsTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
+    // Ensures footer text is small //
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         let footer = view as? UITableViewHeaderFooterView
-        footer?.textLabel?.font = UIFont.systemFont(ofSize: 14) // Adjust the font size as needed
+        footer?.textLabel?.font = UIFont.systemFont(ofSize: 14)
     }
+    
+    // Only acknowledgement section performs segue //
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == SECTION_ACKNOWLEDGEMENT {
+            performSegue(withIdentifier: "acknowledgementSegue", sender: self)
+        }
+    }
+    
+    // MARK: Firebase methods
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
@@ -105,6 +133,8 @@ class SettingsTableViewController: UITableViewController, DatabaseListener {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
         
+        self.navigationController?.isToolbarHidden = false
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -112,12 +142,7 @@ class SettingsTableViewController: UITableViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
 
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == SECTION_ACKNOWLEDGEMENT {
-            performSegue(withIdentifier: "acknowledgementSegue", sender: self)
-        }
-    }
+
     
     /*
     // Override to support conditional editing of the table view.

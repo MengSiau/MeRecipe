@@ -377,6 +377,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Dxl-9S-G4K" kind="show" identifier="settingsSegue" id="ePh-ih-ozY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vpO-WX-EdP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -710,14 +713,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="acknowledgementCell" id="kUk-5S-9G7" customClass="AcknowledgementTableViewCell" customModule="MeRecipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="44"/>
+                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kUk-5S-9G7" id="4If-qC-BEl">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Acknowledgements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zj2-97-VSs">
-                                            <rect key="frame" x="20" y="10.999999999999998" width="211" height="21.333333333333329"/>
+                                            <rect key="frame" x="20" y="11" width="211" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -747,7 +750,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LrB-oV-yGE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4638.9312977099235" y="155.63380281690141"/>
+            <point key="canvasLocation" x="4607" y="156"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Lz2-vs-csG">
@@ -1070,7 +1073,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Td2-CK-EeO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4828" y="-599"/>
+            <point key="canvasLocation" x="5164" y="-613"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mFb-3Y-vAm">
@@ -1093,6 +1096,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="IIU-gT-5fF"/>
+        <segue reference="ePh-ih-ozY"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

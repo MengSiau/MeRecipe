@@ -250,7 +250,7 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         }
     }
 
-    // TODO: REMOVE THE NOTIFICATION
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             var recipeToRemove: Recipe?
@@ -274,9 +274,20 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
                 return
             }
             
-            if let recipeToRemove = recipeToRemove {
-                databaseController?.editRecipeCategory(recipeToEdit: recipeToRemove, category: "")
+            guard let recipeToRemove = recipeToRemove, let recipeCategory = recipeToRemove.category, let recipeId = recipeToRemove.id else {
+                print("Unable to unwrwap recipe")
+                return
             }
+            
+            // Removes Recipe Category // 
+            databaseController?.editRecipeCategory(recipeToEdit: recipeToRemove, category: "")
+            
+            // Removes the pending notification //
+            let toRemoveNotificationIdentifier = recipeCategory + recipeId
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [toRemoveNotificationIdentifier])
+            
+            // Deletes the notification time //
+            databaseController?.editRecipeNotificationTime(recipeToEdit: recipeToRemove, notificationTime: "")
             
             print("Breakfast List Count After Removal: \(breakfastList.count)")
             tableView.deleteRows(at: [indexPath], with: .fade)
