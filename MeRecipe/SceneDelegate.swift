@@ -18,6 +18,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
     }
+    
+
+    // Responsible for changing the appearance of the whole app //
+    func toggleDarkMode(_ isDarkMode: Bool) {
+        window?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

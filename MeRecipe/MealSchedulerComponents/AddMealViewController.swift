@@ -62,7 +62,12 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
-        listOfRecipe = recipes
+        
+        for recipe in recipes {
+            if recipe.category == "" {
+                listOfRecipe.append(recipe)
+            }
+        }
         print(listOfRecipe)
     }
     

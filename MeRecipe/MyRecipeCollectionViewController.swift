@@ -91,7 +91,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     @objc func homeButtonTapped() {}
     @objc func shoppingListBtnTapped() {performSegue(withIdentifier: "shoppingListSegue", sender: self)}
     @objc func mealScheduleBtnTapped() {performSegue(withIdentifier: "mealSchedulerSegue", sender: self)}
-    @objc func settingsButtonTapped() {}
+    @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
+    
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased() else {
