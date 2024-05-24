@@ -56,6 +56,9 @@ class PushNotificationSettingsViewController: UIViewController, DatabaseListener
             return
         }
         
+        // POPVIEWCONTROLLER //
+        self.navigationController?.popViewController(animated: true)
+        
         // Create notification content //
         let content = UNMutableNotificationContent()
         
@@ -89,6 +92,8 @@ class PushNotificationSettingsViewController: UIViewController, DatabaseListener
         
         // Save the notification alarm time to recipe //
         databaseController?.editRecipeNotificationTime(recipeToEdit: selectedRecipe, notificationTime: notificationTime)
+        
+
     }
     
 
@@ -124,7 +129,6 @@ class PushNotificationSettingsViewController: UIViewController, DatabaseListener
         }
         
         // Preset labels and fields with values //
-        timeField.text = selectedRecipe.notificationTime
         if selectedRecipe.notificationTime == "" {
             currentSetTimeField.text = "No Time Currently Selected"
         } else {

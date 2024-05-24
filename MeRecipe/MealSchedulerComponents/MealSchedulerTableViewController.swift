@@ -274,12 +274,13 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
                 return
             }
             
+            // Remove Recipe from tableView + Reset Category + Remove any pending notification //
             guard let recipeToRemove = recipeToRemove, let recipeCategory = recipeToRemove.category, let recipeId = recipeToRemove.id else {
                 print("Unable to unwrwap recipe")
                 return
             }
             
-            // Removes Recipe Category // 
+            // Removes Recipe Category //
             databaseController?.editRecipeCategory(recipeToEdit: recipeToRemove, category: "")
             
             // Removes the pending notification //
