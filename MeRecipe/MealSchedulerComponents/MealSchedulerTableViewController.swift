@@ -36,6 +36,8 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.backgroundColor = UIColor.systemGray6
 
         // FIREBASE //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

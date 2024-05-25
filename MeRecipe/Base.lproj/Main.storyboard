@@ -708,14 +708,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="acknowledgementCell" id="kUk-5S-9G7" customClass="AcknowledgementTableViewCell" customModule="MeRecipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.333332061767578"/>
+                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kUk-5S-9G7" id="4If-qC-BEl">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.333332061767578"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Acknowledgements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zj2-97-VSs">
-                                            <rect key="frame" x="20" y="11.000000000000002" width="211" height="20.666666666666671"/>
+                                            <rect key="frame" x="20" y="11" width="211" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -747,21 +747,38 @@
             </objects>
             <point key="canvasLocation" x="4607" y="156"/>
         </scene>
-        <!--View Controller-->
+        <!--About-->
         <scene sceneID="Lz2-vs-csG">
             <objects>
-                <viewController id="qU1-Ev-Ghi" sceneMemberID="viewController">
+                <viewController id="qU1-Ev-Ghi" customClass="AcknowledgementViewController" customModule="MeRecipe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EE9-7A-Lqd">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="30" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2LU-SD-REC">
+                                <rect key="frame" x="16" y="103" width="361" height="715"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="qD9-ZB-iEO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2LU-SD-REC" firstAttribute="bottom" secondItem="qD9-ZB-iEO" secondAttribute="bottom" id="LQ5-M1-0kH"/>
+                            <constraint firstItem="2LU-SD-REC" firstAttribute="top" secondItem="qD9-ZB-iEO" secondAttribute="top" id="VxA-hK-utN"/>
+                            <constraint firstItem="2LU-SD-REC" firstAttribute="leading" secondItem="qD9-ZB-iEO" secondAttribute="leading" constant="16" id="dlh-HJ-ORO"/>
+                            <constraint firstItem="qD9-ZB-iEO" firstAttribute="trailing" secondItem="2LU-SD-REC" secondAttribute="trailing" constant="16" id="ira-U6-hoy"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="I2z-tU-KIP"/>
+                    <navigationItem key="navigationItem" title="About" id="I2z-tU-KIP"/>
+                    <connections>
+                        <outlet property="acknowledgementText" destination="2LU-SD-REC" id="h4E-2v-CKD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kx7-8P-XYz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5535" y="156"/>
+            <point key="canvasLocation" x="5533.5877862595416" y="155.63380281690141"/>
         </scene>
         <!--Create Recipe-->
         <scene sceneID="dd8-pV-8YE">
