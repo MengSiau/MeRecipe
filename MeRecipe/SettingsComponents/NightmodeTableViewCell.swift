@@ -27,9 +27,6 @@ class NightmodeTableViewCell: UITableViewCell {
         let isDarkModeEnabled = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
         cellSwitch.setOn(isDarkModeEnabled, animated: false)
         setDarkMode(isDarkModeEnabled)
-        print(isDarkModeEnabled)
-        
-  
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -60,6 +60,10 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         // TEST
         generateTestRecipe()
         
+        // Landing page - Ensure appearance is updated on app start up //
+        let isDarkModeEnabled = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+        setDarkMode(isDarkModeEnabled)
+        
         // SEARCH BAR //
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -89,6 +93,12 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     @objc func shoppingListBtnTapped() {performSegue(withIdentifier: "shoppingListSegue", sender: self)}
     @objc func mealScheduleBtnTapped() {performSegue(withIdentifier: "mealSchedulerSegue", sender: self)}
     @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
+    
+    private func setDarkMode(_ isDarkMode: Bool) {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.toggleDarkMode(isDarkMode)
+        }
+    }
     
     
     func updateSearchResults(for searchController: UISearchController) {
