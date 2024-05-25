@@ -232,22 +232,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Daily Meal Schedule" id="L1X-xI-pAw">
-                        <rightBarButtonItems>
-                            <barButtonItem style="plain" systemItem="add" id="diq-60-72k">
-                                <connections>
-                                    <action selector="addMealBtn:" destination="YI7-Y8-JxW" id="7CP-h9-h9g"/>
-                                    <segue destination="Siu-mB-3pi" kind="show" identifier="addMealSegue" id="kho-At-0d7"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" id="AVS-uS-3Av">
-                                <connections>
-                                    <action selector="testBtn:" destination="YI7-Y8-JxW" id="2Gi-W4-LWR"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="diq-60-72k">
+                            <connections>
+                                <action selector="addMealBtn:" destination="YI7-Y8-JxW" id="7CP-h9-h9g"/>
+                                <segue destination="Siu-mB-3pi" kind="show" identifier="addMealSegue" id="kho-At-0d7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="i0i-Dc-7fE" kind="show" identifier="notificationSegue" id="Swx-i8-jfF"/>
+                        <segue destination="Dxl-9S-G4K" kind="show" identifier="settingsSegue" id="nje-Og-YNZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vl5-dn-MV9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -305,7 +299,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJY-Mx-7GL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3330.5343511450378" y="-1387.323943661972"/>
+            <point key="canvasLocation" x="3523" y="-1387"/>
         </scene>
         <!--Shopping List Table View Controller-->
         <scene sceneID="w0W-hD-GRg">
@@ -379,6 +373,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="Dxl-9S-G4K" kind="show" identifier="settingsSegue" id="ePh-ih-ozY"/>
+                        <segue destination="YI7-Y8-JxW" kind="show" identifier="mealSchedulerSegue" id="fWY-Vg-K9Z"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vpO-WX-EdP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -713,14 +708,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="acknowledgementCell" id="kUk-5S-9G7" customClass="AcknowledgementTableViewCell" customModule="MeRecipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.666667938232422"/>
+                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.333332061767578"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kUk-5S-9G7" id="4If-qC-BEl">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.333332061767578"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Acknowledgements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zj2-97-VSs">
-                                            <rect key="frame" x="20" y="11" width="211" height="21"/>
+                                            <rect key="frame" x="20" y="11.000000000000002" width="211" height="20.666666666666671"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1097,6 +1092,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="IIU-gT-5fF"/>
         <segue reference="ePh-ih-ozY"/>
+        <segue reference="fWY-Vg-K9Z"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

@@ -18,6 +18,7 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     var listOfRecipe: [Recipe] = []
     var categoryType: String = "breakfast"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

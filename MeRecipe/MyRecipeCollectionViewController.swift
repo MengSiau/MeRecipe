@@ -72,19 +72,16 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         navigationItem.hidesBackButton = true
         
         // TOOL BAR //
-        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
+//        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
         let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
         let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
         let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-//        homeBtn.tintColor = UIColor.systemRed
         
         // Set the toolbar items
-        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
-        
-        // Ensure the toolbar is visible
-//        self.navigationController?.isToolbarHidden = false
+        self.toolbarItems = [shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
+//        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
     }
     
     // Action functions for bot nav bar //

@@ -46,7 +46,23 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         
         print("printing breaklist from load", breakfastList)
         
+//        // TOOLBAR //
+//        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
+//        let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
+//        let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
+//        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        
+//        // Set the toolbar items
+//        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
+//        
     }
+    
+//    @objc func homeButtonTapped() {navigationController?.popViewController(animated: true)}
+//    @objc func shoppingListBtnTapped() {performSegue(withIdentifier: "shoppingListSegue", sender: self)}
+//    @objc func mealScheduleBtnTapped() {}
+//    @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
+    
     
     func sortRecipeByCategory(listOfRecipe: [Recipe]) {
         for recipe in listOfRecipe {
