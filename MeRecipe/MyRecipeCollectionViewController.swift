@@ -293,7 +293,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     // Prepares the Recipe values for the ViewReciipeDetail page //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createRecipeSegue" {
-            let destination = segue.destination as! CreateRecipeV2ViewController
+            let destination = segue.destination as! CreateRecipeViewController
             destination.recipeDelegate = self // TODO: NEED THIS HERE?
             destination.mode = "create"
             

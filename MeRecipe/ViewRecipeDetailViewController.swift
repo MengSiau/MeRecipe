@@ -94,16 +94,10 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-//        // Test //
-//        if let selectedRecipe = selectedRecipe?.name {
-//            print(selectedRecipe)
-//        } else {
-//            print("cannot unwrap selected recipe name")
-//        }
-        
-        
         // Load the Image //
         recipeImage.image = imageToLoad
+        
+        recipeNameField.text = name
 
         // Processing Values for time and difficulty //
         guard let prepTime = Int(prepTime), let cookTime = Int(cookTime) else {
@@ -114,7 +108,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         let difficultyAndTime = "⭐️ Difficulty: [" + difficulty + "/5] | ⏰ Time: " + String(totalTime) + " minutes"
         
         // Setting Texts values //
-        recipeNameField.text = name
+//        recipeNameField.text = name
         recipeDescriptionFIeld.text = desc
         recipeDifficultyAndTime.text = difficultyAndTime
         
@@ -421,7 +415,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editRecipeSegue" {
-            let destination = segue.destination as! CreateRecipeV2ViewController
+            let destination = segue.destination as! CreateRecipeViewController
             
             destination.mode = "edit"
             destination.navigationItem.title = "Editing \(name)"
