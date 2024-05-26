@@ -87,7 +87,7 @@ class PushNotificationSettingsViewController: UIViewController, DatabaseListener
             }
         }
         
-        print("Notification scheduled at \(dateComponents)") // TODO: DO a pop up here
+        print("Notification scheduled at \(dateComponents)") 
         displayMessage(title: "Alarm Set!", message: "Notification scheduled at \(notificationTime)")
         
         // Save the notification alarm time to recipe //
@@ -98,7 +98,7 @@ class PushNotificationSettingsViewController: UIViewController, DatabaseListener
     
 
     @IBAction func deleteTimerBtn(_ sender: Any) {
-        guard  let selectedRecipe = selectedRecipe, let recipeCategory = selectedRecipe.category, let recipeId = selectedRecipe.id else {
+        guard  let selectedRecipe = selectedRecipe, let recipeCategory = selectedRecipe.category, let recipeId = selectedRecipe.id, let recipeName = selectedRecipe.name else {
             print("Unable to unwrwap recipe")
             return
         }
@@ -113,6 +113,10 @@ class PushNotificationSettingsViewController: UIViewController, DatabaseListener
         // Update the view
         timeField.text = ""
         currentSetTimeField.text = "No Time Currently Selected"
+        
+        self.navigationController?.popViewController(animated: true)
+        
+        displayMessage(title: "Alarm deleted!", message: "\(recipeName) no longer has a alarm set")
     }
     
     

@@ -17,45 +17,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select time to begin cooking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQd-2L-mZG">
-                                <rect key="frame" x="77" y="117" width="217" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select time to begin cooking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQd-2L-mZG">
+                                <rect key="frame" x="61" y="126" width="249" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MN7-So-qdE">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MN7-So-qdE">
                                 <rect key="frame" x="16" y="158" width="361" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No time currently selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdl-Ww-XfT">
-                                <rect key="frame" x="16" y="279" width="361" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No time currently selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdl-Ww-XfT">
+                                <rect key="frame" x="16" y="340" width="361" height="26.333333333333314"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYc-jf-XA3">
-                                <rect key="frame" x="145" y="200" width="103" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYc-jf-XA3">
+                                <rect key="frame" x="88" y="200" width="216" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Add Timer"/>
                                 <connections>
                                     <action selector="saveBtn:" destination="i0i-Dc-7fE" eventType="touchUpInside" id="gji-c7-jxx"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current set time " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Izr-PT-Cdi">
-                                <rect key="frame" x="130" y="250" width="132" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current set alarm time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Izr-PT-Cdi">
+                                <rect key="frame" x="99" y="300" width="195" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qlp-uy-JBo">
-                                <rect key="frame" x="136" y="308" width="122" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qlp-uy-JBo">
+                                <rect key="frame" x="88" y="374" width="216" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Delete Timer">
                                     <color key="baseBackgroundColor" systemColor="systemRedColor"/>
@@ -67,6 +61,26 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nQo-8K-3jo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MN7-So-qdE" firstAttribute="leading" secondItem="nQo-8K-3jo" secondAttribute="leading" constant="16" id="0Xp-Uu-Q3V"/>
+                            <constraint firstItem="nQo-8K-3jo" firstAttribute="trailing" secondItem="WYc-jf-XA3" secondAttribute="trailing" constant="89" id="2PU-Sd-h0S"/>
+                            <constraint firstItem="JQd-2L-mZG" firstAttribute="leading" secondItem="nQo-8K-3jo" secondAttribute="leading" constant="61" id="3CP-wO-9Bc"/>
+                            <constraint firstItem="nQo-8K-3jo" firstAttribute="trailing" secondItem="MN7-So-qdE" secondAttribute="trailing" constant="16" id="6WV-lS-Bmt"/>
+                            <constraint firstItem="Izr-PT-Cdi" firstAttribute="leading" secondItem="nQo-8K-3jo" secondAttribute="leading" constant="99" id="9SZ-S0-bHX"/>
+                            <constraint firstItem="MN7-So-qdE" firstAttribute="top" secondItem="JQd-2L-mZG" secondAttribute="bottom" constant="8" symbolic="YES" id="Bzm-sU-IPB"/>
+                            <constraint firstItem="nQo-8K-3jo" firstAttribute="trailing" secondItem="Izr-PT-Cdi" secondAttribute="trailing" constant="99" id="Cxr-J3-dcs"/>
+                            <constraint firstItem="Qlp-uy-JBo" firstAttribute="top" secondItem="fdl-Ww-XfT" secondAttribute="bottom" constant="7.6699999999999999" id="VBI-UZ-fCN"/>
+                            <constraint firstItem="nQo-8K-3jo" firstAttribute="trailing" secondItem="Qlp-uy-JBo" secondAttribute="trailing" constant="89" id="hCm-Vq-VeE"/>
+                            <constraint firstItem="JQd-2L-mZG" firstAttribute="top" secondItem="nQo-8K-3jo" secondAttribute="top" constant="23" id="hDs-TO-fxy"/>
+                            <constraint firstItem="Izr-PT-Cdi" firstAttribute="top" secondItem="WYc-jf-XA3" secondAttribute="bottom" constant="65" id="ndT-z8-dLo"/>
+                            <constraint firstItem="nQo-8K-3jo" firstAttribute="trailing" secondItem="fdl-Ww-XfT" secondAttribute="trailing" constant="16" id="nqe-Q5-k4r"/>
+                            <constraint firstItem="fdl-Ww-XfT" firstAttribute="leading" secondItem="nQo-8K-3jo" secondAttribute="leading" constant="16" id="nzo-sB-BGR"/>
+                            <constraint firstItem="fdl-Ww-XfT" firstAttribute="top" secondItem="Izr-PT-Cdi" secondAttribute="bottom" constant="16" id="oZl-Yr-51v"/>
+                            <constraint firstItem="WYc-jf-XA3" firstAttribute="top" secondItem="MN7-So-qdE" secondAttribute="bottom" constant="8" symbolic="YES" id="qMT-DR-Lj5"/>
+                            <constraint firstItem="Qlp-uy-JBo" firstAttribute="leading" secondItem="nQo-8K-3jo" secondAttribute="leading" constant="88" id="rJ9-K6-FIm"/>
+                            <constraint firstItem="WYc-jf-XA3" firstAttribute="leading" secondItem="nQo-8K-3jo" secondAttribute="leading" constant="88" id="seA-w4-FUb"/>
+                            <constraint firstItem="nQo-8K-3jo" firstAttribute="trailing" secondItem="JQd-2L-mZG" secondAttribute="trailing" constant="83" id="wTt-9V-bMF"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notification" id="Ple-KP-fEH"/>
                     <connections>

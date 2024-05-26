@@ -51,7 +51,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         definesPresentationContext = true
         
         
-        // Adds a hint message below navigation title //
+        // Programatically adds a hint message below navigation title //
         let headerView = UIView()
         
         let infoLabel = UILabel()

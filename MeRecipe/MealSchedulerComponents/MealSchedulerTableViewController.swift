@@ -43,10 +43,29 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        // Processing //
-//        sortRecipeByCategory()
+        // Programatically adds a hint message below navigation title //
+        let headerView = UIView()
         
-        print("printing breaklist from load", breakfastList)
+        let infoLabel = UILabel()
+        infoLabel.text = "Tap the meal to schedule an alarm"
+        infoLabel.textColor = .gray
+        infoLabel.font = UIFont.systemFont(ofSize: 14)
+        
+        let infoImageView = UIImageView(image: UIImage(systemName: "info.circle"))
+        infoImageView.tintColor = .gray
+        let stackView = UIStackView(arrangedSubviews: [infoImageView, infoLabel])
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        
+        headerView.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 12)
+        ])
+        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 15)
+        tableView.tableHeaderView = headerView
         
 //        // TOOLBAR //
 //        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
