@@ -113,7 +113,18 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         var request = URLRequest(url: url)
         request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key")
         
+        
+        
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.displayMessage(title: "Error", message: "No internet connection or request failed. Please try again.")
+                }
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
             guard let data = data else { return }
             
             if let jsonArray = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
@@ -159,13 +170,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
         
-        // Handling image
-        // TODO: NEED TO MAKE IT OPTIONAL TO ADD AN IMAGE LATER (perhaps use nil)
-//        guard let image = recipePreviewImage.image else {
-//            print("Cannot unwrap chosen image. Assigning placeholder image")
-//            let image = UIImage(named: "placeholderImage")
-//            return
-//        }
+        // Handling image //
         let image: UIImage
         if let selectedImage = recipePreviewImage.image {
             image = selectedImage
@@ -178,13 +183,12 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             image = placeholderImage
         }
         
-
-        print("hi")
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             displayMessage(title: "Error", message: "Image data could not be compressed")
             return
         }
         
+        // Calls database methods//
         if mode == "create" {
             let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
             navigationController?.popViewController(animated: true)

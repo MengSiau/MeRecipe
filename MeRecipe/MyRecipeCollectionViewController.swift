@@ -193,7 +193,8 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         // Get recipe image URL //
         cell.imageView.image = UIImage(named: "placeholder")
         guard let url = currentRecipe.url else{
-            print("cannot unwrwap url")
+            print("cannot unwrwap image url for cell")
+            displayMessage(title: "Connection error", message: "Error syncing recipes. Please connect to the internet. ")
             return cell
         }
         
