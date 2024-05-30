@@ -184,7 +184,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             return
         }
         
-        // Create a Recipe object //
+        // Create a Recipe object and store basic values //
         let recipe = Recipe()
         recipe.name = name
         recipe.desc = desc
@@ -202,7 +202,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         recipe.category = ""
         recipe.notificationTime = ""
-        
         
         
         // Storing of Recipe Image //

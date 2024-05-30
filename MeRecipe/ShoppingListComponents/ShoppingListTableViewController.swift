@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class ShoppingListTableViewController: UITableViewController, DatabaseListener, UISearchBarDelegate {
     
@@ -23,7 +24,9 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     var toBuyList: [Ingredient] = []
     var boughtList: [Ingredient] = []
     
-    
+    @IBAction func webViewBtn(_ sender: Any) {
+        performSegue(withIdentifier: "webViewSegue", sender: self)
+    }
 
     
     @IBAction func addIngredientBtn(_ sender: Any) {
@@ -31,6 +34,13 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         databaseController?.addIngredient(name: "chow")
     }
     
+//    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        webView.frame = view.bounds
+//    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,8 +48,10 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
+        // Setting up background + title //
         self.tableView.backgroundColor = UIColor.systemGray6
         navigationItem.title = "Shoppling List"
+
         
         // Search Bar to add Ingredients manually //
         let searchController = UISearchController(searchResultsController: nil)
@@ -77,22 +89,10 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 15)
         tableView.tableHeaderView = headerView
         
-//        // TOOLBAR //
-//        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
-//        let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
-//        let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
-//        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        
-//        // Set the toolbar items
-//        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
         
     }
     
-//    @objc func homeButtonTapped() {navigationController?.popViewController(animated: true)}
-//    @objc func shoppingListBtnTapped() {}
-//    @objc func mealScheduleBtnTapped() {performSegue(withIdentifier: "mealSchedulerSegue", sender: self)}
-//    @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
+
     
     
     // Adds the ingredient from the search bar //

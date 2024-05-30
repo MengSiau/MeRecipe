@@ -379,20 +379,44 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="TvG-Jg-3aN">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="phd-nv-nJX">
-                            <connections>
-                                <action selector="addIngredientBtn:" destination="tNm-BI-fGH" id="Uz9-UT-M69"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="phd-nv-nJX">
+                                <connections>
+                                    <action selector="addIngredientBtn:" destination="tNm-BI-fGH" id="Uz9-UT-M69"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="safari" catalog="system" largeContentSizeImage="safari.fill" id="pKT-Dm-STc">
+                                <connections>
+                                    <action selector="webViewBtn:" destination="tNm-BI-fGH" id="EKV-Qv-yvw"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="Dxl-9S-G4K" kind="show" identifier="settingsSegue" id="ePh-ih-ozY"/>
                         <segue destination="YI7-Y8-JxW" kind="show" identifier="mealSchedulerSegue" id="fWY-Vg-K9Z"/>
+                        <segue destination="uAV-gG-SZD" kind="show" identifier="webViewSegue" id="0en-Zg-9Gz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vpO-WX-EdP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4473" y="-1341"/>
+        </scene>
+        <!--Web View View Controller-->
+        <scene sceneID="Wyy-lC-6er">
+            <objects>
+                <viewController id="uAV-gG-SZD" customClass="WebViewViewController" customModule="MeRecipe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="afA-61-XAz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="GOW-4K-UDI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VZG-iy-zNn"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="skl-CX-anC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5289" y="-1342"/>
         </scene>
         <!--MeRecipe-->
         <scene sceneID="rQQ-j5-MgF">
@@ -722,14 +746,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="acknowledgementCell" id="kUk-5S-9G7" customClass="AcknowledgementTableViewCell" customModule="MeRecipe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.666667938232422"/>
+                                <rect key="frame" x="0.0" y="137.66666793823242" width="393" height="43.333332061767578"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kUk-5S-9G7" id="4If-qC-BEl">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="43.333332061767578"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Acknowledgements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zj2-97-VSs">
-                                            <rect key="frame" x="20" y="11" width="211" height="21"/>
+                                            <rect key="frame" x="20" y="11.000000000000002" width="211" height="20.666666666666671"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1132,6 +1156,8 @@
         <segue reference="fWY-Vg-K9Z"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="safari" catalog="system" width="128" height="123"/>
+        <image name="safari.fill" catalog="system" width="128" height="123"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
