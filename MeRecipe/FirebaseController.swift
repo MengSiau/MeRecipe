@@ -180,7 +180,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         // Attempet to unwrap image data //
         let storageReference = Storage.storage().reference()
         guard let imageData = imageData else {
-            print("Cannot unwrap image data")
+            print("FirebaseCont: Cannot unwrap image data")
             return
         }
         
@@ -203,14 +203,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         recipe.category = ""
         recipe.notificationTime = ""
         
-        // Store newly created Recipe on firebase //
-        do {
-            if let recipeRef = try recipeRef?.addDocument(from: recipe) {
-                recipe.id = recipeRef.documentID // returns id if added successfully -> use this id to update/delete
-            }
-        } catch {
-            print("Failed to serialize Reicpe")
-        }
+        
         
         // Storing of Recipe Image //
         let timestamp = UInt(Date().timeIntervalSince1970)
@@ -221,20 +214,18 @@ class FirebaseController: NSObject, DatabaseProtocol {
         metadata.contentType = "image/jpg"
         let uploadTask = imageRef.putData(imageData, metadata: metadata)
         
-        guard let recipeID = recipe.id else {
-            print("cannot unwrap recipe id")
-            return
+        recipe.url = imageRef.bucket
+        recipe.imageFileName = filename
+        
+        // Store newly created Recipe on firebase //
+        do {
+            if let recipeRef = try recipeRef?.addDocument(from: recipe) {
+                recipe.id = recipeRef.documentID 
+            }
+        } catch {
+            print("FirebaseCont: Failed to serialize Reicpe")
         }
         
-        // Attempt to save image URL in firebase // 
-        uploadTask.observe(.success) { snapshot in
-            self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
-            self.recipeRef?.document(recipeID).updateData(["imageFileName" : "\(filename)"])
-            print(imageRef)
-        }
-        uploadTask.observe(.failure) { snapshot in
-            print("FAILLLLL UPLOAD IMAGE")
-        }
         
         // Save image locally //
         saveImageData(filename: filename, imageData: imageData)
@@ -242,6 +233,74 @@ class FirebaseController: NSObject, DatabaseProtocol {
         print("FirebaseCont addRecipe method called")
         return
     }
+    
+//    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
+//        
+//        // Attempet to unwrap image data //
+//        let storageReference = Storage.storage().reference()
+//        guard let imageData = imageData else {
+//            print("FirebaseCont: Cannot unwrap image data")
+//            return
+//        }
+//        
+//        // Create a Recipe object //
+//        let recipe = Recipe()
+//        recipe.name = name
+//        recipe.desc = desc
+//        recipe.prepTime = prepTime
+//        recipe.cookTime = cookTime
+//        recipe.difficulty = difficulty
+//        
+//        recipe.ingredients = ingredients
+//        recipe.directions = directions
+//        
+//        recipe.protein = protein
+//        recipe.carbohydrate = carbohydrate
+//        recipe.fats = fats
+//        recipe.calories = calories
+//        
+//        recipe.category = ""
+//        recipe.notificationTime = ""
+//        
+//        // Store newly created Recipe on firebase //
+//        do {
+//            if let recipeRef = try recipeRef?.addDocument(from: recipe) {
+//                recipe.id = recipeRef.documentID
+//            }
+//        } catch {
+//            print("FirebaseCont: Failed to serialize Reicpe")
+//        }
+//        
+//        // Storing of Recipe Image //
+//        let timestamp = UInt(Date().timeIntervalSince1970)
+//        let filename = "\(timestamp).jpg"
+//        let imageRef = storageReference.child("\(timestamp)")
+//        
+//        let metadata = StorageMetadata()
+//        metadata.contentType = "image/jpg"
+//        let uploadTask = imageRef.putData(imageData, metadata: metadata)
+//        
+//        guard let recipeID = recipe.id else {
+//            print("FirebaseCont: Cannot unwrap recipe id")
+//            return
+//        }
+//        
+//        // Attempt to save image URL in firebase //
+//        uploadTask.observe(.success) { snapshot in
+//            self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
+//            self.recipeRef?.document(recipeID).updateData(["imageFileName" : "\(filename)"])
+//            print(imageRef)
+//        }
+//        uploadTask.observe(.failure) { snapshot in
+//            print("FAILLLLL UPLOAD IMAGE")
+//        }
+//        
+//        // Save image locally //
+//        saveImageData(filename: filename, imageData: imageData)
+//        
+//        print("FirebaseCont addRecipe method called")
+//        return
+//    }
     
     // Function used in addRecipe() to locally store image data as a file //
     func saveImageData(filename: String, imageData: Data) {

@@ -180,6 +180,21 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         }
     }
     
+    // Attempts to send a request to see if there is an internet connection //
+    func checkInternetConnection() {
+        let url = URL(string: "https://www.google.com")!
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data, error == nil {
+                let _ = data
+            } else {
+                DispatchQueue.main.async {
+                    self.displayMessage(title: "No Internet Connection", message: "Recipe on this page may be out of sync. Please reconnect to the internet")
+                }
+            }
+        }
+        task.resume()
+    }
+    
     // Responsible for the creation/customization of the CollectionViewCell
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
@@ -190,17 +205,17 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         // Set the cell Name //
         cell.recipeName.text = currentRecipe.name
         
+        checkInternetConnection()
+        
         // Get recipe image URL //
-        cell.imageView.image = UIImage(named: "placeholder")
         guard let url = currentRecipe.url else{
             print("cannot unwrwap image url for cell")
-            displayMessage(title: "Connection error", message: "Error syncing recipes. Please connect to the internet. ")
             return cell
         }
         
         // Get Recipe's image file name and attempt to load it locally from files //
         guard let filename = currentRecipe.imageFileName else {
-            print("cannot unwrap image file name")
+            print("cannot unwrap image file name locally")
             return cell
         }
         if let localImage = loadImageFromLocal(filename: filename) {
@@ -215,6 +230,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         let downloadTask = storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
             guard let imageData = data, error == nil else {
                 print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
+                self.displayMessage(title: "Connection error", message: "Error syncing recipes. Please connect to the internet. ")
                 return
             }
             
