@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class MyRecipeCollectionViewController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout, AddRecipeDelegate, DatabaseListener {
+class MyRecipeCollectionViewController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout, DatabaseListener {
     func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {
         
     }
@@ -28,7 +28,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     var imagePathList = [String]()
     var listOfRecipe: [Recipe] = []
     var filteredListOfRecipe: [Recipe] = []
-    weak var recipeDelegate: AddRecipeDelegate?
     
     let bottomToolbar: UIToolbar = {
         let toolbar = UIToolbar()
@@ -311,7 +310,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createRecipeSegue" {
             let destination = segue.destination as! CreateRecipeViewController
-            destination.recipeDelegate = self // TODO: NEED THIS HERE?
+//            destination.recipeDelegate = self // TODO: NEED THIS HERE?
             destination.mode = "create"
             
             

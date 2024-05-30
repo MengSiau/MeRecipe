@@ -41,9 +41,7 @@
 		2AADB0BA2BF32EF600962CF6 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADB0B92BF32EF600962CF6 /* Ingredient.swift */; };
 		2AADB0BC2BF3575000962CF6 /* ToBuyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADB0BB2BF3574F00962CF6 /* ToBuyTableViewCell.swift */; };
 		2AAF02FB2BE7D605004BC26C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2AAF02FA2BE7D605004BC26C /* FirebaseStorage */; };
-		2ACFB5492C01B4C600BA2E57 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFB5482C01B4C600BA2E57 /* TabController.swift */; };
 		2ACFB54B2C01BF5E00BA2E57 /* AcknowledgementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACFB54A2C01BF5E00BA2E57 /* AcknowledgementViewController.swift */; };
-		2AD878B42BD8D70A0055DC01 /* AddRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */; };
 		2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */; };
 		2AF481622BDD2CA100BEE85B /* CreateRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF481612BDD2CA100BEE85B /* CreateRecipeViewController.swift */; };
 		2AF481642BDD3B4B00BEE85B /* UIViewController+displayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */; };
@@ -82,9 +80,7 @@
 		2AADB0B52BF32CEB00962CF6 /* ShoppingListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewController.swift; sourceTree = "<group>"; };
 		2AADB0B92BF32EF600962CF6 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		2AADB0BB2BF3574F00962CF6 /* ToBuyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToBuyTableViewCell.swift; sourceTree = "<group>"; };
-		2ACFB5482C01B4C600BA2E57 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		2ACFB54A2C01BF5E00BA2E57 /* AcknowledgementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementViewController.swift; sourceTree = "<group>"; };
-		2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeDelegate.swift; sourceTree = "<group>"; };
 		2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRecipeDetailViewController.swift; sourceTree = "<group>"; };
 		2AF481612BDD2CA100BEE85B /* CreateRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeViewController.swift; sourceTree = "<group>"; };
 		2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+displayMessage.swift"; sourceTree = "<group>"; };
@@ -158,21 +154,16 @@
 				2A48C53F2BD77DDE006EFA94 /* LaunchScreen.storyboard */,
 				2A48C5422BD77DDE006EFA94 /* Info.plist */,
 				2A14994E2BE3D8A2005114DE /* GoogleService-Info.plist */,
-				2A48C5482BD782EA006EFA94 /* MyRecipeCollectionViewController.swift */,
-				2A48C54C2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift */,
-				2AF481612BDD2CA100BEE85B /* CreateRecipeViewController.swift */,
-				2AD878B32BD8D70A0055DC01 /* AddRecipeDelegate.swift */,
-				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
+				2A79F44E2C08BC66003E3057 /* HomePageComponents */,
+				2A79F44D2C08BC22003E3057 /* CreateRecipeComponents */,
+				2A79F44C2C08BC0B003E3057 /* ViewRecipeComponents */,
 				2A58447C2BF3645300FA9BD3 /* ShoppingListComponents */,
 				2A10860F2BF9EA5A00F8FAED /* MealSchedulerComponents */,
 				2A43977D2BFF2DA900E242A2 /* SettingsComponents */,
 				2A7DACFD2BE6085E00886398 /* RecipeList.swift */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
 				2AADB0B92BF32EF600962CF6 /* Ingredient.swift */,
-				2A7DACFF2BE6092100886398 /* FirebaseController.swift */,
 				2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */,
-				2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */,
-				2ACFB5482C01B4C600BA2E57 /* TabController.swift */,
 			);
 			path = MeRecipe;
 			sourceTree = "<group>";
@@ -188,11 +179,38 @@
 			path = ShoppingListComponents;
 			sourceTree = "<group>";
 		};
+		2A79F44C2C08BC0B003E3057 /* ViewRecipeComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2AD878B52BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift */,
+				2A297AFF2BEF8C9C0009E014 /* PieChartUIView.swift */,
+			);
+			path = ViewRecipeComponents;
+			sourceTree = "<group>";
+		};
+		2A79F44D2C08BC22003E3057 /* CreateRecipeComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2AF481612BDD2CA100BEE85B /* CreateRecipeViewController.swift */,
+			);
+			path = CreateRecipeComponents;
+			sourceTree = "<group>";
+		};
+		2A79F44E2C08BC66003E3057 /* HomePageComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2A48C5482BD782EA006EFA94 /* MyRecipeCollectionViewController.swift */,
+				2A48C54C2BD7980E006EFA94 /* MyRecipeCollectionViewCell.swift */,
+			);
+			path = HomePageComponents;
+			sourceTree = "<group>";
+		};
 		2A7DACF62BE601D000886398 /* Database */ = {
 			isa = PBXGroup;
 			children = (
 				2A7DACF72BE601EF00886398 /* MulticastDelegate.swift */,
 				2A7DACF92BE6020400886398 /* DatabaseProtocol.swift */,
+				2A7DACFF2BE6092100886398 /* FirebaseController.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -286,7 +304,6 @@
 				2A43978B2BFF843300E242A2 /* AcknowledgementTableViewCell.swift in Sources */,
 				2AD878B62BD8DBC20055DC01 /* ViewRecipeDetailViewController.swift in Sources */,
 				2A48C5392BD77DDD006EFA94 /* ViewController.swift in Sources */,
-				2ACFB5492C01B4C600BA2E57 /* TabController.swift in Sources */,
 				2AF481642BDD3B4B00BEE85B /* UIViewController+displayMessage.swift in Sources */,
 				2AF481622BDD2CA100BEE85B /* CreateRecipeViewController.swift in Sources */,
 				2A48C5352BD77DDD006EFA94 /* AppDelegate.swift in Sources */,
@@ -301,7 +318,6 @@
 				2AADB0BC2BF3575000962CF6 /* ToBuyTableViewCell.swift in Sources */,
 				2A10861B2BFA059600F8FAED /* AddMealViewController.swift in Sources */,
 				2A4397832BFF7E7A00E242A2 /* SettingsTableViewController.swift in Sources */,
-				2AD878B42BD8D70A0055DC01 /* AddRecipeDelegate.swift in Sources */,
 				2A1086192BF9FC6A00F8FAED /* DinnerMealTableViewCell.swift in Sources */,
 				2A4397872BFF81BC00E242A2 /* NightmodeTableViewCell.swift in Sources */,
 				2A1086132BF9F9DC00F8FAED /* BreakfastMealTableViewCell.swift in Sources */,

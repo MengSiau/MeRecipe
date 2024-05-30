@@ -9,7 +9,6 @@ import UIKit
 
 class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
-    weak var recipeDelegate: AddRecipeDelegate?
     weak var databaseController: DatabaseProtocol?
     var mode: String?
     var recipeToReplace: Recipe?
@@ -246,15 +245,26 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             caloriesTextField.text = calories
         }
         
+        // Top left back button will now present an alert before popping back //
+        let customBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(customBackAction))
+        navigationItem.leftBarButtonItem = customBackButton
+
     }
     
+    // Presents warning when popping back (top left back btn) //
+    @objc func customBackAction() {
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to go back? Inputted fields or changes made will not be saved", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+
     // Adds bar btns above keyboard for ingredient textView //
     func ingredientToolBar() {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        
-//        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         let oneQuarterButton = UIBarButtonItem(title: "1/4", style: .plain, target: self, action: #selector(measurementButtonTapped))
         let oneThirdButton = UIBarButtonItem(title: "1/3", style: .plain, target: self, action: #selector(measurementButtonTapped))
@@ -350,6 +360,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
+    
 
     /*
     // MARK: - Navigation
