@@ -281,10 +281,11 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
-    @objc func doneButtonTapped() {
-        ingredientTextField.resignFirstResponder()
-    }
-    // Adds the bar button text ontop of what the user has typed //
+//    @objc func doneButtonTapped() {
+//        ingredientTextField.resignFirstResponder()
+//    }
+    
+    // Adds the bar button text ontop of what the user has typed (ingredient UITextView) //
     @objc func measurementButtonTapped(sender: UIBarButtonItem) {
         if let text = ingredientTextField.text {
             ingredientTextField.text = text + sender.title!
@@ -293,15 +294,16 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
-    // TextView Delegate: changes from placeholder text to user typed text //
+    // TextView Delegate: changes from placeholder text to user typed text (UITextView does not have placeholders...) //
     func textViewDidBeginEditing(_ textView: UITextView) {
         if ingredientTextField.text == "List ingredients here" {
             ingredientTextField.text = ""
             ingredientTextField.textColor = UIColor.black
         }
         
+        // For this one, on click initially adds "1)" //
         if directionTextField.text == "List directions here" {
-            directionTextField.text = ""
+            directionTextField.text = "1) "
             directionTextField.textColor = UIColor.black
         }
     }
@@ -312,10 +314,30 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         return true
     }
     
+    // UITextView delegate: Ensures that when "done" is pressed, directionTextView goes to new line + calls method to add numbers //
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if textView == directionTextField && text == "\n" {
+            insertNewLineNumber(in: textView)
+            return false
+        }
+        return true
+    }
+    
+    // UITextView delegate helper method: Adds a new line number incrementally//
+    private func insertNewLineNumber(in textView: UITextView) {
+        if var currentText = textView.text {
+            let currentLineNumber = currentText.components(separatedBy: "\n").count + 1 // Each line broken down to elements in array to determine number
+            currentText += "\n\(currentLineNumber)) "
+            textView.text = currentText // update textView
+        }
+    }
+    
     // UITextView delegate: Dismisses the keyboard //
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
+    
+    
     
     // Set up the segmented controller //
     func setupUI() {
@@ -346,6 +368,8 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             nutrientView.isHidden = false
         }
     }
+    
+    
     
     // UIImagePickerControllerDelegate -> This func is called when user has selected a photo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
