@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
     }
     
-
     // Responsible for changing the appearance of the whole app //
     func toggleDarkMode(_ isDarkMode: Bool) {
         window?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light

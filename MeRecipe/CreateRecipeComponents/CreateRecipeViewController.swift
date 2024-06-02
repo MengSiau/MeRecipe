@@ -207,7 +207,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             navigationController?.popViewController(animated: true)
         } else if mode == "edit" {
             let _ = databaseController?.editRecipe(recipeToEdit: recipeToReplace, name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
-            navigationController?.popViewController(animated: true)
+            navigationController?.popToRootViewController(animated: true) // Pops back to home page
             print("edit mode called")
         } else {
             print("Invalid mode")

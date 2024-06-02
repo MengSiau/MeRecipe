@@ -15,22 +15,16 @@ class BreakfastMealTableViewCell: UITableViewCell {
     @IBOutlet weak var timeText: UILabel!
     @IBOutlet weak var mealImage: UIImageView!
     
-    
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90.0 // Return the desired height
+        return 90.0
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

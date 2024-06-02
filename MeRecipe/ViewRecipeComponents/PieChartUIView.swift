@@ -35,6 +35,7 @@ struct NutritionDataStructure: Identifiable {
     let value: Int
 }
 
+// Debugging purposes //
 struct TestData {
     static var data: [NutritionDataStructure] = [
         .init(name: "Protein", value: 10),

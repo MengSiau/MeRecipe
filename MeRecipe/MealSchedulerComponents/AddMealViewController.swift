@@ -18,19 +18,56 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
     var listOfRecipe: [Recipe] = []
     var categoryType: String = "breakfast"
     
+    let breakfastSegmentIndex = 0
+    let lunchSegmentIndex = 1
+    let dinnerSegmentIndex = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupSegmentController()
+        self.view.backgroundColor = UIColor.systemGray6
+        
+        // Adds category selection functionality to the segmented controller //
+        segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        
+        // Adds the information hint below segmented controler //
+        setUpInfoHeading()
         
         // FIREBASE //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
 
+        // Setup the tableView //
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "recipeCell")
+        tableView.backgroundColor = UIColor.systemGray6
+    }
+    
+    
+    // Programatically adds a hint message below navigation title //
+    private func setUpInfoHeading() {
+        let headerView = UIView()
+        let infoLabel = UILabel()
+        infoLabel.text = "Select a meal to add to a category"
+        infoLabel.textColor = .gray
+        infoLabel.font = UIFont.systemFont(ofSize: 14)
+        
+        let infoImageView = UIImageView(image: UIImage(systemName: "info.circle"))
+        infoImageView.tintColor = .gray
+        let stackView = UIStackView(arrangedSubviews: [infoImageView, infoLabel])
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        
+        headerView.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 12)
+        ])
+        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 25)
+        tableView.tableHeaderView = headerView
     }
     
     // MARK: - TableView methods //
@@ -38,17 +75,17 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
         return listOfRecipe.count
     }
     
+    // Cells only have the name of the recipe //
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell", for: indexPath)
         
         let selectedRecipe = listOfRecipe[indexPath.row]
-        
-        // Configure the cell
         cell.textLabel?.text = selectedRecipe.name
         
         return cell
     }
     
+    // Selecting a recipe will add it to a category. Pop back to prev view //
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedRecipe = listOfRecipe[indexPath.row]
@@ -56,23 +93,19 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
         
         tableView.deselectRow(at: indexPath, animated: true)
         navigationController?.popViewController(animated: false)
-        print("ADDING RECIPE")
-        
     }
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
     
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
-        
+        // If a recipe does not have a category, add it to the tableview for users to select from //
         for recipe in recipes {
             if recipe.category == "" {
                 listOfRecipe.append(recipe)
             }
         }
-        print(listOfRecipe)
     }
-    
-    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -84,22 +117,16 @@ class AddMealViewController: UIViewController, UITableViewDataSource, UITableVie
         databaseController?.removeListener(listener: self)
     }
     
-
-    func setupSegmentController() {
-        segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-    }
-    
-    // SegmentedView controls the 4 Views //
+    // SegmentedView controls the 3 Views //
     @objc func segmentedControlValueChanged() {
-        if segmentController.selectedSegmentIndex == 0 {
+        if segmentController.selectedSegmentIndex == breakfastSegmentIndex {
             categoryType = "breakfast"
-        } else if segmentController.selectedSegmentIndex == 1 {
+        } else if segmentController.selectedSegmentIndex == lunchSegmentIndex {
             categoryType = "lunch"
-        } else if segmentController.selectedSegmentIndex == 2 {
+        } else if segmentController.selectedSegmentIndex == dinnerSegmentIndex {
             categoryType = "dinner"
         }
     }
-    
 
     /*
     // MARK: - Navigation

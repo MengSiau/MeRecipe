@@ -37,6 +37,7 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Define the colour of this view //
         self.tableView.backgroundColor = UIColor.systemGray6
 
         // FIREBASE //
@@ -66,25 +67,9 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         ])
         headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 15)
         tableView.tableHeaderView = headerView
-        
-//        // TOOLBAR //
-//        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
-//        let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
-//        let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
-//        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        
-//        // Set the toolbar items
-//        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
-//        
     }
     
-//    @objc func homeButtonTapped() {navigationController?.popViewController(animated: true)}
-//    @objc func shoppingListBtnTapped() {performSegue(withIdentifier: "shoppingListSegue", sender: self)}
-//    @objc func mealScheduleBtnTapped() {}
-//    @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
-    
-    
+    // Checks to see if a recipe is already in a particular category. If so, don't append //
     func sortRecipeByCategory(listOfRecipe: [Recipe]) {
         for recipe in listOfRecipe {
             if recipe.category == "breakfast" && !breakfastList.contains(where: { $0.name == recipe.name }){
@@ -99,15 +84,10 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
-    
-    // TODO: ISSUE HERE IS THAT POPPING BACK CAUSES BREAKFAST LIST TO OVERPOPULATE
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
         listOfRecipe = recipes
-        print("onchange recipelist", listOfRecipe)
-        sortRecipeByCategory(listOfRecipe: listOfRecipe) 
-        print("onchange breakList", breakfastList)
+        sortRecipeByCategory(listOfRecipe: listOfRecipe)
     }
-    
     func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,8 +100,6 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
-        
-
     }
 
     // MARK: - Table view data source
@@ -143,7 +121,6 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == SECTION_BREAKFAST {
@@ -237,6 +214,7 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         }
     }
     
+    // Helper function that loads images stored locallym//
     func loadImageFromLocal(filename: String) -> UIImage? {
         // Get the document directory path
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -269,11 +247,12 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
     }
 
     
-    //
+    // Allows for swipe to delete //
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    // Selecting ingredient bring suser to notificaiton page //
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == SECTION_BREAKFAST {
             selectedRecipeForNotification = breakfastList[indexPath.row]
@@ -287,11 +266,10 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         }
     }
 
-    
+    // Removes recipe from the correct list. The notification time + its tagged category will be all removed //
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             var recipeToRemove: Recipe?
-            
             tableView.beginUpdates()
             
             switch indexPath.section {
@@ -333,26 +311,8 @@ class MealSchedulerTableViewController: UITableViewController, DatabaseListener 
         }
     }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "notificationSegue" {
               if let destination = segue.destination as? PushNotificationSettingsViewController {

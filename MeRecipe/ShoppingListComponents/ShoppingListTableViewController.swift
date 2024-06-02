@@ -28,18 +28,28 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         performSegue(withIdentifier: "webViewSegue", sender: self)
     }
 
-    
+    // Creates a pop-up for users to enter ingredient name //
     @IBAction func addIngredientBtn(_ sender: Any) {
-        print("btn pressed")
-        databaseController?.addIngredient(name: "chow")
+        let alertController = UIAlertController(title: "Add Ingredient", message: "Please enter the name of the ingredient", preferredStyle: .alert)
+            
+            // Textfield for user to input ingredient name
+            alertController.addTextField { (textField) in
+                textField.placeholder = "Ingredient name"
+            }
+            
+            // Confirm action
+            let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self] _ in
+                if let ingredientName = alertController.textFields?.first?.text {
+                    self?.databaseController?.addIngredient(name: ingredientName)
+                }
+            }
+            // Cancel action
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alertController.addAction(confirmAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
     }
-    
-//    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        webView.frame = view.bounds
-//    }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +71,10 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
+
         
         // Programatically adds a hint message below navigation title //
         let headerView = UIView()
-        
         let infoLabel = UILabel()
         infoLabel.text = "Press the plus button to add ingredients."
         infoLabel.textColor = .gray
@@ -88,12 +97,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         
         headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 15)
         tableView.tableHeaderView = headerView
-        
-        
     }
-    
-
-    
     
     // Adds the ingredient from the search bar //
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -116,8 +120,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
-        
-        self.navigationController?.isToolbarHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -126,8 +128,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
         // Removes checked Ingredients //
         removeCheckedIngredients()
         databaseController?.removeListener(listener: self)
-        
-        self.navigationController?.isToolbarHidden = true
     }
     
     // Removes checked Ingredients from Firebaes //
@@ -139,6 +139,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
 
     // MARK: - Table view data source
 
+    // ToBuy, Checked and information cell //
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
@@ -201,13 +202,13 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener, 
             tableView.reloadData()
         }
     }
-
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    // Responsible for giving titles to each section //
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     switch section {
             case SECTION_TOBUY:

@@ -16,12 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var notificationsEnabled = false
     static let NOTIFICATION_IDENTIFIER = "edu.monash.MeRecipe"
     
-    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         databaseController = FirebaseController()
         
+        // Responsible for allowing notifications //
         Task {
             let notificationCenter = UNUserNotificationCenter.current()
             let notificationSettings = await notificationCenter.notificationSettings()
@@ -34,11 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         UNUserNotificationCenter.current().delegate = self
-        
-        
     
-        
-        
         return true
     }
 

@@ -47,6 +47,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     var fats: String = ""
     var calories: String = ""
     
+    // Btn that adds ingredients to the shopping list//
     @IBAction func addIngredientToShopplingListBtn(_ sender: Any) {
         for ingredient in listOfIngredients {
             databaseController?.addIngredient(name: ingredient)
@@ -57,12 +58,14 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         present(alert, animated: true, completion: nil)
     }
     
+    // Btn that deletes the recipe being viewed right now. Popup warning presented onclick //
     @IBAction func deleteRecipeBtn(_ sender: Any) {
         guard let recipeToDelete = recipe else {
             print("Unable to delete recipe")
             return
         }
         
+        // Popup warning: confirm to delete, cancel to dismiss //
         let alertController = UIAlertController(title: "Warning", message: "Are you sure you want to delete recipe?", preferredStyle: .alert)
         let leaveAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             self.databaseController?.deleteRecipe(recipe: recipeToDelete)
@@ -89,16 +92,9 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        // Load the Image //
+        // Load the Image + Name//
         recipeImage.image = imageToLoad
-        
         recipeNameField.text = name
-
-//        // Processing Values for time and difficulty //
-//        guard let prepTime = Int(prepTime), let cookTime = Int(cookTime) else {
-//            print("issue unwrapping time")
-//            return
-//        }
         
         // Initialize totalTime and difficultyAndTime with default values
         var totalTime: Int = 0
@@ -113,9 +109,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
             difficultyAndTime = "⭐️ Difficulty: [0/9] | ⏰ Time: 0 minutes"
         }
 
-        
         // Setting Texts values //
-//        recipeNameField.text = name
         recipeDescriptionFIeld.text = desc
         recipeDifficultyAndTime.text = difficultyAndTime
         
@@ -218,7 +212,6 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         if let targetRecipe = listOfRecipe.first(where: { $0.id == recipeId }) {
             selectedRecipe = targetRecipe
             print("found recipe")
-//            magic(selectedRecipe: targetRecipe)
         } else {
             print("Cannot find recipe with that id")
         }
@@ -401,6 +394,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
 //        ])
 //    }
     
+    // Helper function to retrieve locally stored images by filename //
     func loadImageFromLocal(filename: String) -> UIImage? {
         // Get the document directory path
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -421,7 +415,7 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     
     // MARK: - Navigation
 
-   
+   // Pre-loads the values into the createRecipeVC, with the mode set to edit (called different firebase method to edit instead to create) //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editRecipeSegue" {
             let destination = segue.destination as! CreateRecipeViewController

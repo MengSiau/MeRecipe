@@ -17,7 +17,7 @@ class MyRecipeCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         onReuse?()
-        imageView.image = nil // Reset the image when cell is reused
+        imageView.image = nil // Reset the image when cell is reused to avoid the "flickering image" bug.
     }
     
 }

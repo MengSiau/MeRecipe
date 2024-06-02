@@ -53,7 +53,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         navigationItem.searchController = searchController
         definesPresentationContext = true
         filteredListOfRecipe = listOfRecipe
-        
         navigationItem.hidesBackButton = true
         
         // TOOL BAR //
