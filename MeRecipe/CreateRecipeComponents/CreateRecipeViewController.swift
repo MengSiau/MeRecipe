@@ -89,9 +89,9 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     
     // Btn for auto-generating nutrients via API + Called the API request func //
     @IBAction func generateNutrientsAPI(_ sender: Any) {
-        print("API btn pressed")
         guard let query = recipeNameAPI.text else {
-            print("No recipe name specified") // TODO: make pop up later
+            print("No recipe name specified")
+            displayMessage(title: "Input Error", message: "No recipe name specified")
             return
         }
         
@@ -110,9 +110,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         }
         
         var request = URLRequest(url: url)
-        request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key")
-        
-        
+        request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key") // 
         
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             
@@ -129,6 +127,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             if let jsonArray = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
                 if let firstItem = jsonArray.first {
                     
+                    // Selecting the key information only from the jsonArray
                     if let protein = firstItem["protein_g"] as? Double, let carbs = firstItem["carbohydrates_total_g"] as? Double, let fats = firstItem["fat_total_g"] as? Double, let calories = firstItem["calories"] as? Double {
                         
                         DispatchQueue.main.async {
@@ -140,6 +139,10 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
                         
                     } else {
                         print("Error: Cannot unwrap values")
+                        DispatchQueue.main.async {
+                            self.displayMessage(title: "Error", message: "There was an issue getting the values from webserver")
+                        }
+                        
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -153,20 +156,27 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     }
 
     
-    // Save button (ADDS THE RECIPE) //
+    // Save button (ADDS/EDITS THE RECIPE) //
     @IBAction func saveBtn(_ sender: Any) {
         guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text, let directions = directionTextField.text, let protein = proteinTextField.text, let carbohydrate = carbohydrateTextField.text, let fats = fatTextField.text, let calories = caloriesTextField.text else {
             print("Issues in unwraping fields")
             return
         }
     
-        // Field checking
+        // Field checking (minimum name required)
         if name.isEmpty {
-            var errorMsg = "Please ensure all fields are filled:\n"
-            if name.isEmpty {
-                errorMsg += "- Must provide a name\n"
+            displayMessage(title: "Field Error", message: "Please ensure that a name is given at minimum")
+        }
+        
+        // Field checking difficulty (must be int between 1-9)
+        if let difficultyText = recipeDifficultyField.text, !difficultyText.isEmpty {
+            if let difficulty = Int(difficultyText), (1...9).contains(difficulty) {
+                let _ = difficulty
+            } else {
+                print("Difficulty must be a single digit between 1 and 9")
+                displayMessage(title: "Field Error", message: "Difficulty must be a single digit between 1 and 9")
+                return
             }
-            displayMessage(title: "Not all fields filled", message: errorMsg)
         }
         
         // Handling image //
@@ -174,16 +184,16 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         if let selectedImage = recipePreviewImage.image {
             image = selectedImage
         } else {
-            print("Cannot unwrap chosen image. Assigning placeholder image")
+            print("Cannot unwrap chosen image or no image selected. Assigning placeholder image")
             guard let placeholderImage = UIImage(named: "placeholderImage") else {
-                displayMessage(title: "Error", message: "Placeholder image could not be loaded")
+                displayMessage(title: "Error", message: "Placeholder image could not be loaded. Please upload an image from photo album")
                 return
             }
             image = placeholderImage
         }
         
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            displayMessage(title: "Error", message: "Image data could not be compressed")
+            displayMessage(title: "Error", message: "Image data could not be compressed. Try another image")
             return
         }
         
@@ -204,7 +214,9 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        
+        // Set up segmented controller to switch between 4 views //
+        segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         
         // Set up firebase //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -221,7 +233,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         directionTextField.returnKeyType = .done
         directionTextField.delegate = self
         
-        // Keyboard settings //
+        // Keyboard settings for difficulty field //
         recipeDifficultyField.delegate = self
         recipeDifficultyField.keyboardType = .numberPad
         
@@ -248,7 +260,6 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         // Top left back button will now present an alert before popping back //
         let customBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(customBackAction))
         navigationItem.leftBarButtonItem = customBackButton
-
     }
     
     // Presents warning when popping back (top left back btn) //
@@ -280,10 +291,6 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         ingredientTextField.inputAccessoryView = toolbar
     }
     
-    
-//    @objc func doneButtonTapped() {
-//        ingredientTextField.resignFirstResponder()
-//    }
     
     // Adds the bar button text ontop of what the user has typed (ingredient UITextView) //
     @objc func measurementButtonTapped(sender: UIBarButtonItem) {
@@ -339,10 +346,8 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     
     
     
-    // Set up the segmented controller //
-    func setupUI() {
-        segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-    }
+
+
     
     // SegmentedView controls the 4 Views //
     @objc func segmentedControlValueChanged() {
@@ -369,14 +374,12 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         }
     }
     
-    
-    
     // UIImagePickerControllerDelegate -> This func is called when user has selected a photo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             recipePreviewImage.image = pickedImage
         }
-        // Once image selected, dismiss ... Maybe here we need to store it elsewhere.
+        // Once image selected, dismiss
         dismiss(animated: true, completion: nil)
     }
     

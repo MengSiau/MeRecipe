@@ -10,9 +10,7 @@ import SwiftUI
 
 class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     
-    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {
-        
-    }
+
     
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
@@ -99,13 +97,25 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         
         recipeNameField.text = name
 
-        // Processing Values for time and difficulty //
-        guard let prepTime = Int(prepTime), let cookTime = Int(cookTime) else {
-            print("issue unwrapping time")
-            return
+//        // Processing Values for time and difficulty //
+//        guard let prepTime = Int(prepTime), let cookTime = Int(cookTime) else {
+//            print("issue unwrapping time")
+//            return
+//        }
+        
+        // Initialize totalTime and difficultyAndTime with default values
+        var totalTime: Int = 0
+        var difficultyAndTime: String = "⭐️ Difficulty: [0/9] | ⏰ Time: 0 minutes"
+
+        if let prepTimeInt = Int(prepTime), let cookTimeInt = Int(cookTime) {
+            totalTime = prepTimeInt + cookTimeInt
+            difficultyAndTime = "⭐️ Difficulty: [\(difficulty)/9] | ⏰ Time: \(totalTime) minutes"
+        } else {
+            // If unwrapping fails, use default values
+            totalTime = 0
+            difficultyAndTime = "⭐️ Difficulty: [0/9] | ⏰ Time: 0 minutes"
         }
-        let totalTime = prepTime + cookTime
-        let difficultyAndTime = "⭐️ Difficulty: [" + difficulty + "/5] | ⏰ Time: " + String(totalTime) + " minutes"
+
         
         // Setting Texts values //
 //        recipeNameField.text = name
@@ -216,6 +226,8 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
             print("Cannot find recipe with that id")
         }
     }
+    
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

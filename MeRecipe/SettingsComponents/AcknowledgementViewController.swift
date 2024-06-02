@@ -14,9 +14,9 @@ class AcknowledgementViewController: UIViewController {
     var textToDisplay = """
 This app utilises the following third-party code, use of which is hereby acknowledged.
 
-Firebase (FirebaseAuth, FirebaseFirestore)
+Firebase (FirebaseAuth, FirebaseFirestore, FirebaseStorage)
 
-API Ninja Nutrition API (Data provided by the Nutrition API from API Ninja.)
+API Ninja Nutrition API (Data provided by the Nutrition API from API Ninja + sample prompt code given to call a request for swift.)
 
 Copyright 2017-2024 Google
 

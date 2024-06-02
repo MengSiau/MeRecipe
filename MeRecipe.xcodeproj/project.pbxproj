@@ -160,10 +160,10 @@
 				2A58447C2BF3645300FA9BD3 /* ShoppingListComponents */,
 				2A10860F2BF9EA5A00F8FAED /* MealSchedulerComponents */,
 				2A43977D2BFF2DA900E242A2 /* SettingsComponents */,
+				2AC1EE892C0A019200A019F5 /* Utils */,
 				2A7DACFD2BE6085E00886398 /* RecipeList.swift */,
 				2A48C54A2BD7842B006EFA94 /* Recipe.swift */,
 				2AADB0B92BF32EF600962CF6 /* Ingredient.swift */,
-				2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */,
 			);
 			path = MeRecipe;
 			sourceTree = "<group>";
@@ -213,6 +213,14 @@
 				2A7DACFF2BE6092100886398 /* FirebaseController.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		2AC1EE892C0A019200A019F5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2AF481632BDD3B4B00BEE85B /* UIViewController+displayMessage.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
