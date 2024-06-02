@@ -10,18 +10,13 @@ import Firebase
 import FirebaseStorage
 
 class MyRecipeCollectionViewController: UICollectionViewController, UISearchResultsUpdating, UICollectionViewDelegateFlowLayout, DatabaseListener {
-    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {
-        
-    }
+
     
-        
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
-//    var storageReference = Storage.storage().reference()
     var recipeRef: CollectionReference?
     let storage = Storage.storage()
-//    let cache = NSCache<NSString, UIImage>()
-    
+
     
     let CELL_IMAGE = "imageCell"
     var imageList = [UIImage]()
@@ -35,29 +30,16 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         return toolbar
     }()
     
-    func addRecipe(_ newRecipe: Recipe) -> Bool {
-        listOfRecipe.append(newRecipe)
-        print("added")
-        collectionView.reloadData();
-        return true
-    
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        collectionView.backgroundColor = .systemBackground
+        // Determines the layout of collectionViewCells
         collectionView.setCollectionViewLayout(generateLayout(), animated: false)
         
         // FIREBASE //
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
-
-        // TEST
-        generateTestRecipe()
         
         // Landing page - Ensure appearance is updated on app start up //
         let isDarkModeEnabled = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
@@ -75,16 +57,13 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         navigationItem.hidesBackButton = true
         
         // TOOL BAR //
-//        let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(homeButtonTapped))
         let shoppingListBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(shoppingListBtnTapped))
         let mealScheduleBtn = UIBarButtonItem(image: UIImage(systemName: "calendar"), style: .plain, target: self, action: #selector(mealScheduleBtnTapped))
         let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        
         // Set the toolbar items
         self.toolbarItems = [shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
-//        self.toolbarItems = [homeBtn, flexibleSpace, shoppingListBtn, flexibleSpace, mealScheduleBtn, flexibleSpace, settingsBtn]
     }
     
     // Action functions for bot nav bar //
@@ -93,13 +72,14 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     @objc func mealScheduleBtnTapped() {performSegue(withIdentifier: "mealSchedulerSegue", sender: self)}
     @objc func settingsButtonTapped() {performSegue(withIdentifier: "settingsSegue", sender: self)}
     
+    // Helper function to set screen to darkmode //
     private func setDarkMode(_ isDarkMode: Bool) {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             sceneDelegate.toggleDarkMode(isDarkMode)
         }
     }
     
-    
+    // Allows CollectionView to refelct the search bar input //
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased() else {
             return
@@ -112,21 +92,13 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         } else {
             filteredListOfRecipe = listOfRecipe
         }
-//        print(filteredListOfRecipe)
         collectionView.reloadData()
-    }
-    
-    
-    // name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, ingredients: String?)
-    func generateTestRecipe() {
-//        listOfRecipe.append(Recipe(name: "Apple Pie",  description: "sweet apple pie!", prepTime: "20", cookTime: "40", difficulty: "3", ingredients: "30g Apple, 40g Sugar, 500mL milk"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
         
-        // Disable bot nav bar: Some screens will not have the bot nav bar //
         self.navigationController?.isToolbarHidden = false
     }
     
@@ -140,28 +112,27 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
     
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
+    
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
         listOfRecipe = recipes
         updateSearchResults(for: navigationItem.searchController!)
-//        collectionView.reloadData();
     }
 
     // MARK: UICollectionViewDataSource
 
-    // Set to 20
+    // Only need one section as its just Recipes //
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    
+    // Number of cells depend on stored recipes and the filtered ones //
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return filteredListOfRecipe.count
     }
 
     // Function for getting Recipe Image that may have been stored locally //
-    func loadImageFromLocal(filename: String) -> UIImage? {
+    private func loadImageFromLocal(filename: String) -> UIImage? {
         // Get the document directory path
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -180,7 +151,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     }
     
     // Attempts to send a request to see if there is an internet connection //
-    func checkInternetConnection() {
+    private func checkInternetConnection() {
         let url = URL(string: "https://www.google.com")!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data, error == nil {
@@ -194,7 +165,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         task.resume()
     }
     
-    // Responsible for the creation/customization of the CollectionViewCell
+    // Responsible for the creation/customization of the CollectionViewCell //
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
         
@@ -222,10 +193,11 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
             return cell
         }
         
-        // If image not locally stored, attempt to retrieve image from cloud //
+        // If image not locally stored, attempt to retrieve image from cloud by getting ImageData via URL nested in Recipe //
         let storageReference = storage.reference(forURL: url)
         let cellIndex = indexPath.row // Capture the current index path
             
+        // Attempt to retrieve the image data stored on firebase by storage reference //
         let downloadTask = storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
             guard let imageData = data, error == nil else {
                 print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
@@ -251,6 +223,7 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
         return cell
     }
     
+    // Defines the layout of the CollectionViewCells //
     func generateLayout() -> UICollectionViewLayout {
         let imageItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
         
@@ -276,12 +249,6 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     }
     */
 
-    
-//    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-    
-
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -297,63 +264,42 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     }
     */
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "createRecipeSegue" {
-//            if let cell = sender as? UICollectionViewCell, let indexPath = self.collectionView(UICollectionView, cellForItemAt: IndexPath) {
-//                let destination = segue.destination as! ViewRecipeDetailViewController
-//            }
-//            
-//        }
-//    }
     
-    // Prepares the Recipe values for the ViewReciipeDetail page //
+    // Prepares the Recipe values for the ViewReciipeDetail page + Segues to createRecipeVC with the intention to create recipes //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createRecipeSegue" {
             let destination = segue.destination as! CreateRecipeViewController
-//            destination.recipeDelegate = self // TODO: NEED THIS HERE?
             destination.mode = "create"
-            
             
         } else if segue.identifier == "recipeDetailSegue" {
             if let selectedIndexPaths = collectionView.indexPathsForSelectedItems, let indexPath = selectedIndexPaths.first {
                 let destination = segue.destination as! ViewRecipeDetailViewController
                 let selectedRecipe = listOfRecipe[indexPath.row]
                 
+                // Perform error checking. Unlikely to catch error due to error checking done in recipe creation. //
+                
                 guard let recipeImageFileName = selectedRecipe.imageFileName else {
                     return
                 }
                 let recipeImage = loadImageFromLocal(filename: recipeImageFileName)
                 
-                guard let recipeId = selectedRecipe.id else {
-                    print("")
+                guard let recipeId = selectedRecipe.id,
+                      let recipeName = selectedRecipe.name,
+                      let recipeDescription = selectedRecipe.desc,
+                      let recipePrepTime = selectedRecipe.prepTime,
+                      let recipeCookTime = selectedRecipe.cookTime,
+                      let recipeDifficulty = selectedRecipe.difficulty,
+                      let recipeIngredients = selectedRecipe.ingredients,
+                      let recipeDirections = selectedRecipe.directions else {
+                    print("Error unwrapping one or more basic recipe fields")
                     return
                 }
-                guard let recipeName = selectedRecipe.name else {
-                    print("unwrap error for name")
-                    return
-                }
-                guard let recipeDescription = selectedRecipe.desc else {
-                    return
-                }
-                guard let recipePrepTime = selectedRecipe.prepTime else {
-                    return
-                }
-                guard let recipeCookTime = selectedRecipe.cookTime else {
-                    return
-                }
-                guard let recipeDifficulty = selectedRecipe.difficulty else {
-                    print("unwrap error for difficulty")
-                    return
-                }
-                guard let recipeIngredients = selectedRecipe.ingredients else {
-                    return
-                }
-                guard let recipeDirections = selectedRecipe.directions else {
-                    return
-                }
+    
                 guard let recipeProtein = selectedRecipe.protein, let recipeCarbohydrate = selectedRecipe.carbohydrate, let recipeFats = selectedRecipe.fats, let recipeCalories = selectedRecipe.calories else {
                     return
                 }
+                
+                // Load the details into destination //
                 destination.recipeId = recipeId
                 destination.recipe = selectedRecipe
                 
@@ -376,91 +322,3 @@ class MyRecipeCollectionViewController: UICollectionViewController, UISearchResu
     }
 }
 
-//override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
-//    let currentRecipe = listOfRecipe[indexPath.row]
-//    
-//    // Set the cell Name //
-//    cell.recipeName.text = currentRecipe.name
-//    
-//    // Set the cell Image //
-////        let storage = Storage.storage()
-//    guard let url = currentRecipe.url else{
-//        print("cannot unwrwap url")
-//        return cell
-//    }
-//    
-//    
-//    let storageReference = storage.reference(forURL: url)
-//    storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
-//        guard let imageData = data, error == nil else {
-//            print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
-//            return
-//        }
-//        
-//        if let image = UIImage(data: imageData) {
-//            print("updating image view")
-//            cell.imageView.image = image
-//        } else {
-//            print("cammot get the image")
-//        }
-//    }
-//    
-//    cell.backgroundColor = .secondarySystemFill
-//    
-//    
-//    return cell
-//}
-
-//// Uses Caching
-//override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_IMAGE, for: indexPath) as! MyRecipeCollectionViewCell
-//    let currentRecipe = listOfRecipe[indexPath.row]
-//    
-//    // Set the cell Name //
-//    cell.recipeName.text = currentRecipe.name
-//    
-//    // Set the cell Image //
-//    cell.imageView.image = UIImage(named: "placeholder")
-//    guard let url = currentRecipe.url else{
-//        print("cannot unwrwap url")
-//        return cell
-//    }
-//    
-//    if let cachedImage = cache.object(forKey: url as NSString) {
-//        cell.imageView.image = cachedImage
-//        print("found in cache")
-//        return cell
-//    }
-//    
-//    let storageReference = storage.reference(forURL: url)
-//    let cellIndex = indexPath.row // Capture the current index path
-//        
-//    let downloadTask = storageReference.getData(maxSize: 10 * 1024 * 1024) { data, error in
-//        guard let imageData = data, error == nil else {
-//            print("Error downloading image: \(error?.localizedDescription ?? "Unknown error")")
-//            return
-//        }
-//        
-//        // Make sure that reused cells do not show images that are still previously being loaded in
-//        if let image = UIImage(data: imageData), indexPath.row == cellIndex {
-//            
-//            self.cache.setObject(image, forKey: url as NSString)
-//            
-//            DispatchQueue.main.async {
-//                print("updating image view")
-//                cell.imageView.image = image
-//            }
-//        } else {
-//            print("Cell has been reused, skipping image update")
-//        }
-//    }
-//    
-//    cell.onReuse = {
-//        downloadTask.cancel()
-//    }
-//    
-//    cell.backgroundColor = .secondarySystemFill
-//    
-//    return cell
-//}

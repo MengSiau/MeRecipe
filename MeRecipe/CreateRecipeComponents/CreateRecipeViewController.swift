@@ -13,6 +13,11 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     var mode: String?
     var recipeToReplace: Recipe?
     
+    let screenIndexOverview = 0
+    let screenIndexIngredeints = 1
+    let screenIndexDirections = 2
+    let screenIndexNutrients = 3
+    
     var name: String = ""
     var desc: String = ""
     var prepTime: String = ""
@@ -155,7 +160,6 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         task.resume()
     }
 
-    
     // Save button (ADDS/EDITS THE RECIPE) //
     @IBAction func saveBtn(_ sender: Any) {
         guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text, let directions = directionTextField.text, let protein = proteinTextField.text, let carbohydrate = carbohydrateTextField.text, let fats = fatTextField.text, let calories = caloriesTextField.text else {
@@ -214,6 +218,8 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.systemGray6
         
         // Set up segmented controller to switch between 4 views //
         segmentController.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
@@ -345,28 +351,24 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
-    
-
-
-    
     // SegmentedView controls the 4 Views //
     @objc func segmentedControlValueChanged() {
-        if segmentController.selectedSegmentIndex == 0 {
+        if segmentController.selectedSegmentIndex == screenIndexOverview {
             overviewView.isHidden = false
             ingredientsView.isHidden = true
             directionView.isHidden = true
             nutrientView.isHidden = true
-        } else if segmentController.selectedSegmentIndex == 1 {
+        } else if segmentController.selectedSegmentIndex == screenIndexIngredeints {
             overviewView.isHidden = true
             ingredientsView.isHidden = false
             directionView.isHidden = true
             nutrientView.isHidden = true
-        } else if segmentController.selectedSegmentIndex == 2 {
+        } else if segmentController.selectedSegmentIndex == screenIndexDirections {
             overviewView.isHidden = true
             ingredientsView.isHidden = true
             directionView.isHidden = false
             nutrientView.isHidden = true
-        } else if segmentController.selectedSegmentIndex == 3 {
+        } else if segmentController.selectedSegmentIndex == screenIndexNutrients {
             overviewView.isHidden = true
             ingredientsView.isHidden = true
             directionView.isHidden = true

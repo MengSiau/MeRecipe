@@ -10,14 +10,11 @@ import SwiftUI
 
 class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     
-
-    
     var listenerType = ListenerType.recipe
     weak var databaseController: DatabaseProtocol?
     var listOfRecipe: [Recipe] = []
     var selectedRecipe: Recipe?
     var listOfIngredients: [String] = []
-
 
     @IBOutlet weak var contentView: UIView!
     
