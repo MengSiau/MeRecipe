@@ -29,6 +29,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Customizing how the acknowledgement text looks like //
         self.view.backgroundColor = UIColor.systemGray6
         acknowledgementText.textColor = UIColor.darkGray
         acknowledgementText.font = UIFont.systemFont(ofSize: 16)

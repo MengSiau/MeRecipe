@@ -162,7 +162,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
 
     // Save button (ADDS/EDITS THE RECIPE) //
     @IBAction func saveBtn(_ sender: Any) {
-        guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, let ingredients = ingredientTextField.text, let directions = directionTextField.text, let protein = proteinTextField.text, let carbohydrate = carbohydrateTextField.text, let fats = fatTextField.text, let calories = caloriesTextField.text else {
+        guard let name = recipeNameField.text, let description = recipeDescriptionField.text, let prepTime = recipePrepTimeField.text, let cookTime = recipeCookingTimeField.text, let difficulty = recipeDifficultyField.text, var ingredients = ingredientTextField.text, var directions = directionTextField.text, let protein = proteinTextField.text, let carbohydrate = carbohydrateTextField.text, let fats = fatTextField.text, let calories = caloriesTextField.text else {
             print("Issues in unwraping fields")
             return
         }
@@ -199,6 +199,15 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             displayMessage(title: "Error", message: "Image data could not be compressed. Try another image")
             return
+        }
+        
+        // Turns the placeholder text into empty string //
+        print(ingredients)
+        if ingredients == "List ingredients here" {
+            ingredients = ""
+        }
+        if directions == "List directions here" {
+            directions = ""
         }
         
         // Calls database methods//

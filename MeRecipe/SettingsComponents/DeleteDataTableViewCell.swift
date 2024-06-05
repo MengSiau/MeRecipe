@@ -16,28 +16,26 @@ class DeleteDataTableViewCell: UITableViewCell, DatabaseListener {
     @IBOutlet weak var cellText: UILabel!
     @IBOutlet weak var cellBtn: UIButton!
     
-    @IBAction func cellBtnAction(_ sender: Any) {    
+    // Btn responsible for deleting all recipes. Creates an alert popup to confirm with user //
+    @IBAction func cellBtnAction(_ sender: Any) {
         
         guard let viewController = self.findViewController() else {
             print("Unable to find view controller to present alert")
             return
         }
         
+        // Present an alert popup //
         let alertController = UIAlertController(title: "Warning", message: "This will delete all recipe data permanently. Are you sure you want to proceed?", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { _ in
             self.deleteAllRecipe()
         }
-        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-        
         viewController.present(alertController, animated: true, completion: nil)
     }
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,6 +49,7 @@ class DeleteDataTableViewCell: UITableViewCell, DatabaseListener {
         super.setSelected(selected, animated: animated)
     }
     
+    // Helper func -> Calls database method that deletes all recipes //
     private func deleteAllRecipe() {
         for toDeleteRecipe in listOfRecipe {
             print("deleted one recipe")
@@ -59,15 +58,15 @@ class DeleteDataTableViewCell: UITableViewCell, DatabaseListener {
     }
     
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe]) {}
-    
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
+
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe]) {
         listOfRecipe = recipes
         print(listOfRecipe)
     }
     
-    
-    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) {}
-    
+    // Ensures that we are displaying popup alert from the settings vc, not the cell //
+    // //
     private func findViewController() -> UIViewController? {
         var responder: UIResponder? = self
         
@@ -77,7 +76,6 @@ class DeleteDataTableViewCell: UITableViewCell, DatabaseListener {
             }
             responder = nextResponder
         }
-        
         return nil
     }
 

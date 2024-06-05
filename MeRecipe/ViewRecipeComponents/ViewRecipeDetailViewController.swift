@@ -49,6 +49,16 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     
     // Btn that adds ingredients to the shopping list//
     @IBAction func addIngredientToShopplingListBtn(_ sender: Any) {
+        
+        // If ingredient list empty, do not add anything
+        if ingredients == "" {
+            let alert = UIAlertController(title: "Error", message: "Unable to add an empty ingredient list to the shopping list. Please fill in ingredient list and try again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        // If ingredient list not empty, proceed to add to shopping cart
         for ingredient in listOfIngredients {
             databaseController?.addIngredient(name: ingredient)
         }
@@ -81,9 +91,8 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
     }
     
 
-    // Handled below in ... IDK
     @IBAction func editRecipeBtn(_ sender: Any) {}
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,22 +123,38 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         recipeDifficultyAndTime.text = difficultyAndTime
         
         // Processing ingredients for stackview //
-        let listIngredients = ingredients.components(separatedBy: "\n")
-        recipeIngredientStackView.spacing = 8
-        for ingredient in listIngredients {
+        if ingredients == "" { // If ingredient is empty, return the following ...
+            recipeIngredientStackView.spacing = 8
             let label = UILabel()
-            label.text = ingredient
+            label.text = "# No ingredients have been given"
+            label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
             recipeIngredientStackView.addArrangedSubview(label)
+        } else { // Else, populate the stackview
+            let listIngredients = ingredients.components(separatedBy: "\n")
+            recipeIngredientStackView.spacing = 8
+            for ingredient in listIngredients {
+                let label = UILabel()
+                label.text = ingredient
+                recipeIngredientStackView.addArrangedSubview(label)
+            }
+            listOfIngredients = listIngredients // Used for add to shopping cart btn
         }
-        listOfIngredients = listIngredients
-        
+
         // Processing direction for stackview //
-        let listDirections = directions.components(separatedBy: "\n")
-        recipeDirectionStackView.spacing = 8
-        for direction in listDirections {
+        if directions == "" { // If directions is empty, return the following ...
+            recipeDirectionStackView.spacing = 8
             let label = UILabel()
-            label.text = direction
+            label.text = "# No directions have been given"
+            label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
             recipeDirectionStackView.addArrangedSubview(label)
+        } else { // else, populate the stack view
+            let listDirections = directions.components(separatedBy: "\n")
+            recipeDirectionStackView.spacing = 8
+            for direction in listDirections {
+                let label = UILabel()
+                label.text = direction
+                recipeDirectionStackView.addArrangedSubview(label)
+            }
         }
         
         // Processing nutrition for stackview //
@@ -230,169 +255,6 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
     
-    // TODO: This loads via firebase. But popping back means vertical stack duplicates. ViewWillAppear -> Call a self made function that resets the viewstacks
-    // This uses the recipe grabbed from firebase via id. This unwraps + sets local vars for recipe attributes.
-    
-//    func magic(selectedRecipe: Recipe) {
-//        
-//        guard let recipeImageFileName = selectedRecipe.imageFileName else {
-//            return
-//        }
-//        let retrievedImage = loadImageFromLocal(filename: recipeImageFileName)
-//        
-//        guard let recipeId = selectedRecipe.id else {
-//            print("")
-//            return
-//        }
-//        guard let recipeName = selectedRecipe.name else {
-//            print("unwrap error for name")
-//            return
-//        }
-//        guard let recipeDescription = selectedRecipe.desc else {
-//            return
-//        }
-//        guard let recipePrepTime = selectedRecipe.prepTime else {
-//            return
-//        }
-//        guard let recipeCookTime = selectedRecipe.cookTime else {
-//            return
-//        }
-//        guard let recipeDifficulty = selectedRecipe.difficulty else {
-//            print("unwrap error for difficulty")
-//            return
-//        }
-//        guard let recipeIngredients = selectedRecipe.ingredients else {
-//            return
-//        }
-//        guard let recipeDirections = selectedRecipe.directions else {
-//            return
-//        }
-//        guard let recipeProtein = selectedRecipe.protein, let recipeCarbohydrate = selectedRecipe.carbohydrate, let recipeFats = selectedRecipe.fats, let recipeCalories = selectedRecipe.calories else {
-//            return
-//        }
-//        
-//        // Setting
-//        name = recipeName
-//        desc = recipeDescription
-//        prepTime = recipePrepTime
-//        cookTime = recipeCookTime
-//        difficulty = recipeDifficulty
-//        imageToLoad = retrievedImage
-//        
-//        ingredients = recipeIngredients
-//        directions = recipeDirections
-//        
-//        protein = recipeProtein
-//        carbohydrates = recipeCarbohydrate
-//        fats = recipeFats
-//        calories = recipeCalories
-//        
-//        
-//        // Settings Image //
-//        recipeImage.image = retrievedImage
-//
-//        // Processing Values for time and difficulty //
-//        guard let prepTime = Int(recipePrepTime), let cookTime = Int(recipeCookTime) else {
-//            print("issue unwrapping time")
-//            return
-//        }
-//        let totalTime = prepTime + cookTime
-//        let difficultyAndTime = "⭐️ Difficulty: [" + recipeDifficulty + "/5] | ⏰ Time: " + String(totalTime) + " minutes"
-//        
-//        // Setting Texts values //
-//        recipeNameField.text = recipeName
-//        recipeDescriptionFIeld.text = recipeDescription
-//        recipeDifficultyAndTime.text = difficultyAndTime
-//        
-//        // Processing ingredients for stackview //
-//        let listIngredients = recipeIngredients.components(separatedBy: "\n")
-//        recipeIngredientStackView.spacing = 8
-//        for ingredient in listIngredients {
-//            let label = UILabel()
-//            label.text = ingredient
-//            recipeIngredientStackView.addArrangedSubview(label)
-//        }
-//        
-//        // Processing direction for stackview //
-//        let listDirections = recipeDirections.components(separatedBy: "\n")
-//        recipeDirectionStackView.spacing = 8
-//        for direction in listDirections {
-//            let label = UILabel()
-//            label.text = direction
-//            recipeDirectionStackView.addArrangedSubview(label)
-//        }
-//        
-//        // Processing nutrition for stackview //
-//        let proteinLabel = UILabel()
-//        var proteinText = "Protein: \(recipeProtein) g"
-//        if protein == "" {
-//            proteinText = String(proteinText.dropLast(1))
-//        }
-//        let attributedString1 = NSMutableAttributedString(string: proteinText)
-//        attributedString1.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 8))
-//        proteinLabel.attributedText = attributedString1
-//        
-//        let carbohydrateLabel = UILabel()
-//        var carbohydrateText = "Carbohydrate: \(recipeCarbohydrate) g"
-//        if carbohydrates == "" {
-//            carbohydrateText = String(carbohydrateText.dropLast(1))
-//        }
-//        let attributedString2 = NSMutableAttributedString(string: carbohydrateText)
-//        attributedString2.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 13))
-//        carbohydrateLabel.attributedText = attributedString2
-//        
-//        let fatsLabel = UILabel()
-//        var fatsText = "Fats: \(recipeFats) g"
-//        if fats == "" {
-//            fatsText = String(fatsText.dropLast(1))
-//        }
-//        let attributedString3 = NSMutableAttributedString(string: fatsText)
-//        attributedString3.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 5))
-//        fatsLabel.attributedText = attributedString3
-//        
-//        let caloriesLabel = UILabel()
-//        let caloriesText = "Calories: \(recipeCalories)"
-//        let attributedString4 = NSMutableAttributedString(string: caloriesText)
-//        attributedString4.addAttribute(.foregroundColor, value: UIColor.gray, range: NSRange(location: 0, length: 9))
-//        caloriesLabel.attributedText = attributedString4
-//        
-//        recipeNutritionStack.spacing = 8
-//        recipeNutritionStack.addArrangedSubview(proteinLabel)
-//        recipeNutritionStack.addArrangedSubview(carbohydrateLabel)
-//        recipeNutritionStack.addArrangedSubview(fatsLabel)
-//        recipeNutritionStack.addArrangedSubview(caloriesLabel)
-//        
-//        
-//        // Cast string that are floats to int //
-//        guard let proteinFloat = Float(recipeProtein), let carbohydrateFloat = Float(recipeCarbohydrate), let fatsFloat = Float(recipeFats) else {
-//            print("Cannot unwrap nutrition values")
-//            return
-//        }
-//        let proteinInt = Int(round(proteinFloat))
-//        let carbohydrateInt = Int(round(carbohydrateFloat))
-//        let fatsInt = Int(round(fatsFloat))
-//        
-//        let controller = UIHostingController(rootView: PieChartUIView())
-//        guard let chartView = controller.view else {
-//            print("blah")
-//            return
-//        }
-//        
-//        // Add values to the PieChartUIView //
-//        controller.rootView.chartData.append(NutritionDataStructure(name: "Protein", value: proteinInt))
-//        controller.rootView.chartData.append(NutritionDataStructure(name: "Carbo", value: carbohydrateInt))
-//        controller.rootView.chartData.append(NutritionDataStructure(name: "Fats", value: fatsInt))
-//        
-//        // Assign UIView the PieChartUIView //
-//        viewForChart.addSubview(chartView)
-//        chartView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            chartView.centerXAnchor.constraint(equalTo: viewForChart.centerXAnchor),
-//            chartView.centerYAnchor.constraint(equalTo: viewForChart.centerYAnchor),
-//            chartView.widthAnchor.constraint(equalTo: viewForChart.widthAnchor),
-//            chartView.heightAnchor.constraint(equalTo: viewForChart.heightAnchor)
-//        ])
-//    }
     
     // Helper function to retrieve locally stored images by filename //
     func loadImageFromLocal(filename: String) -> UIImage? {

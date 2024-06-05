@@ -18,10 +18,10 @@ class Recipe: NSObject, Codable {
     var cookTime: String?
     var difficulty: String?
     var image: Data?
-    var url: String? // Accessed by addRecipe()
-    var imageFileName: String? // Accessed by addRecipe()
+    var url: String? 
+    var imageFileName: String?
     
-    var ingredients: String? // [String] = [], perhaps string manipulation, but store string for now.
+    var ingredients: String?
     var directions: String?
     
     var protein: String?
