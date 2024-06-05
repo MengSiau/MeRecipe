@@ -115,10 +115,21 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         }
         
         var request = URLRequest(url: url)
-        request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key") // 
+        request.setValue(API_KEY, forHTTPHeaderField: "X-Api-Key") // Snippet from api-ninja
         
+        // Responsible for showing the loading animatopm
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
+        
+        // Request the data
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            // Stop the loading sign
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+            }
             
+            // This will run when we fail to fetch the data from api
             if let error = error {
                 DispatchQueue.main.async {
                     self.displayMessage(title: "Error", message: "No internet connection or request failed. Please try again.")
@@ -150,7 +161,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
                         
                     }
                 } else {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { // When we dont get an array, it means no recipe for that exists
                         self.displayMessage(title: "Recipe not found", message: "Please try use another keyword for your recipe")
                         print("Cannot get JSON: Likely due to unknown recipe name.")
                     }
@@ -225,8 +236,13 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
 
     }
     
+    var activityIndicator = UIActivityIndicatorView(style: .large)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
         
         self.view.backgroundColor = UIColor.systemGray6
         

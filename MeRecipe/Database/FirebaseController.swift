@@ -27,7 +27,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var recipeListRef: CollectionReference?
     var currentUser: FirebaseAuth.User?
     
-    var ingredientRef: CollectionReference? // For now
+    var ingredientRef: CollectionReference?
     
 
     
@@ -211,7 +211,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
-        let uploadTask = imageRef.putData(imageData, metadata: metadata)
+        let _ = imageRef.putData(imageData, metadata: metadata)
         
         recipe.url = imageRef.bucket
         recipe.imageFileName = filename
@@ -233,73 +233,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return
     }
     
-//    func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?) {
-//        
-//        // Attempet to unwrap image data //
-//        let storageReference = Storage.storage().reference()
-//        guard let imageData = imageData else {
-//            print("FirebaseCont: Cannot unwrap image data")
-//            return
-//        }
-//        
-//        // Create a Recipe object //
-//        let recipe = Recipe()
-//        recipe.name = name
-//        recipe.desc = desc
-//        recipe.prepTime = prepTime
-//        recipe.cookTime = cookTime
-//        recipe.difficulty = difficulty
-//        
-//        recipe.ingredients = ingredients
-//        recipe.directions = directions
-//        
-//        recipe.protein = protein
-//        recipe.carbohydrate = carbohydrate
-//        recipe.fats = fats
-//        recipe.calories = calories
-//        
-//        recipe.category = ""
-//        recipe.notificationTime = ""
-//        
-//        // Store newly created Recipe on firebase //
-//        do {
-//            if let recipeRef = try recipeRef?.addDocument(from: recipe) {
-//                recipe.id = recipeRef.documentID
-//            }
-//        } catch {
-//            print("FirebaseCont: Failed to serialize Reicpe")
-//        }
-//        
-//        // Storing of Recipe Image //
-//        let timestamp = UInt(Date().timeIntervalSince1970)
-//        let filename = "\(timestamp).jpg"
-//        let imageRef = storageReference.child("\(timestamp)")
-//        
-//        let metadata = StorageMetadata()
-//        metadata.contentType = "image/jpg"
-//        let uploadTask = imageRef.putData(imageData, metadata: metadata)
-//        
-//        guard let recipeID = recipe.id else {
-//            print("FirebaseCont: Cannot unwrap recipe id")
-//            return
-//        }
-//        
-//        // Attempt to save image URL in firebase //
-//        uploadTask.observe(.success) { snapshot in
-//            self.recipeRef?.document(recipeID).updateData(["url" : "\(imageRef)"])
-//            self.recipeRef?.document(recipeID).updateData(["imageFileName" : "\(filename)"])
-//            print(imageRef)
-//        }
-//        uploadTask.observe(.failure) { snapshot in
-//            print("FAILLLLL UPLOAD IMAGE")
-//        }
-//        
-//        // Save image locally //
-//        saveImageData(filename: filename, imageData: imageData)
-//        
-//        print("FirebaseCont addRecipe method called")
-//        return
-//    }
     
     // Function used in addRecipe() to locally store image data as a file //
     func saveImageData(filename: String, imageData: Data) {
@@ -329,7 +262,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         // Store newly created Recipe on firebase //
         do {
             if let ingredientRef = try ingredientRef?.addDocument(from: ingredient) {
-                ingredient.id = ingredientRef.documentID // returns id if added successfully -> use this id to update/delete
+                ingredient.id = ingredientRef.documentID // returns id if added successfully
             }
         } catch {
             print("Failed to serialize Reicpe")
@@ -374,7 +307,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         // Check if recipeList contains recipe + validate the documentID
         if recipeList.recipes.contains(recipe), let recipeListID = recipeList.id, let recipeID = recipe.id {
             if let removeRecipeRef = recipeRef?.document(recipeID) {
-                // Update the heroes array in teams to remove the target hero by its reference
+      
                 recipeListRef?.document(recipeListID).updateData(["recipes": FieldValue.arrayRemove([removeRecipeRef])])
             }
         }
@@ -400,7 +333,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 return
             }
             self.parseRecipeSnapshot(snapshot: querySnapshot)
-//            if self.recipeListRef == nil { self.setupRecipeListListener()} // If first time called, set up listener
         }
     }
     
@@ -414,20 +346,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 return
             }
             self.parseIngredientSnapshot(snapshot: querySnapshot)
-//            if self.recipeListRef == nil { self.setupRecipeListListener()} // If first time called, set up listener
         }
     }
     
-//    func setupRecipeListListener() {
-//        recipeListRef = database.collection("PLACEHOLDER") // may not use, use this name as a placeholder
-//        recipeListRef?.whereField("name", isEqualTo: DEFAULT_RECIPELIST_NAME).addSnapshotListener { (querySnapshot, error) in // specify name
-//            guard let querySnapshot = querySnapshot, let recipeListSnapshot = querySnapshot.documents.first else { // validate snapshot
-//                print("Error fetching RecipeList: \(error!)")
-//                return
-//            }
-//            self.parseRecipeListSnapshot(snapshot: recipeListSnapshot)
-//        }
-//    }
+
     
     func parseRecipeSnapshot(snapshot: QuerySnapshot) {
         snapshot.documentChanges.forEach { (change) in // iterate thro each document change in snapshot
@@ -450,7 +372,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
         }
         
-        // Call the multicast delegate to call the onAllHeroChange on all listeners
         listeners.invoke { (listener) in
             if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
                 listener.onAllRecipeChange(change: .update, recipes: listOfRecipe)
@@ -479,7 +400,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
         }
         
-        // Call the multicast delegate to call the onAllHeroChange on all listeners
+        // Call the multicast delegate
         listeners.invoke { (listener) in
             if listener.listenerType == ListenerType.ingredient || listener.listenerType == ListenerType.all {
                 listener.onAllIngredientChange(change: .update, ingredients: listOfIngredient)
@@ -487,27 +408,5 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         
     }
-    
-//    func parseRecipeListSnapshot(snapshot: QueryDocumentSnapshot) {
-//        
-//        defaultRecipeList = RecipeList()
-//        defaultRecipeList.name = snapshot.data()["name"] as? String
-//        defaultRecipeList.id = snapshot.documentID
-//        
-//        // Try access the array of document references
-//        if let recipeReference = snapshot.data()["recipes"] as? [DocumentReference] {
-//            for reference in recipeReference { // Iterate through references, use it to get a hero, add hero to Team's array
-//                if let recipe = getRecipeById(reference.documentID) {
-//                    defaultRecipeList.recipes.append(recipe)
-//                }
-//            }
-//        }
-//        // Call Multicast delegate to invoke method to update all listeners
-//        listeners.invoke { (listener) in
-//            if listener.listenerType == ListenerType.recipeList || listener.listenerType == ListenerType.all {
-//                listener.onRecipeListChange(change: .update, recipes: defaultRecipeList.recipes)
-//            }
-//        }
-//    }
     
 }

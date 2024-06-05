@@ -24,7 +24,7 @@ protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
     func onRecipeListChange(change: DatabaseChange, recipes: [Recipe])
     func onAllRecipeChange(change: DatabaseChange, recipes: [Recipe])
-    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) // For now
+    func onAllIngredientChange(change: DatabaseChange, ingredients: [Ingredient]) 
 }
 
 protocol DatabaseProtocol: AnyObject {
@@ -33,7 +33,6 @@ protocol DatabaseProtocol: AnyObject {
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)
     
-    // init(name: String?, description: String?, prepTime: String?, cookTime: String?, difficulty: String?, image: UIImage?, ingredients: String?)
     func addRecipe(name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?)
     func editRecipe(recipeToEdit: Recipe?, name: String?, desc: String?, prepTime: String?, cookTime: String?, difficulty: String?, imageData: Data?, ingredients: String?, directions: String?, protein: String?, carbohydrate: String?, fats: String?, calories: String?)
     func deleteRecipe(recipe: Recipe)
