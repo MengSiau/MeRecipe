@@ -202,6 +202,16 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         recipeNutritionStack.addArrangedSubview(fatsLabel)
         recipeNutritionStack.addArrangedSubview(caloriesLabel)
         
+        // Check if any nutrition value is missing (print message saying we cannot create pie chart)
+        if protein.isEmpty || carbohydrates.isEmpty || fats.isEmpty {
+            let warningLabel = UILabel()
+            warningLabel.text = "# Unable to create pie chart due to missing nutrition values"
+            warningLabel.font = UIFont.boldSystemFont(ofSize: warningLabel.font.pointSize) // Bold
+            warningLabel.textColor = .red
+            warningLabel.numberOfLines = 0 // Enable sentence wrapping
+            warningLabel.lineBreakMode = .byWordWrapping
+            recipeNutritionStack.addArrangedSubview(warningLabel)
+        }
         
         // Cast string that are floats to int //
         guard let proteinFloat = Float(protein), let carbohydrateFloat = Float(carbohydrates), let fatsFloat = Float(fats) else {
