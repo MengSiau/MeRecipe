@@ -243,6 +243,44 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             directions = ""
         }
         
+        // Field checking for Nutrition values (must be positive floats)
+        if !protein.isEmpty {
+            if let proteinFloat = Float(protein), proteinFloat > 0 {
+                let _ = proteinFloat
+            } else {
+                print("Error: Protein must be a positive number")
+                displayMessage(title: "Field Error", message: "Protein must be a positive number")
+                return
+            }
+        }
+        if !carbohydrate.isEmpty {
+            if let carbohydrateFloat = Float(carbohydrate), carbohydrateFloat > 0 {
+                let _ = carbohydrateFloat
+            } else {
+                print("Error: Carbohydrate must be a positive number")
+                displayMessage(title: "Field Error", message: "Carbohydrate must be a positive number")
+                return
+            }
+        }
+        if !fats.isEmpty {
+            if let fatsFloat = Float(fats), fatsFloat > 0 {
+                let _ = fatsFloat
+            } else {
+                print("Error: Fats must be a positive number")
+                displayMessage(title: "Field Error", message: "Fats must be a positive number")
+                return
+            }
+        }
+        if !calories.isEmpty {
+            if let caloriesFloat = Float(calories), caloriesFloat > 0 {
+                let _ = caloriesFloat
+            } else {
+                print("Error: Calories must be a positive number")
+                displayMessage(title: "Field Error", message: "Calories must be a positive number")
+                return
+            }
+        }
+        
         // Calls database methods//
         if mode == "create" {
             let _ = databaseController?.addRecipe(name: name, desc: description, prepTime: prepTime, cookTime: cookTime, difficulty: difficulty, imageData: imageData, ingredients: ingredients, directions: directions, protein: protein, carbohydrate: carbohydrate, fats: fats, calories: calories)
