@@ -16,11 +16,6 @@ class SettingsTableViewController: UITableViewController, DatabaseListener {
     let SECTION_DELETEDATA = 1
     let SECTION_ACKNOWLEDGEMENT = 2
     
-//    let bottomToolbar: UIToolbar = {
-//        let toolbar = UIToolbar()
-//        toolbar.translatesAutoresizingMaskIntoConstraints = false
-//        return toolbar
-//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
