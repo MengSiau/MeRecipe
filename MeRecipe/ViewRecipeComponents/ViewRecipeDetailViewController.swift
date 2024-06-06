@@ -119,7 +119,12 @@ class ViewRecipeDetailViewController: UIViewController, DatabaseListener {
         }
 
         // Setting Texts values //
-        recipeDescriptionFIeld.text = desc
+        if desc == "" {
+            recipeDescriptionFIeld.text = "# No description given"
+            recipeDescriptionFIeld.font = UIFont.boldSystemFont(ofSize: recipeDescriptionFIeld.font.pointSize) // bold
+        } else {
+            recipeDescriptionFIeld.text = desc
+        }
         recipeDifficultyAndTime.text = difficultyAndTime
         
         // Processing ingredients for stackview //

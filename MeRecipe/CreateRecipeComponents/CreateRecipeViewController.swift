@@ -181,6 +181,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
         // Field checking (minimum name required)
         if name.isEmpty {
             displayMessage(title: "Field Error", message: "Please ensure that a name is given at minimum")
+            return
         }
         
         // Field checking difficulty (must be int between 1-9)
@@ -236,7 +237,7 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
 
     }
     
-    var activityIndicator = UIActivityIndicatorView(style: .large)
+    var activityIndicator = UIActivityIndicatorView(style: .large) // The loading icon for API
     override func viewDidLoad() {
         super.viewDidLoad()
         
