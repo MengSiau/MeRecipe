@@ -184,6 +184,27 @@ class CreateRecipeViewController: UIViewController, UITextFieldDelegate, UIImage
             return
         }
         
+        // Field checking (Prep time, must be an int)
+        if let prepTime = recipePrepTimeField.text, !prepTime.isEmpty {
+            if let prepTimeInt = Int(prepTime) {
+                let _ = prepTimeInt
+            } else {
+                print("Prep time must be a number")
+                displayMessage(title: "Field Error", message: "Prep time must be a number")
+                return
+            }
+        }
+        // Field checking (Cook time, must be an int)
+        if let cookTime = recipeCookingTimeField.text, !cookTime.isEmpty {
+            if let cookTimeInt = Int(cookTime) {
+                let _ = cookTime
+            } else {
+                print("Cook time must be a number")
+                displayMessage(title: "Error", message: "Cook time must be a number")
+                return
+            }
+        }
+
         // Field checking difficulty (must be int between 1-9)
         if let difficultyText = recipeDifficultyField.text, !difficultyText.isEmpty {
             if let difficulty = Int(difficultyText), (1...9).contains(difficulty) {
