@@ -35,6 +35,7 @@ MeRecipe is designed to help users create and manage cooking recipes in a simple
 
 ### Meal Scheduler 
 <img src="https://github.com/user-attachments/assets/a7db23ed-4837-45cc-8e4f-b4e44a3fa5bb" width="250">
+<img src="https://github.com/user-attachments/assets/1a2510b1-59de-417a-9fad-598e87e6b2dc" width="250">
 
 ### Dark Mode Feature
 <img src="https://github.com/user-attachments/assets/64c0502d-364a-4417-b7db-f4fa492cea6f" width="250">
